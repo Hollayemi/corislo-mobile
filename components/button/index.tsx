@@ -6,20 +6,33 @@ type prop = {
   onPress: () => void;
   title: string;
   fullWidth?: boolean;
-  Icon?: JSX.Element;
+  IconAfter?: JSX.Element;
+  IconBefore?: JSX.Element;
 };
 
-export default function Button({ onPress, title, fullWidth, Icon }: prop) {
+export default function Button({
+  onPress,
+  title,
+  fullWidth,
+  IconAfter,
+  IconBefore,
+}: prop) {
   return (
     <Pressable style={styles.button} onPress={onPress}>
       <Text
         style={{ ...styles.btnText, ...{ width: fullWidth ? "100%" : null } }}
       >
-        {title}
-        {Icon ? (
+        {IconBefore ? (
           <Text>
             {"   "}
-            {Icon}
+            {IconBefore}
+          </Text>
+        ) : null}{" "}
+        {title}{" "}
+        {IconAfter ? (
+          <Text>
+            {"   "}
+            {IconAfter}
           </Text>
         ) : null}
       </Text>

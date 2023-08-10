@@ -18,7 +18,7 @@
     "react-native-paper": "^5.9.1",
     "react-native-safe-area-context": "4.6.3",
     "react-native-screens": "~3.22.0",
-    "react-native-stepper-ui": "^0.0.9"
+    "react-native-step-progess": "^1.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

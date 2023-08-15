@@ -20,6 +20,7 @@ import { color, review, similar, size } from "./data";
 import Rating from "../../components/rating";
 import Button from "../../components/button";
 import Card from "./Card";
+import Coment from "./Coment";
 
 type prop = {
   navigation: any;
@@ -147,7 +148,6 @@ export default function Product({ navigation }: prop) {
                   color: "#2A347E",
                   fontSize: 20,
                   fontWeight: "500",
-                  // alignItems: "center",
                 }}
               >
                 Disto Ventures
@@ -169,12 +169,7 @@ export default function Product({ navigation }: prop) {
               </Text>
             </View>
             <Text style={{ color: "#2A347E", fontSize: 13 }}>
-              <Ionicons
-                name="md-chatbubbles"
-                size={15}
-                color="#2A347E"
-                // style={{ marginRight: 5 }}
-              />
+              <Ionicons name="md-chatbubbles" size={15} color="#2A347E" />
               Message
             </Text>
           </View>
@@ -216,55 +211,12 @@ export default function Product({ navigation }: prop) {
             </Text>
             <Rating rate={4} />
           </View>
-          <View>
-            {review.map(({ comment, date, rating }, index) => (
-              <View
-                key={index}
-                style={{ display: "flex", flexDirection: "row", marginTop: 10 }}
-              >
-                <Image
-                  source={require("../../assets/icon.png")}
-                  style={{
-                    width: 35,
-                    height: 35,
-                    borderRadius: 35 / 2,
-                    objectFit: "contain",
-                  }}
-                />
-                <View>
-                  <Text
-                    style={{
-                      color: "#505050",
-                      fontSize: 10,
-                      fontWeight: "400",
-                      paddingRight: "10%",
-                    }}
-                  >
-                    {comment}
-                  </Text>
-                  <View
-                    style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Rating small rate={rating} />
-
-                    <Text
-                      style={{
-                        fontSize: 8,
-                        fontWeight: "500",
-                        marginLeft: 10,
-                      }}
-                    >
-                      {date}
-                    </Text>
-                  </View>
-                </View>
-              </View>
-            ))}
-          </View>
+          <FlatList
+            style={{ marginVertical: 20 }}
+            data={review}
+            renderItem={({ item }: any) => <Coment {...item} />}
+            keyExtractor={(item: any) => item.id}
+          />
           <Text
             style={{
               color: "#2A347E",

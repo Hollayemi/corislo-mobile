@@ -14,7 +14,8 @@ export const color: string[] = [
   "#424242",
 ];
 
-type Review = {
+export type Review = {
+  id: number | string;
   comment: string;
   rating: number;
   date: string;
@@ -22,24 +23,28 @@ type Review = {
 
 export const review: Review[] = [
   {
+    id: 1,
     comment:
       "I couldn't be happier with my purchase! The vendor provided exceptional customer service, answering all my queries promptly. The denim shoe fits perfectly and looks amazing.",
     rating: 4,
     date: "2 days ago",
   },
   {
+    id: 2,
     comment:
       "Fantastic vendor! The denim shoe arrived promptly and in pristine condition. Excellent communication throughout the process. Highly satisfied.",
     rating: 3,
     date: "3 days ago",
   },
   {
+    id: 3,
     comment:
       "Highly recommended vendor! The delivery was fast and hassle-free. The denim shoe itself is well-crafted and comfortable. Will definitely buy from this vendor again.",
     rating: 5,
     date: "3 days ago",
   },
   {
+    id: 4,
     comment:
       "I couldn't be happier with my purchase! The vendor provided exceptional customer service, answering all my queries promptly. The denim shoe fits perfectly and looks amazing.",
     rating: 3,

@@ -7,12 +7,9 @@ import Alert from "../../components/alert";
 import Button from "../../components/button";
 import Card from "./Card";
 import { cart } from "./data";
-import { Platform, NativeModules } from "react-native";
-
-const { StatusBarManager } = NativeModules;
+import Header from "../../navigations/bottomTabNavigation/Header";
 
 export default function Home() {
-  const [isChecked, setChecked] = React.useState(false);
   const [isAllChecked, setIsAllChecked] = React.useState(false);
 
   return (
@@ -21,51 +18,10 @@ export default function Home() {
         style.container,
         {
           flex: 1,
-          paddingTop: Platform.OS === "android" ? StatusBarManager.HEIGHT : 0,
         },
       ]}
     >
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          padding: "5%",
-        }}
-      >
-        <View style={{ flexDirection: "row" }}>
-          <Ionicons
-            name="chevron-back"
-            size={24}
-            color="#28303F"
-            style={{
-              backgroundColor: "#EFEFEF",
-              height: 30,
-              width: 30,
-              borderRadius: 30 / 2,
-              marginRight: "15%",
-            }}
-          />
-          <Text style={{ fontWeight: "500", fontSize: 16 }}>My Cart (3)</Text>
-        </View>
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Text
-            style={{
-              fontWeight: "500",
-              fontSize: 12,
-              color: "#7C7C7C",
-              marginRight: 15,
-            }}
-          >
-            Select All
-          </Text>
-          <Checkbox
-            style={{}}
-            value={isChecked}
-            onValueChange={setChecked}
-            color={isChecked ? "#2A347E" : undefined}
-          />
-        </View>
-      </View>
+      {/* <Header /> */}
       <Alert
         label="You have a discount voucher for this products"
         type="action"
@@ -87,7 +43,7 @@ export default function Home() {
             style={{}}
             value={isAllChecked}
             onValueChange={setIsAllChecked}
-            color={isChecked ? "#2A347E" : undefined}
+            color={isAllChecked ? "#2A347E" : undefined}
           />
           <Text
             style={{

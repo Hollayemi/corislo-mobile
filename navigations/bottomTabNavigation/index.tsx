@@ -1,20 +1,23 @@
 import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Home from "../../screens/tabsHome";
 import Category from "../../screens/category";
-import Cart from "../../screens/cart";
 import Profile from "../../screens/profile";
 import { Ionicons, AntDesign, FontAwesome5 } from "@expo/vector-icons";
 import TabBar from "./TabBar";
+import Header from "./Header";
+import CartStackScreen from "./BottomStackNavigation";
 
 const Tab = createBottomTabNavigator();
 
 export default function BottomTabs() {
   return (
     <Tab.Navigator
-      screenOptions={{ headerShown: false }}
+      screenOptions={{
+        header: (props) => <Header {...props} />,
+      }}
       tabBar={(props) => <TabBar {...props} />}
+      initialRouteName="Cart"
     >
       <Tab.Screen
         name="Home"
@@ -49,7 +52,7 @@ export default function BottomTabs() {
       />
       <Tab.Screen
         name="Cart"
-        component={Cart}
+        component={CartStackScreen}
         options={{
           tabBarLabel: "Cart",
           tabBarIcon: ({ color, size, focused }) => {

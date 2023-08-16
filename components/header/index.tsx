@@ -17,12 +17,7 @@ export default function Header({ title, navigation }: prop) {
       {title === "Product Details" ? (
         <View style={styles.iconGroup}>
           <AntDesign name="search1" size={24} color="black" />
-          <AntDesign
-            name="shoppingcart"
-            size={24}
-            color="black"
-            // style={{ marginLeft: 20 }}
-          />
+          <AntDesign name="shoppingcart" size={24} color="black" />
         </View>
       ) : null}
     </View>
@@ -32,19 +27,16 @@ export default function Header({ title, navigation }: prop) {
 const styles = StyleSheet.create({
   header: {
     padding: "5%",
-    display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
   },
   iconGroup: {
-    display: "flex",
     flexDirection: "row",
     flex: 0.2,
     justifyContent: "space-between",
   },
   titleGroup: {
-    display: "flex",
     flexDirection: "row",
     flex: 0.6,
     justifyContent: "space-between",

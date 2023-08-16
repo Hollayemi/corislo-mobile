@@ -9,8 +9,8 @@ type prop = {
 
 export default function Rating({ rate, small }: prop) {
   return (
-    <View style={{ display: "flex", flexDirection: "row" }}>
-      <View style={{ display: "flex", flexDirection: "row" }}>
+    <View style={{ flexDirection: "row" }}>
+      <View style={{ flexDirection: "row" }}>
         {Array.from({ length: rate }, (_, index) => (
           <MaterialCommunityIcons
             name="star"
@@ -20,7 +20,7 @@ export default function Rating({ rate, small }: prop) {
           />
         ))}
       </View>
-      <View style={{ display: "flex", flexDirection: "row" }}>
+      <View style={{ flexDirection: "row" }}>
         {Array.from({ length: 5 - rate }, (_, index) => (
           <MaterialCommunityIcons
             name="star"

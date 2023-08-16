@@ -68,7 +68,6 @@ const styles = StyleSheet.create({
   },
   logo: {
     backgroundColor: "#fff",
-    display: "flex",
     justifyContent: "center",
     alignItems: "center",
     marginTop: "30%",

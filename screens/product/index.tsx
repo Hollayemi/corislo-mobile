@@ -21,6 +21,9 @@ import Rating from "../../components/rating";
 import Button from "../../components/button";
 import Card from "./Card";
 import Coment from "./Coment";
+import { Platform, NativeModules } from "react-native";
+
+const { StatusBarManager } = NativeModules;
 
 type prop = {
   navigation: any;
@@ -31,9 +34,10 @@ export default function Product({ navigation }: prop) {
     <SafeAreaView
       style={{
         flex: 1,
+        paddingTop: Platform.OS === "android" ? StatusBarManager.HEIGHT : 0,
       }}
     >
-      <ScrollView style={[style.container, styles.view]}>
+      <ScrollView style={style.container}>
         <Header title="Product Details" navigation={navigation} />
         <View style={[styles.slider, styles.shadowProp, styles.elevation]}>
           <Image
@@ -45,7 +49,6 @@ export default function Product({ navigation }: prop) {
           <Text style={styles.title}>Denim Athletic Sneakers</Text>
           <View
             style={{
-              display: "flex",
               flexDirection: "row",
               justifyContent: "space-between",
               alignItems: "center",
@@ -54,7 +57,6 @@ export default function Product({ navigation }: prop) {
           >
             <View
               style={{
-                display: "flex",
                 flexDirection: "row",
                 alignItems: "center",
                 flex: 0.7,
@@ -67,7 +69,6 @@ export default function Product({ navigation }: prop) {
             </View>
             <View
               style={{
-                display: "flex",
                 flexDirection: "row",
                 flex: 0.2,
                 justifyContent: "space-between",
@@ -80,9 +81,7 @@ export default function Product({ navigation }: prop) {
           <Text style={{ fontSize: 14, fontWeight: "600", marginTop: 15 }}>
             Available sizes
           </Text>
-          <View
-            style={{ display: "flex", flexDirection: "row", marginTop: 10 }}
-          >
+          <View style={{ flexDirection: "row", marginTop: 10 }}>
             {size.map((text, index) => (
               <Text key={index} style={styles.size}>
                 {text.toLocaleUpperCase()}
@@ -92,9 +91,7 @@ export default function Product({ navigation }: prop) {
           <Text style={{ fontSize: 14, fontWeight: "600", marginTop: 15 }}>
             Select Color
           </Text>
-          <View
-            style={{ display: "flex", flexDirection: "row", marginTop: 10 }}
-          >
+          <View style={{ flexDirection: "row", marginTop: 10 }}>
             {color.map((text, index) => (
               <Text
                 key={index}
@@ -137,12 +134,11 @@ export default function Product({ navigation }: prop) {
           </Text>
           <View
             style={{
-              display: "flex",
               flexDirection: "row",
               justifyContent: "space-between",
             }}
           >
-            <View style={{ display: "flex", flexDirection: "row" }}>
+            <View style={{ flexDirection: "row" }}>
               <Text
                 style={{
                   color: "#2A347E",
@@ -178,7 +174,6 @@ export default function Product({ navigation }: prop) {
           </Text>
           <View
             style={{
-              display: "flex",
               flexDirection: "row",
               marginVertical: 15,
             }}
@@ -200,7 +195,6 @@ export default function Product({ navigation }: prop) {
           </Text>
           <View
             style={{
-              display: "flex",
               flexDirection: "row",
               justifyContent: "space-between",
               marginVertical: 15,
@@ -211,12 +205,14 @@ export default function Product({ navigation }: prop) {
             </Text>
             <Rating rate={4} />
           </View>
-          <FlatList
-            style={{ marginVertical: 20 }}
-            data={review}
-            renderItem={({ item }: any) => <Coment {...item} />}
-            keyExtractor={(item: any) => item.id}
-          />
+          <ScrollView>
+            <FlatList
+              style={{ marginVertical: 20, flex: 1 }}
+              data={review}
+              renderItem={({ item }: any) => <Coment {...item} />}
+              keyExtractor={(item: any) => item.id}
+            />
+          </ScrollView>
           <Text
             style={{
               color: "#2A347E",
@@ -238,14 +234,15 @@ export default function Product({ navigation }: prop) {
           >
             Similar Products
           </Text>
-
-          <FlatList
-            style={{ marginVertical: 20 }}
-            horizontal
-            data={similar}
-            renderItem={({ item }: any) => <Card {...item} />}
-            keyExtractor={(item: any) => item.id}
-          />
+          <ScrollView>
+            <FlatList
+              style={{ marginVertical: 20, flex: 1 }}
+              horizontal
+              data={similar}
+              renderItem={({ item }: any) => <Card {...item} />}
+              keyExtractor={(item: any) => item.id}
+            />
+          </ScrollView>
 
           <Button
             onPress={() => {
@@ -263,9 +260,6 @@ export default function Product({ navigation }: prop) {
 }
 
 const styles = StyleSheet.create({
-  view: {
-    paddingVertical: "10%",
-  },
   slider: {
     minHeight: 264,
   },

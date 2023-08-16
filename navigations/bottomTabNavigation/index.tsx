@@ -1,0 +1,84 @@
+import React from "react";
+import { View, Text, TouchableOpacity } from "react-native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import Home from "../../screens/tabsHome";
+import Category from "../../screens/category";
+import Cart from "../../screens/cart";
+import Profile from "../../screens/profile";
+import { Ionicons, AntDesign, FontAwesome5 } from "@expo/vector-icons";
+import TabBar from "./TabBar";
+
+const Tab = createBottomTabNavigator();
+
+export default function BottomTabs() {
+  return (
+    <Tab.Navigator
+      screenOptions={{ headerShown: false }}
+      tabBar={(props) => <TabBar {...props} />}
+    >
+      <Tab.Screen
+        name="Home"
+        component={Home}
+        options={{
+          tabBarLabel: "Home",
+          tabBarIcon: ({ color, size, focused }) => (
+            <Ionicons
+              name={focused ? "ios-home-sharp" : "ios-home-outline"}
+              size={size}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Category"
+        component={Category}
+        options={{
+          //   headerShown: false,
+          tabBarLabel: "Category",
+          tabBarIcon: ({ color, size, focused }) => {
+            return (
+              <AntDesign
+                name={focused ? "appstore1" : "appstore-o"}
+                size={size}
+                color={color}
+              />
+            );
+          },
+        }}
+      />
+      <Tab.Screen
+        name="Cart"
+        component={Cart}
+        options={{
+          tabBarLabel: "Cart",
+          tabBarIcon: ({ color, size, focused }) => {
+            return (
+              <Ionicons
+                name={focused ? "cart-sharp" : "cart-outline"}
+                size={size}
+                color={color}
+              />
+            );
+          },
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          tabBarLabel: "Profile",
+          tabBarIcon: ({ color, size, focused }) => {
+            return (
+              <FontAwesome5
+                name={focused ? "user-alt" : "user"}
+                size={size}
+                color={color}
+              />
+            );
+          },
+        }}
+      />
+    </Tab.Navigator>
+  );
+}

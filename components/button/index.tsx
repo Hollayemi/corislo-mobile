@@ -43,7 +43,7 @@ export default function Button({
 const styles = StyleSheet.create({
   button: {
     backgroundColor: "#2A347E",
-    borderRadius: 10,
+    borderRadius: 20,
     padding: 20,
     textAlign: "center",
     display: "flex",

@@ -5,10 +5,7 @@ import { View, Image, Text } from "react-native";
 
 export default function Coment({ comment, date, rating, id }: Review) {
   return (
-    <View
-      key={id}
-      style={{ display: "flex", flexDirection: "row", marginTop: 10 }}
-    >
+    <View key={id} style={{ flexDirection: "row", marginTop: 10 }}>
       <Image
         source={require("../../assets/icon.png")}
         style={{
@@ -31,7 +28,6 @@ export default function Coment({ comment, date, rating, id }: Review) {
         </Text>
         <View
           style={{
-            display: "flex",
             flexDirection: "row",
             alignItems: "center",
           }}

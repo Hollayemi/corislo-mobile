@@ -1,7 +1,10 @@
-import { StyleSheet, View, Text, Image } from "react-native";
+import { StyleSheet, View, Text, Image, SafeAreaView } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import Button from "../../components/button";
 import { style } from "../../style";
+import { Platform, NativeModules } from "react-native";
+
+const { StatusBarManager } = NativeModules;
 
 type prop = {
   navigation: any;
@@ -9,7 +12,15 @@ type prop = {
 
 export default function Home({ navigation }: prop) {
   return (
-    <View style={style.container}>
+    <SafeAreaView
+      style={[
+        style.container,
+        {
+          flex: 1,
+          paddingTop: Platform.OS === "android" ? StatusBarManager.HEIGHT : 0,
+        },
+      ]}
+    >
       <View style={styles.upper}>
         <View style={styles.logo}>
           <Image source={require("../../assets/logo1.png")} />
@@ -25,12 +36,12 @@ export default function Home({ navigation }: prop) {
             navigation.navigate("login");
           }}
           title="Open an account"
-          Icon={
+          IconAfter={
             <FontAwesome5 name="arrow-circle-right" size={15} color="white" />
           }
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -40,7 +51,6 @@ const styles = StyleSheet.create({
     height: "40%",
     borderBottomLeftRadius: 120,
     borderBottomEndRadius: 120,
-    display: "flex",
     justifyContent: "flex-end",
     alignItems: "center",
   },
@@ -49,7 +59,6 @@ const styles = StyleSheet.create({
     height: 115,
     width: 115,
     borderRadius: 115,
-    display: "flex",
     justifyContent: "center",
     alignItems: "center",
     marginBottom: -50,
@@ -68,7 +77,6 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   btnView: {
-    display: "flex",
     alignItems: "center",
     position: "absolute",
     bottom: "10%",

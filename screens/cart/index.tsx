@@ -8,9 +8,16 @@ import Button from "../../components/button";
 import Card from "./Card";
 import { cart } from "./data";
 import Header from "../../navigations/bottomTabNavigation/Header";
+import { useAppDispatch } from "../../hooks";
+import { cartActions } from "../../store/cartSlice";
 
-export default function Home() {
+type prop = {
+  navigation: any;
+};
+
+export default function Cart({ navigation }: prop) {
   const [isAllChecked, setIsAllChecked] = React.useState(false);
+  const dispatch = useAppDispatch();
 
   return (
     <ScrollView
@@ -159,7 +166,17 @@ export default function Home() {
           </Text>
           <Text style={{ color: "#1C2534", fontSize: 18 }}>₦85,300</Text>
         </View>
-        <Button title="Checkout(3)" onPress={() => {}} />
+        <Button
+          title="Checkout(3)"
+          onPress={() => {
+            try {
+              navigation.navigate("Checkout");
+              dispatch(cartActions.setCartLabel("Checkout"));
+            } catch (error) {
+              console.log("an error occured");
+            }
+          }}
+        />
       </View>
     </ScrollView>
   );

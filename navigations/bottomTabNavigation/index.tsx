@@ -7,10 +7,13 @@ import { Ionicons, AntDesign, FontAwesome5 } from "@expo/vector-icons";
 import TabBar from "./TabBar";
 import Header from "./Header";
 import CartStackScreen from "./BottomStackNavigation";
+import { useAppSelector } from "../../hooks";
 
 const Tab = createBottomTabNavigator();
 
 export default function BottomTabs() {
+  const { cartLabel } = useAppSelector((state) => state.cart);
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -37,7 +40,6 @@ export default function BottomTabs() {
         name="Category"
         component={Category}
         options={{
-          //   headerShown: false,
           tabBarLabel: "Category",
           tabBarIcon: ({ color, size, focused }) => {
             return (
@@ -51,7 +53,7 @@ export default function BottomTabs() {
         }}
       />
       <Tab.Screen
-        name="Cart"
+        name={cartLabel}
         component={CartStackScreen}
         options={{
           tabBarLabel: "Cart",

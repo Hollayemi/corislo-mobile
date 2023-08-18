@@ -53,10 +53,10 @@ export default function BottomTabs() {
         }}
       />
       <Tab.Screen
-        name={cartLabel}
+        name="cart"
         component={CartStackScreen}
         options={{
-          tabBarLabel: "Cart",
+          tabBarLabel: cartLabel,
           tabBarIcon: ({ color, size, focused }) => {
             return (
               <Ionicons

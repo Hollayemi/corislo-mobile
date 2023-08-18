@@ -7,9 +7,6 @@ import Alert from "../../components/alert";
 import Button from "../../components/button";
 import Card from "./Card";
 import { cart } from "./data";
-import Header from "../../navigations/bottomTabNavigation/Header";
-import { useAppDispatch } from "../../hooks";
-import { cartActions } from "../../store/cartSlice";
 
 type prop = {
   navigation: any;
@@ -17,7 +14,6 @@ type prop = {
 
 export default function Cart({ navigation }: prop) {
   const [isAllChecked, setIsAllChecked] = React.useState(false);
-  const dispatch = useAppDispatch();
 
   return (
     <ScrollView
@@ -28,7 +24,6 @@ export default function Cart({ navigation }: prop) {
         },
       ]}
     >
-      {/* <Header /> */}
       <Alert
         label="You have a discount voucher for this products"
         type="action"
@@ -171,7 +166,6 @@ export default function Cart({ navigation }: prop) {
           onPress={() => {
             try {
               navigation.navigate("Checkout");
-              dispatch(cartActions.setCartLabel("Checkout"));
             } catch (error) {
               console.log("an error occured");
             }

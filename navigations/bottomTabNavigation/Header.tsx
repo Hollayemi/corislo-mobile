@@ -34,7 +34,9 @@ function Header({ layout, navigation, options, route }: BottomTabHeaderProps) {
             marginRight: "15%",
           }}
         />
-        <Text style={{ fontWeight: "500", fontSize: 16 }}>{route.name}</Text>
+        <Text style={{ fontWeight: "500", fontSize: 16 }}>
+          {options.tabBarLabel?.toString()}
+        </Text>
       </View>
       {route.name == "Cart" ? (
         <View style={{ flexDirection: "row", alignItems: "center" }}>

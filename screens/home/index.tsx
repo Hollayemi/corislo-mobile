@@ -2,9 +2,6 @@ import { StyleSheet, View, Text, Image, SafeAreaView } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import Button from "../../components/button";
 import { style } from "../../style";
-import { Platform, NativeModules } from "react-native";
-
-const { StatusBarManager } = NativeModules;
 
 type prop = {
   navigation: any;
@@ -12,15 +9,7 @@ type prop = {
 
 export default function Home({ navigation }: prop) {
   return (
-    <SafeAreaView
-      style={[
-        style.container,
-        {
-          flex: 1,
-          paddingTop: Platform.OS === "android" ? StatusBarManager.HEIGHT : 0,
-        },
-      ]}
-    >
+    <SafeAreaView style={style.container}>
       <View style={styles.upper}>
         <View style={styles.logo}>
           <Image source={require("../../assets/logo1.png")} />

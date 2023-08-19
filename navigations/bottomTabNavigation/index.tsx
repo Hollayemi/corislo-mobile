@@ -56,6 +56,7 @@ export default function BottomTabs() {
         name="cart"
         component={CartStackScreen}
         options={{
+          headerShown: false,
           tabBarLabel: cartLabel,
           tabBarIcon: ({ color, size, focused }) => {
             return (

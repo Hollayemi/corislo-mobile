@@ -1,20 +1,34 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
+import { Platform, NativeModules } from "react-native";
+
+const { StatusBarManager } = NativeModules;
 
 type prop = {
   title: string;
   navigation: any;
+  app?: boolean;
 };
 
-export default function Header({ title, navigation }: prop) {
+export default function Header({ title, navigation, app }: prop) {
   return (
     <View style={styles.header}>
-      <View style={styles.titleGroup}>
-        <AntDesign name="left" size={24} color="black" />
+      <View
+        style={[
+          styles.titleGroup,
+          { justifyContent: app ? "flex-start" : "space-between" },
+        ]}
+      >
+        <AntDesign
+          name="left"
+          size={24}
+          color="black"
+          style={{ paddingRight: "15%" }}
+        />
         <Text style={styles.title}>{title}</Text>
       </View>
-      {title === "Product Details" ? (
+      {title === "product" ? (
         <View style={styles.iconGroup}>
           <AntDesign name="search1" size={24} color="black" />
           <AntDesign name="shoppingcart" size={24} color="black" />
@@ -30,6 +44,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    paddingTop: StatusBarManager.HEIGHT + 20,
   },
   iconGroup: {
     flexDirection: "row",
@@ -38,8 +53,7 @@ const styles = StyleSheet.create({
   },
   titleGroup: {
     flexDirection: "row",
-    flex: 0.6,
-    justifyContent: "space-between",
+    flex: 0.5,
   },
   title: {
     color: "#000",

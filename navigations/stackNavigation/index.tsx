@@ -6,6 +6,7 @@ import Home from "../../screens/home";
 import Login from "../../components/forms/signup";
 import Product from "../../screens/product";
 import BottomTabs from "../bottomTabNavigation";
+import Header from "../../components/header";
 
 const Stack = createNativeStackNavigator();
 export default function Navigation() {
@@ -25,7 +26,11 @@ export default function Navigation() {
         <Stack.Screen
           name="product"
           component={Product}
-          options={{ headerShown: false }}
+          options={{
+            header: ({ navigation, route }) => (
+              <Header navigation={navigation} title={route.name} />
+            ),
+          }}
         />
         <Stack.Screen
           name="homeScreen"

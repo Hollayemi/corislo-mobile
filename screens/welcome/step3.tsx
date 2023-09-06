@@ -8,10 +8,11 @@ import {
   Image,
   View,
 } from "react-native";
+import { Routes } from "../../navigations/routes";
 
 const { StatusBarManager } = NativeModules;
 
-export default function Step3() {
+export default function Step3({ navigation }: any) {
   return (
     <SafeAreaView
       style={{
@@ -23,7 +24,11 @@ export default function Step3() {
         justifyContent: "space-evenly",
       }}
     >
-      <Pressable>
+      <Pressable
+        onPress={() => {
+          navigation.navigate(Routes.Authentication);
+        }}
+      >
         <Text
           style={{
             color: "#000",
@@ -40,7 +45,7 @@ export default function Step3() {
           Skip
         </Text>
       </Pressable>
-      <Image source={require("../../assets/Auth/image1.png")} />
+      <Image source={require("../../assets/Welcome/image3.png")} />
       <View>
         <Text
           style={{
@@ -68,23 +73,31 @@ export default function Step3() {
         </Text>
       </View>
       <View style={{ alignItems: "center" }}>
-        <Image source={require("../../assets/Auth/step3.png")} />
+        <Image source={require("../../assets/Welcome/step3.png")} />
       </View>
       <View style={{ alignItems: "center" }}>
-        <Text
-          style={{
-            color: "#FFF",
-            fontSize: 9,
-            fontWeight: "500",
-            backgroundColor: "#2A347E",
-            height: 61,
-            width: 61,
-            borderRadius: 61 / 2,
-            textAlign: "center",
+        <Pressable
+          onPress={() => {
+            navigation.navigate(Routes.Authentication);
           }}
+          style={{ alignItems: "center" }}
         >
-          Sign Up
-        </Text>
+          <Text
+            style={{
+              color: "#FFF",
+              fontSize: 11,
+              fontWeight: "600",
+              backgroundColor: "#2A347E",
+              // height: 61,
+              width: 63,
+              borderRadius: 61 / 2,
+              textAlign: "center",
+              paddingVertical: 25,
+            }}
+          >
+            Sign Up
+          </Text>
+        </Pressable>
       </View>
     </SafeAreaView>
   );

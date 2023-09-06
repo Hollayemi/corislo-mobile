@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FlatList, View } from "react-native";
 import Method from "../../components/shipping/Method";
 
@@ -25,9 +25,22 @@ const Data: data[] = [
 ];
 
 function ShippingMethod() {
+  const [selectedItem, setSelectedItem] = useState(-1);
+
+  // Function to handle item click
+  const handleItemClick = (index: number) => {
+    setSelectedItem(index);
+  };
   return (
     <View style={{ padding: "5%", backgroundColor: "#fff", flex: 1 }}>
-      <FlatList data={Data} renderItem={({ item }) => <Method {...item} />} />
+      <FlatList
+        data={Data}
+        renderItem={({ item, index }) => (
+          <View>
+            <Method {...item} />
+          </View>
+        )}
+      />
     </View>
   );
 }

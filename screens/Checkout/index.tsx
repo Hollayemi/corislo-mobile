@@ -9,7 +9,7 @@ import Voucher from "../cart/Voucher";
 import Button from "../../components/button";
 import { Routes } from "../../navigations/routes";
 
-export default function Checkout({ navigation }) {
+export default function Checkout({ navigation }: any) {
   return (
     <View style={style.container}>
       <Alert

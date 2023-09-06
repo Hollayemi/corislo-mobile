@@ -8,6 +8,7 @@ import {
   Image,
   View,
 } from "react-native";
+import { Routes } from "../../navigations/routes";
 
 const { StatusBarManager } = NativeModules;
 
@@ -23,7 +24,11 @@ export default function Step2({ navigation }: any) {
         justifyContent: "space-evenly",
       }}
     >
-      <Pressable>
+      <Pressable
+        onPress={() => {
+          navigation.navigate(Routes.Authentication);
+        }}
+      >
         <Text
           style={{
             color: "#000",
@@ -40,7 +45,7 @@ export default function Step2({ navigation }: any) {
           Skip
         </Text>
       </Pressable>
-      <Image source={require("../../assets/Auth/image2.png")} />
+      <Image source={require("../../assets/Welcome/image2.png")} />
       <View>
         <Text
           style={{
@@ -68,11 +73,16 @@ export default function Step2({ navigation }: any) {
         </Text>
       </View>
       <View style={{ alignItems: "center" }}>
-        <Image source={require("../../assets/Auth/step1.png")} />
+        <Image source={require("../../assets/Welcome/step2.png")} />
       </View>
-      <View style={{ alignItems: "center" }}>
-        <Image source={require("../../assets/Auth/ProgressButton2.png")} />
-      </View>
+      <Pressable
+        onPress={() => {
+          navigation.navigate(Routes.WelcomeStep3);
+        }}
+        style={{ alignItems: "center" }}
+      >
+        <Image source={require("../../assets/Welcome/ProgressButton2.png")} />
+      </Pressable>
     </SafeAreaView>
   );
 }

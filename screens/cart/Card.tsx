@@ -4,7 +4,18 @@ import { Ionicons, AntDesign } from "@expo/vector-icons";
 import Checkbox from "expo-checkbox";
 import { prop } from "./data";
 
-export default function Card({ color, price, size, store, title }: prop) {
+interface props extends prop {
+  checkout: boolean;
+}
+
+export default function Card({
+  color,
+  price,
+  size,
+  store,
+  title,
+  checkout,
+}: props) {
   const [isChecked, setChecked] = React.useState(false);
 
   return (
@@ -13,7 +24,7 @@ export default function Card({ color, price, size, store, title }: prop) {
         flexDirection: "row",
         alignItems: "center",
         marginVertical: 5,
-        padding: "5%",
+        padding: "2%",
         backgroundColor: "#F6F6F6",
         justifyContent: "space-between",
       }}
@@ -34,12 +45,17 @@ export default function Card({ color, price, size, store, title }: prop) {
         </Text>
         <View
           style={{
-            flexDirection: "row",
-            alignItems: "center",
+            flexDirection: checkout ? "column" : "row",
+            alignItems: checkout ? "stretch" : "center",
             justifyContent: "space-between",
           }}
         >
-          <View>
+          <View
+            style={{
+              flexDirection: checkout ? "row" : "column",
+              justifyContent: "space-between",
+            }}
+          >
             <Text style={{ fontSize: 20, fontWeight: "600", color: "#1C2534" }}>
               ₦{price}
             </Text>
@@ -65,47 +81,51 @@ export default function Card({ color, price, size, store, title }: prop) {
               />
             </View>
           </View>
-          <View style={{ flexDirection: "row" }}>
-            <AntDesign name="minuscircle" size={20} color="#A3AAAE" />
-            <Text style={{ marginHorizontal: 10 }}>2</Text>
-            <AntDesign name="pluscircle" size={20} color="#A3AAAE" />
-          </View>
+          {checkout ? null : (
+            <View style={{ flexDirection: "row" }}>
+              <AntDesign name="minuscircle" size={20} color="#A3AAAE" />
+              <Text style={{ marginHorizontal: 10 }}>2</Text>
+              <AntDesign name="pluscircle" size={20} color="#A3AAAE" />
+            </View>
+          )}
         </View>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginTop: 5,
-          }}
-        >
+        {checkout ? null : (
           <View
             style={{
               flexDirection: "row",
               justifyContent: "space-between",
               alignItems: "center",
+              marginTop: 5,
             }}
           >
-            <Text
+            <View
               style={{
-                color: "#2A347E",
-                fontWeight: "500",
-                fontSize: 11,
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
               }}
             >
-              {store}
+              <Text
+                style={{
+                  color: "#2A347E",
+                  fontWeight: "500",
+                  fontSize: 11,
+                }}
+              >
+                {store}
+              </Text>
+              <Ionicons
+                name="chevron-forward"
+                size={18}
+                color="#2A347E"
+                style={{ marginLeft: 5 }}
+              />
+            </View>
+            <Text style={{ color: "#FF4141", fontWeight: "500", fontSize: 10 }}>
+              <AntDesign name="delete" size={10} color="#FF4141" /> Delete
             </Text>
-            <Ionicons
-              name="chevron-forward"
-              size={18}
-              color="#2A347E"
-              style={{ marginLeft: 5 }}
-            />
           </View>
-          <Text style={{ color: "#FF4141", fontWeight: "500", fontSize: 10 }}>
-            <AntDesign name="delete" size={10} color="#FF4141" /> Delete
-          </Text>
-        </View>
+        )}
       </View>
     </View>
   );

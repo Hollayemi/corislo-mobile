@@ -1,30 +1,31 @@
 import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { Routes } from "../routes";
 
-import Home from "../../screens/home";
-import Login from "../../components/forms/signup";
 import Product from "../../screens/product";
 import BottomTabs from "../bottomTabNavigation";
 import Header from "../../components/header";
+import WelcomeNavigation from "../../screens/welcome";
+import Auth from "../../screens/Auth";
 
 const Stack = createNativeStackNavigator();
 export default function Navigation() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="homeScreen">
+      <Stack.Navigator initialRouteName={Routes.Welcome}>
         <Stack.Screen
-          name="Home"
-          component={Home}
+          name={Routes.Welcome}
+          component={WelcomeNavigation}
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="login"
-          component={Login}
+          name={Routes.Authentication}
+          component={Auth}
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="product"
+          name={Routes.product}
           component={Product}
           options={{
             header: ({ navigation, route }) => (
@@ -33,7 +34,7 @@ export default function Navigation() {
           }}
         />
         <Stack.Screen
-          name="homeScreen"
+          name={Routes.homeScreen}
           component={BottomTabs}
           options={{ headerShown: false }}
         />

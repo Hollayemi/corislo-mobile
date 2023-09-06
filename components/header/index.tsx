@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import { Platform, NativeModules } from "react-native";
+import { NativeModules } from "react-native";
 
 const { StatusBarManager } = NativeModules;
 
@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     paddingTop: StatusBarManager.HEIGHT + 20,
+    backgroundColor: "#fff",
   },
   iconGroup: {
     flexDirection: "row",

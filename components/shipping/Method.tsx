@@ -16,20 +16,21 @@ export default function Method({ title, desc, view, edit }: prop) {
         borderRadius: 5,
         borderWidth: 0.5,
         borderStyle: "solid",
-        borderColor: "#BBB",
+        // borderColor: "#BBB",
         padding: "5%",
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
+        marginVertical: 5,
       }}
     >
       <View style={{ flexDirection: "row" }}>
         {view ? <Entypo name="location" size={20} color="#2A347E" /> : null}
         <View style={{ marginLeft: 15 }}>
-          <Text style={{ fontSize: 15, fontWeight: "600", color: "#1F1F1F" }}>
+          <Text style={{ fontSize: 15, fontWeight: "700", color: "#2A347E" }}>
             {title}
           </Text>
-          <Text style={{ fontSize: 12, color: "#7C7C7C" }}>
+          <Text style={{ fontSize: 12, marginTop: 8, color: "#7C7C7C" }}>
             {view ? desc.slice(0, 45) : desc}
           </Text>
         </View>

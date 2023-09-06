@@ -1,0 +1,16 @@
+export enum Routes {
+  My_Cart = "My Cart",
+  Checkout = "Checkout",
+  Home = "Home",
+  Category = "Category",
+  Cart = "cart",
+  Profile = "Profile",
+  Authentication = "Authentication",
+  product = "product",
+  homeScreen = "homeScreen",
+  Welcome = "welcome",
+  Shipping = "ShippingMethod",
+  WelcomeStep1 = "WelcomeStep1",
+  WelcomeStep2 = "WelcomeStep2",
+  WelcomeStep3 = "WelcomeStep3",
+}

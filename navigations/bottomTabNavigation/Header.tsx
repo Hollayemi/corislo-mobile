@@ -2,8 +2,8 @@ import React from "react";
 import { Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Checkbox from "expo-checkbox";
-import { Platform, NativeModules } from "react-native";
 import { BottomTabHeaderProps } from "@react-navigation/bottom-tabs";
+import { Platform, NativeModules } from "react-native";
 
 const { StatusBarManager } = NativeModules;
 

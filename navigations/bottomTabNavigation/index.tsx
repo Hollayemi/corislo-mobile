@@ -8,6 +8,7 @@ import TabBar from "./TabBar";
 import Header from "./Header";
 import CartStackScreen from "./BottomStackNavigation";
 import { useAppSelector } from "../../hooks";
+import { Routes } from "../routes";
 
 const Tab = createBottomTabNavigator();
 
@@ -23,7 +24,7 @@ export default function BottomTabs() {
       initialRouteName="Cart"
     >
       <Tab.Screen
-        name="Home"
+        name={Routes.Home}
         component={Home}
         options={{
           tabBarLabel: "Home",
@@ -37,7 +38,7 @@ export default function BottomTabs() {
         }}
       />
       <Tab.Screen
-        name="Category"
+        name={Routes.Category}
         component={Category}
         options={{
           tabBarLabel: "Category",
@@ -53,7 +54,7 @@ export default function BottomTabs() {
         }}
       />
       <Tab.Screen
-        name="cart"
+        name={Routes.Cart}
         component={CartStackScreen}
         options={{
           headerShown: false,
@@ -70,7 +71,7 @@ export default function BottomTabs() {
         }}
       />
       <Tab.Screen
-        name="Profile"
+        name={Routes.Profile}
         component={Profile}
         options={{
           tabBarLabel: "Profile",

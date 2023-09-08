@@ -1,5 +1,5 @@
 import React from "react";
-import { SafeAreaView, TextInput, View } from "react-native";
+import { SafeAreaView, Text, View } from "react-native";
 import Heading from "../../components/Auth/Heading";
 import Footer from "../../components/Auth/Footer";
 import Input from "../../components/forms/Input";
@@ -22,35 +22,17 @@ export default function Verify() {
         onSubmit={(values) => console.log(values)}
       >
         {({ handleChange, handleBlur, handleSubmit, values }) => (
-          <>
-            <View style={{ marginVertical: "7%" }}>
-              <Input
-                onChangeText={handleChange("password")}
-                onBlur={handleBlur("password")}
-                value={values.password}
-                label="Password"
-                password
-                placeholder="*********"
-                Icon={
-                  <Ionicons name="checkmark-circle" size={24} color="#233974" />
-                }
-              />
-              <Input
-                onChangeText={handleChange("confirmPassword")}
-                onBlur={handleBlur("confirmPassword")}
-                value={values.confirmPassword}
-                password
-                placeholder="*********"
-                label="Confirm Password"
-                Icon={
-                  <Ionicons name="checkmark-circle" size={24} color="#233974" />
-                }
-              />
-            </View>
-            <View style={{ marginTop: "40%" }}>
-              <Button title="Next" onPress={handleSubmit} />
-            </View>
-          </>
+          <Text
+            style={{
+              fontSize: 13,
+              fontWeight: "500",
+              color: "#1F1F1F",
+              textAlign: "center",
+            }}
+          >
+            <Text>Didn’t receive code? </Text>
+            <Text style={{ color: "#2A347E" }}>Resend</Text>
+          </Text>
         )}
       </Formik>
       <Footer />

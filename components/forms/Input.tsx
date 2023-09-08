@@ -3,10 +3,12 @@ import { View, Text, TextInput } from "react-native";
 
 type prop = {
   placeholder: string;
+  label: string;
   password?: boolean;
   Icon: JSX.Element;
   value: string;
-  onChange: any;
+  onChangeText: any;
+  onBlur: any;
 };
 
 export default function Input({
@@ -14,7 +16,9 @@ export default function Input({
   password,
   Icon,
   value,
-  onChange,
+  onChangeText,
+  label,
+  onBlur,
 }: prop) {
   return (
     <View
@@ -29,16 +33,20 @@ export default function Input({
       }}
     >
       <View style={{ flex: 0.95 }}>
-        <Text style={{ fontSize: 11, color: "#7C7C7C" }}>{placeholder}</Text>
+        <Text style={{ fontSize: 11, color: "#7C7C7C" }}>{label}</Text>
         <TextInput
-          value={password ? "*".repeat(value.length) : value}
-          onChange={onChange}
+          value={value}
+          onChangeText={onChangeText}
+          onBlur={onBlur}
+          placeholder={placeholder}
           style={{
             backgroundColor: "transparent",
             color: "#424242",
             fontSize: 14,
             fontWeight: "500",
           }}
+          secureTextEntry={password ? true : false}
+          // keyboardType="email-address"
         />
       </View>
       {Icon}

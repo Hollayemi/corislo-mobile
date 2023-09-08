@@ -7,7 +7,7 @@ import Product from "../../screens/product";
 import BottomTabs from "../bottomTabNavigation";
 import Header from "../../components/header";
 import WelcomeNavigation from "../../screens/welcome";
-import Auth from "../../screens/Auth";
+import AuthNavigation from "../../screens/Auth";
 
 const Stack = createNativeStackNavigator();
 export default function Navigation() {
@@ -21,7 +21,7 @@ export default function Navigation() {
         />
         <Stack.Screen
           name={Routes.Authentication}
-          component={Auth}
+          component={AuthNavigation}
           options={{ headerShown: false }}
         />
         <Stack.Screen

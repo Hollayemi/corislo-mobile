@@ -5,6 +5,7 @@ import React from "react";
 type prop = {
   onPress: () => void;
   title: string;
+  disabled?: boolean;
   IconAfter?: JSX.Element;
   IconBefore?: JSX.Element;
 };
@@ -14,9 +15,10 @@ export default function Button({
   title,
   IconAfter,
   IconBefore,
+  disabled,
 }: prop) {
   return (
-    <Pressable style={styles.button} onPress={onPress}>
+    <Pressable style={styles.button} onPress={onPress} disabled={disabled}>
       <Text
         style={styles.btnText}
         // style={{ ...styles.btnText, ...{ width: fullWidth ? "100%" : null } }}

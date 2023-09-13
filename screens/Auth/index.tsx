@@ -4,6 +4,8 @@ import { Routes } from "../../navigations/routes";
 import Step2 from "./Step2";
 import Step1 from "./Step1";
 import Verify from "./Verify";
+import Created from "./Created";
+import Login from "./Login";
 
 const Stack = createNativeStackNavigator();
 export default function AuthNavigation() {
@@ -22,6 +24,16 @@ export default function AuthNavigation() {
       <Stack.Screen
         name={Routes.AuthenticationVerify}
         component={Verify}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name={Routes.AccountCreated}
+        component={Created}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name={Routes.Login}
+        component={Login}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

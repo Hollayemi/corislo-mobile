@@ -16,4 +16,7 @@ export enum Routes {
   AuthenticationStep1 = "AuthenticationStep1",
   AuthenticationStep2 = "AuthenticationStep2",
   AuthenticationVerify = "AuthenticationVerify",
+  AccountCreated = "AccountCreated",
+  Login = "Login",
+  ForgetPassword = "ForgetPassword",
 }

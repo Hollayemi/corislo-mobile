@@ -4,6 +4,7 @@ import Heading from "../../components/Auth/Heading";
 import Footer from "../../components/Auth/Footer";
 import Input from "../../components/forms/Input";
 import { Ionicons } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 import Button from "../../components/button";
 import { Formik } from "formik";
 import { Routes } from "../../navigations/routes";
@@ -47,7 +48,15 @@ export default function Step2({ navigation }: any) {
                 password
                 placeholder="*********"
                 Icon={
-                  <Ionicons name="checkmark-circle" size={24} color="#233974" />
+                  errors.password && touched.password ? (
+                    <MaterialIcons name="error-outline" size={24} color="red" />
+                  ) : (
+                    <Ionicons
+                      name="checkmark-circle"
+                      size={24}
+                      color="#233974"
+                    />
+                  )
                 }
               />
               {errors.password && touched.password && (
@@ -61,7 +70,15 @@ export default function Step2({ navigation }: any) {
                 placeholder="*********"
                 label="Confirm Password"
                 Icon={
-                  <Ionicons name="checkmark-circle" size={24} color="#233974" />
+                  errors.confirmPassword && touched.confirmPassword ? (
+                    <MaterialIcons name="error-outline" size={24} color="red" />
+                  ) : (
+                    <Ionicons
+                      name="checkmark-circle"
+                      size={24}
+                      color="#233974"
+                    />
+                  )
                 }
               />
               {errors.confirmPassword && touched.confirmPassword && (

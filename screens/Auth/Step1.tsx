@@ -4,6 +4,7 @@ import Heading from "../../components/Auth/Heading";
 import Footer from "../../components/Auth/Footer";
 import Input from "../../components/forms/Input";
 import { Ionicons } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 import Button from "../../components/button";
 import { Formik } from "formik";
 import { Routes } from "../../navigations/routes";
@@ -47,7 +48,15 @@ export default function Step1({ navigation }: any) {
                 label="Full Name"
                 placeholder="John Doe"
                 Icon={
-                  <Ionicons name="checkmark-circle" size={24} color="#233974" />
+                  errors.fullName && touched.fullName ? (
+                    <MaterialIcons name="error-outline" size={24} color="red" />
+                  ) : (
+                    <Ionicons
+                      name="checkmark-circle"
+                      size={24}
+                      color="#233974"
+                    />
+                  )
                 }
               />
               {errors.fullName && touched.fullName && (
@@ -60,7 +69,15 @@ export default function Step1({ navigation }: any) {
                 placeholder="JohnDoe@mail.com"
                 label="Email Address"
                 Icon={
-                  <Ionicons name="checkmark-circle" size={24} color="#233974" />
+                  errors.email && touched.email ? (
+                    <MaterialIcons name="error-outline" size={24} color="red" />
+                  ) : (
+                    <Ionicons
+                      name="checkmark-circle"
+                      size={24}
+                      color="#233974"
+                    />
+                  )
                 }
               />
               {errors.email && touched.email && (
@@ -73,7 +90,15 @@ export default function Step1({ navigation }: any) {
                 placeholder="Big Joe"
                 label="Username"
                 Icon={
-                  <Ionicons name="checkmark-circle" size={24} color="#233974" />
+                  errors.username && touched.username ? (
+                    <MaterialIcons name="error-outline" size={24} color="red" />
+                  ) : (
+                    <Ionicons
+                      name="checkmark-circle"
+                      size={24}
+                      color="#233974"
+                    />
+                  )
                 }
               />
               {errors.username && touched.username && (
@@ -87,7 +112,15 @@ export default function Step1({ navigation }: any) {
                 label="Phone Number"
                 placeholder="+234 815 667 0000"
                 Icon={
-                  <Ionicons name="checkmark-circle" size={24} color="#233974" />
+                  errors.phoneNumber && touched.phoneNumber ? (
+                    <MaterialIcons name="error-outline" size={24} color="red" />
+                  ) : (
+                    <Ionicons
+                      name="checkmark-circle"
+                      size={24}
+                      color="#233974"
+                    />
+                  )
                 }
               />
               {errors.phoneNumber && touched.phoneNumber && (

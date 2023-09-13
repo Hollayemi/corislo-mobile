@@ -3,7 +3,11 @@ import { View, Text, Pressable, Image } from "react-native";
 import Button from "../button";
 import { FontAwesome } from "@expo/vector-icons";
 
-export default function Footer() {
+type prop = {
+  login?: boolean;
+};
+
+export default function Footer({ login }: prop) {
   return (
     <View style={{ alignItems: "center", marginTop: "5%" }}>
       <Text
@@ -13,8 +17,12 @@ export default function Footer() {
           fontWeight: "700",
         }}
       >
-        <Text>Have an account? </Text>
-        <Text style={{ color: "#2A347E" }}>Log In</Text>
+        <Text>
+          {login ? "Don’t have an account? Register" : "Have an account?"}{" "}
+        </Text>
+        <Text style={{ color: "#2A347E" }}>
+          {login ? "Register" : "Log In"}
+        </Text>
       </Text>
       <Text
         style={{
@@ -67,14 +75,16 @@ export default function Footer() {
           <FontAwesome name="apple" size={20} color="black" />
         </View>
       </View>
-      <Text style={{ textAlign: "center", padding: "5%", fontSize: 12 }}>
-        <Text>By continuing, you agree to the </Text>
-        <Text style={{ color: "#233974" }}>
-          Library Terms {"\n"} Conditions{" "}
+      {login ? null : (
+        <Text style={{ textAlign: "center", padding: "5%", fontSize: 12 }}>
+          <Text>By continuing, you agree to the </Text>
+          <Text style={{ color: "#233974" }}>
+            Library Terms {"\n"} Conditions{" "}
+          </Text>
+          <Text> and </Text>
+          <Text style={{ color: "#233974" }}> Privacy Policy</Text>
         </Text>
-        <Text> and </Text>
-        <Text style={{ color: "#233974" }}> Privacy Policy</Text>
-      </Text>
+      )}
     </View>
   );
 }

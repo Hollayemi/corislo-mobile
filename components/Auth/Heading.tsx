@@ -2,21 +2,27 @@ import React from "react";
 import { View, Image, Text } from "react-native";
 
 type prop = {
-  title: string;
-  description: string;
-  show?: boolean;
+  title?: string;
+  description?: string;
 };
 
-export default function Heading({ description, title, show }: prop) {
+export default function Heading({ description, title }: prop) {
   return (
     <View>
       <Image
         source={require("../../assets/logo2.png")}
         style={{ marginVertical: "5%" }}
       />
-      {show ? null : (
+      {description && title ? (
         <>
-          <Text style={{ color: "#2A347E", fontWeight: "700", fontSize: 22 }}>
+          <Text
+            style={{
+              color: "#2A347E",
+              fontWeight: "700",
+              fontSize: 22,
+              marginTop: "10%",
+            }}
+          >
             {title}
           </Text>
           <Text
@@ -31,7 +37,7 @@ export default function Heading({ description, title, show }: prop) {
             {description}
           </Text>
         </>
-      )}
+      ) : null}
     </View>
   );
 }

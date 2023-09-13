@@ -18,7 +18,14 @@ export default function Button({
   disabled,
 }: prop) {
   return (
-    <Pressable style={styles.button} onPress={onPress} disabled={disabled}>
+    <Pressable
+      style={[
+        styles.button,
+        { backgroundColor: disabled ? "#2A347E80" : "#2A347E" },
+      ]}
+      onPress={onPress}
+      disabled={disabled}
+    >
       <Text
         style={styles.btnText}
         // style={{ ...styles.btnText, ...{ width: fullWidth ? "100%" : null } }}
@@ -43,7 +50,6 @@ export default function Button({
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: "#2A347E",
     borderRadius: 40,
     padding: 20,
     textAlign: "center",

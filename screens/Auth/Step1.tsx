@@ -1,5 +1,5 @@
 import React from "react";
-import { SafeAreaView, StyleSheet, Text, TextInput, View } from "react-native";
+import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import Heading from "../../components/Auth/Heading";
 import Footer from "../../components/Auth/Footer";
 import Input from "../../components/forms/Input";

@@ -10,7 +10,8 @@ import { Formik } from "formik";
 import { Routes } from "../../navigations/routes";
 import LoginValidationSchema from "./schema/login.schema";
 import { styles } from "./Step1";
-import axios from "../../services/axios";
+import axios from "axios";
+// import axios from "../../services/axios";
 
 export default function Login({ navigation }: any) {
   const [Disabled, setDisabled] = React.useState(false);
@@ -32,17 +33,20 @@ export default function Login({ navigation }: any) {
               email: values.email,
               password: values.password,
             });
+            setDisabled(true);
 
-            const { data } = await axios.post("/auth/login", {
+            const { data } = await axios.post("auth/login", {
               email: values.email,
               password: values.password,
             });
 
             console.log("Response Data:", data);
 
+            setDisabled(false);
             navigation.navigate(Routes.ForgetPassword);
           } catch (error) {
             console.error("Error:", error);
+            setDisabled(false);
           }
         }}
       >

@@ -2,12 +2,14 @@ import React from "react";
 import { View, Text, Pressable, Image } from "react-native";
 import Button from "../button";
 import { FontAwesome } from "@expo/vector-icons";
+import { Routes } from "../../navigations/routes";
 
 type prop = {
   login?: boolean;
+  navigation: any;
 };
 
-export default function Footer({ login }: prop) {
+export default function Footer({ navigation, login }: prop) {
   return (
     <View style={{ alignItems: "center", marginTop: "5%" }}>
       <Text
@@ -17,10 +19,15 @@ export default function Footer({ login }: prop) {
           fontWeight: "700",
         }}
       >
-        <Text>
-          {login ? "Don’t have an account? Register" : "Have an account?"}{" "}
-        </Text>
-        <Text style={{ color: "#2A347E" }}>
+        <Text>{login ? "Don’t have an account?" : "Have an account?"} </Text>
+        <Text
+          style={{ color: "#2A347E" }}
+          onPress={() =>
+            navigation.navigate(
+              login ? Routes.AuthenticationStep1 : Routes.Login
+            )
+          }
+        >
           {login ? "Register" : "Log In"}
         </Text>
       </Text>

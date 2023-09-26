@@ -10,8 +10,10 @@ import { Formik } from "formik";
 import { Routes } from "../../navigations/routes";
 import LoginValidationSchema from "./schema/login.schema";
 import { styles } from "./Step1";
+import axios from "../../services/axios";
 
 export default function Login({ navigation }: any) {
+  const [Disabled, setDisabled] = React.useState(false);
   return (
     <SafeAreaView style={{ padding: "5%", backgroundColor: "#fff", flex: 1 }}>
       <Heading
@@ -21,12 +23,27 @@ export default function Login({ navigation }: any) {
       <Formik
         validationSchema={LoginValidationSchema}
         initialValues={{
-          username: "",
+          email: "",
           password: "",
         }}
-        onSubmit={(values) => {
-          console.log(values);
-          navigation.navigate(Routes.ForgetPassword);
+        onSubmit={async (values) => {
+          try {
+            console.log("Request Payload:", {
+              email: values.email,
+              password: values.password,
+            });
+
+            const { data } = await axios.post("/auth/login", {
+              email: values.email,
+              password: values.password,
+            });
+
+            console.log("Response Data:", data);
+
+            navigation.navigate(Routes.ForgetPassword);
+          } catch (error) {
+            console.error("Error:", error);
+          }
         }}
       >
         {({
@@ -41,13 +58,13 @@ export default function Login({ navigation }: any) {
           <>
             <View style={{ marginVertical: "7%" }}>
               <Input
-                onChangeText={handleChange("username")}
-                onBlur={handleBlur("username")}
-                value={values.username}
-                label="User Name"
-                placeholder="John Doe"
+                onChangeText={handleChange("email")}
+                onBlur={handleBlur("email")}
+                value={values.email}
+                label="Email"
+                placeholder="JohnDoe@mail.com"
                 Icon={
-                  errors.username && touched.username ? (
+                  errors.email && touched.email ? (
                     <MaterialIcons name="error-outline" size={24} color="red" />
                   ) : (
                     <Ionicons
@@ -58,8 +75,8 @@ export default function Login({ navigation }: any) {
                   )
                 }
               />
-              {errors.username && touched.username && (
-                <Text style={styles.error}>{errors.username}</Text>
+              {errors.email && touched.email && (
+                <Text style={styles.error}>{errors.email}</Text>
               )}
               <Input
                 onChangeText={handleChange("password")}
@@ -85,12 +102,16 @@ export default function Login({ navigation }: any) {
               )}
             </View>
             <View style={{ marginTop: "40%" }}>
-              <Button title="Next" onPress={handleSubmit} disabled={!isValid} />
+              <Button
+                title="Next"
+                onPress={() => handleSubmit()}
+                disabled={!isValid || Disabled}
+              />
             </View>
           </>
         )}
       </Formik>
-      <Footer login />
+      <Footer login navigation={navigation} />
     </SafeAreaView>
   );
 }

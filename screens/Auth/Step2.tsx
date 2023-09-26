@@ -91,7 +91,7 @@ export default function Step2({ navigation }: any) {
           </>
         )}
       </Formik>
-      <Footer />
+      <Footer navigation={navigation} />
     </SafeAreaView>
   );
 }

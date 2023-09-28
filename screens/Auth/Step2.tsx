@@ -10,6 +10,7 @@ import { Formik } from "formik";
 import { Routes } from "../../navigations/routes";
 import Step2ValidationSchema from "./schema/Step2.schema";
 import { styles } from "./Step1";
+import storage from "../../services/storage";
 
 export default function Step2({ navigation }: any) {
   return (
@@ -24,9 +25,36 @@ export default function Step2({ navigation }: any) {
           password: "",
           confirmPassword: "",
         }}
-        onSubmit={(values) => {
-          console.log(values);
-          navigation.navigate(Routes.AuthenticationVerify);
+        onSubmit={async (values) => {
+          try {
+            const user1 = await storage.load({
+              key: "step1",
+            });
+            console.log({ ...user1, password: values.password });
+            try {
+              const response = await fetch(
+                "https://corislo-backend.onrender.com/api/v1/auth/create-account",
+                {
+                  method: "POST",
+                  body: JSON.stringify({ ...user1, password: values.password }),
+                  headers: {
+                    "Content-type": "application/json; charset=UTF-8",
+                  },
+                }
+              );
+              const data = await response.json();
+              console.log("Response Data:", data);
+              navigation.navigate(Routes.AuthenticationVerify);
+            } catch (error) {
+              console.log("Error in fetching");
+              console.log("Error : ", error);
+              return;
+            }
+          } catch (error: any) {
+            console.log("Error : ", error);
+            console.warn(error.message);
+            return;
+          }
         }}
       >
         {({

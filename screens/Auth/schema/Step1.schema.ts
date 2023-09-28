@@ -1,7 +1,7 @@
 import * as yup from "yup";
 
 const Step1ValidationSchema = yup.object().shape({
-  fullName: yup.string().required("Full Name is Required"),
+  fullname: yup.string().required("Full Name is Required"),
   username: yup.string().required("Username is Required"),
   email: yup
     .string()

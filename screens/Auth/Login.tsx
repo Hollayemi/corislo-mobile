@@ -10,11 +10,10 @@ import { Formik } from "formik";
 import { Routes } from "../../navigations/routes";
 import LoginValidationSchema from "./schema/login.schema";
 import { styles } from "./Step1";
-import axios from "axios";
-// import axios from "../../services/axios";
 
 export default function Login({ navigation }: any) {
   const [Disabled, setDisabled] = React.useState(false);
+  const [message, setessage] = React.useState("");
   return (
     <SafeAreaView style={{ padding: "5%", backgroundColor: "#fff", flex: 1 }}>
       <Heading
@@ -35,15 +34,31 @@ export default function Login({ navigation }: any) {
             });
             setDisabled(true);
 
-            const { data } = await axios.post("auth/login", {
-              email: values.email,
-              password: values.password,
-            });
-
+            const response = await fetch(
+              "https://corislo-backend.onrender.com/api/v1/auth/login",
+              {
+                method: "POST",
+                body: JSON.stringify(values),
+                headers: {
+                  "Content-type": "application/json; charset=UTF-8",
+                },
+              }
+            );
+            const data = await response.json();
             console.log("Response Data:", data);
+            if (!response) {
+              setessage("An error occured, Try again");
+              setDisabled(false);
+              return;
+            }
+            if (data?.type == "error") {
+              setessage(data.message);
+              setDisabled(false);
+              return;
+            }
 
             setDisabled(false);
-            navigation.navigate(Routes.ForgetPassword);
+            navigation.navigate(Routes.AuthenticationVerify);
           } catch (error) {
             console.error("Error:", error);
             setDisabled(false);
@@ -61,6 +76,8 @@ export default function Login({ navigation }: any) {
         }) => (
           <>
             <View style={{ marginVertical: "7%" }}>
+              <Text style={styles.error}>{message ? message : null}</Text>
+
               <Input
                 onChangeText={handleChange("email")}
                 onBlur={handleBlur("email")}

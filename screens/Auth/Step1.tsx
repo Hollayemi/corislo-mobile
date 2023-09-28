@@ -9,6 +9,7 @@ import Button from "../../components/button";
 import { Formik } from "formik";
 import { Routes } from "../../navigations/routes";
 import Step1ValidationSchema from "./schema/Step1.schema";
+import storage from "../../services/storage";
 
 export default function Step1({ navigation }: any) {
   return (
@@ -20,13 +21,17 @@ export default function Step1({ navigation }: any) {
       <Formik
         validationSchema={Step1ValidationSchema}
         initialValues={{
-          fullName: "",
+          fullname: "",
           username: "",
           email: "",
           phoneNumber: "",
         }}
         onSubmit={(values) => {
           console.log(values);
+          storage.save({
+            key: "step1",
+            data: values,
+          });
           navigation.navigate(Routes.AuthenticationStep2);
         }}
       >
@@ -42,13 +47,13 @@ export default function Step1({ navigation }: any) {
           <>
             <View style={{ marginVertical: "7%" }}>
               <Input
-                onChangeText={handleChange("fullName")}
-                onBlur={handleBlur("fullName")}
-                value={values.fullName}
+                onChangeText={handleChange("fullname")}
+                onBlur={handleBlur("fullname")}
+                value={values.fullname}
                 label="Full Name"
                 placeholder="John Doe"
                 Icon={
-                  errors.fullName && touched.fullName ? (
+                  errors.fullname && touched.fullname ? (
                     <MaterialIcons name="error-outline" size={24} color="red" />
                   ) : (
                     <Ionicons
@@ -59,8 +64,8 @@ export default function Step1({ navigation }: any) {
                   )
                 }
               />
-              {errors.fullName && touched.fullName && (
-                <Text style={styles.error}>{errors.fullName}</Text>
+              {errors.fullname && touched.fullname && (
+                <Text style={styles.error}>{errors.fullname}</Text>
               )}
               <Input
                 onChangeText={handleChange("email")}

@@ -1,6 +1,7 @@
 import React from "react";
 import { SafeAreaView, Text, View } from "react-native";
 import Heading from "../../components/Auth/Heading";
+import Footer from "../../components/Auth/Footer";
 import Input from "../../components/forms/Input";
 import { Ionicons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -9,11 +10,8 @@ import { Formik } from "formik";
 import { Routes } from "../../navigations/routes";
 import ForgetPasswordValidationSchema from "./schema/ForgetPassword.schema";
 import { styles } from "./Step1";
-import fetcher from "../../hooks/useFetch";
 
 export default function Login({ navigation }: any) {
-  const [message, setMessage] = React.useState("");
-  const [_, setData] = React.useState();
   return (
     <SafeAreaView style={{ padding: "5%", backgroundColor: "#fff", flex: 1 }}>
       <Heading
@@ -25,21 +23,8 @@ export default function Login({ navigation }: any) {
         initialValues={{
           email: "",
         }}
-        onSubmit={async (values) => {
+        onSubmit={(values) => {
           console.log(values);
-          try {
-            await fetcher(
-              "https://corislo-backend.onrender.com/api/v1/auth/forgot-password",
-              values,
-              "POST",
-              setMessage,
-              setData
-            );
-          } catch (error: any) {
-            console.log("Error : ", error);
-            console.warn(error.message);
-            return;
-          }
           navigation.navigate(Routes.AuthenticationVerify);
         }}
       >
@@ -54,8 +39,6 @@ export default function Login({ navigation }: any) {
         }) => (
           <>
             <View style={{ marginVertical: "7%" }}>
-              <Text style={styles.error}>{message ? message : null}</Text>
-
               <Input
                 onChangeText={handleChange("username")}
                 onBlur={handleBlur("username")}

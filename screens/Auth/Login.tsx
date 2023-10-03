@@ -10,13 +10,10 @@ import { Formik } from "formik";
 import { Routes } from "../../navigations/routes";
 import LoginValidationSchema from "./schema/login.schema";
 import { styles } from "./Step1";
-import fetcher from "../../hooks/useFetch";
-import storage from "../../services/storage";
 
 export default function Login({ navigation }: any) {
   const [Disabled, setDisabled] = React.useState(false);
-  const [message, setMessage] = React.useState("");
-  const [data, setData] = React.useState<any>();
+  const [message, setessage] = React.useState("");
   return (
     <SafeAreaView style={{ padding: "5%", backgroundColor: "#fff", flex: 1 }}>
       <Heading
@@ -31,19 +28,35 @@ export default function Login({ navigation }: any) {
         }}
         onSubmit={async (values) => {
           try {
-            console.log("Request Payload:", values);
-            setDisabled(true);
-            await fetcher(
-              "https://corislo-backend.onrender.com/api/v1/auth/login",
-              values,
-              "POST",
-              setMessage,
-              setData
-            );
-            storage.save({
-              key: "userToken",
-              data: data?.user?.accessToken,
+            console.log("Request Payload:", {
+              email: values.email,
+              password: values.password,
             });
+            setDisabled(true);
+
+            const response = await fetch(
+              "https://corislo-backend.onrender.com/api/v1/auth/login",
+              {
+                method: "POST",
+                body: JSON.stringify(values),
+                headers: {
+                  "Content-type": "application/json; charset=UTF-8",
+                },
+              }
+            );
+            const data = await response.json();
+            console.log("Response Data:", data);
+            if (!response) {
+              setessage("An error occured, Try again");
+              setDisabled(false);
+              return;
+            }
+            if (data?.type == "error") {
+              setessage(data.message);
+              setDisabled(false);
+              return;
+            }
+
             setDisabled(false);
             navigation.navigate(Routes.AuthenticationVerify);
           } catch (error) {

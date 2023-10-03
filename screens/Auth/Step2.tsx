@@ -11,13 +11,8 @@ import { Routes } from "../../navigations/routes";
 import Step2ValidationSchema from "./schema/Step2.schema";
 import { styles } from "./Step1";
 import storage from "../../services/storage";
-import fetcher from "../../hooks/useFetch";
 
 export default function Step2({ navigation }: any) {
-  const [disabled, setDisabled] = React.useState<boolean>(false);
-  const [message, setMessage] = React.useState("");
-  const [data, setData] = React.useState<any>();
-
   return (
     <SafeAreaView style={{ padding: "5%", backgroundColor: "#fff", flex: 1 }}>
       <Heading
@@ -31,30 +26,31 @@ export default function Step2({ navigation }: any) {
           confirmPassword: "",
         }}
         onSubmit={async (values) => {
-          setDisabled(true);
           try {
             const user1 = await storage.load({
               key: "step1",
             });
             console.log({ ...user1, password: values.password });
-            await fetcher(
-              "https://corislo-backend.onrender.com/api/v1/auth/create-account",
-              { ...user1, password: values.password },
-              "POST",
-              setMessage,
-              setData
-            );
-            storage.save({
-              key: "otp",
-              data: data.otp,
-            });
-            storage.save({
-              key: "userToken",
-              data: data.token,
-            });
-            navigation.navigate(Routes.AuthenticationVerify);
+            try {
+              const response = await fetch(
+                "https://corislo-backend.onrender.com/api/v1/auth/create-account",
+                {
+                  method: "POST",
+                  body: JSON.stringify({ ...user1, password: values.password }),
+                  headers: {
+                    "Content-type": "application/json; charset=UTF-8",
+                  },
+                }
+              );
+              const data = await response.json();
+              console.log("Response Data:", data);
+              navigation.navigate(Routes.AuthenticationVerify);
+            } catch (error) {
+              console.log("Error in fetching");
+              console.log("Error : ", error);
+              return;
+            }
           } catch (error: any) {
-            setDisabled(false);
             console.log("Error : ", error);
             console.warn(error.message);
             return;
@@ -72,7 +68,6 @@ export default function Step2({ navigation }: any) {
         }) => (
           <>
             <View style={{ marginVertical: "7%" }}>
-              <Text style={styles.error}>{message ? message : null}</Text>
               <Input
                 onChangeText={handleChange("password")}
                 onBlur={handleBlur("password")}
@@ -119,11 +114,7 @@ export default function Step2({ navigation }: any) {
               )}
             </View>
             <View style={{ marginTop: "40%" }}>
-              <Button
-                title="Next"
-                onPress={handleSubmit}
-                disabled={!isValid || disabled}
-              />
+              <Button title="Next" onPress={handleSubmit} disabled={!isValid} />
             </View>
           </>
         )}

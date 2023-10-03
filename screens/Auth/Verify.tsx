@@ -4,10 +4,14 @@ import Heading from "../../components/Auth/Heading";
 import Button from "../../components/button";
 import OTPInput from "../../components/OTP";
 import { Routes } from "../../navigations/routes";
+import { styles } from "./Step1";
+import fetcher from "../../hooks/useFetch";
 
 export default function Verify({ navigation }: any) {
   const [otp, setOTP] = useState(["", "", "", ""]); // Initialize an array of 4 empty strings
   const inputRefs = useRef<(TextInput | null)[]>([]);
+  const [message, setMessage] = React.useState("");
+  const [_, setData] = React.useState();
 
   const handleInputChange = (text: string, index: number) => {
     const newOTP = [...otp];
@@ -25,8 +29,21 @@ export default function Verify({ navigation }: any) {
   };
 
   const checkDisable = otp.includes("");
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     console.log(otp);
+    try {
+      await fetcher(
+        "https://corislo-backend.onrender.com/api/v1/auth/create-account",
+        { otp: otp },
+        "POST",
+        setMessage,
+        setData
+      );
+    } catch (error: any) {
+      console.log("Error : ", error);
+      console.warn(error.message);
+      return;
+    }
     navigation.navigate(Routes.AccountCreated);
   };
 
@@ -46,6 +63,8 @@ export default function Verify({ navigation }: any) {
           title="Verify your email"
         />
       </View>
+      <Text style={styles.error}>{message ? message : null}</Text>
+
       <View style={{ paddingBottom: "10%", paddingTop: "30%" }}>
         <OTPInput
           handleInputChange={handleInputChange}

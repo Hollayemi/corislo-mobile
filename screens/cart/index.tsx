@@ -1,14 +1,14 @@
 import React from "react";
 import { FlatList, SafeAreaView, Text, View } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 import { style } from "../../style";
 import Checkbox from "expo-checkbox";
 import Alert from "../../components/alert";
 import Button from "../../components/button";
 import Card from "./Card";
-import { cart } from "./data";
 import Voucher from "./Voucher";
 import { Routes } from "../../navigations/routes";
+import useSWR from "swr";
+import Loader from "../../components/loader";
 
 type prop = {
   navigation: any;
@@ -16,8 +16,24 @@ type prop = {
 
 export default function Cart({ navigation }: prop) {
   const [isAllChecked, setIsAllChecked] = React.useState(false);
-
-  return (
+  const {
+    data: cart,
+    error,
+    isLoading,
+    isValidating,
+    mutate,
+  } = useSWR("/user/cart");
+  if (error) {
+    console.log(error);
+  }
+  // const { data, error, isLoading, isValidating, mutate } = useSWR("/user/cart");
+  return isLoading ? (
+    <View
+      style={{ height: "100%", justifyContent: "center", alignItems: "center" }}
+    >
+      <Loader />
+    </View>
+  ) : (
     <SafeAreaView style={style.container}>
       <FlatList
         ListHeaderComponent={
@@ -138,7 +154,7 @@ export default function Cart({ navigation }: prop) {
                 <Text style={{ color: "#1C2534", fontSize: 18 }}>₦85,300</Text>
               </View>
               <Button
-                title="Checkout(3)"
+                title={`Checkout(${cart ? "" : cart?.length})`}
                 onPress={() => {
                   try {
                     navigation.navigate(Routes.Checkout);

@@ -14,6 +14,8 @@ const fetcher = async (
       },
     });
     const data = await response.json();
+    setMessage("");
+    console.log("hello");
     console.log("Response Data:", data);
     if (!data) {
       setMessage("No data available, An error occured, Try again");
@@ -22,6 +24,7 @@ const fetcher = async (
       setMessage(data.message);
     }
     if (data && data?.type !== "error") {
+      console.log("hi");
       setData(data);
     }
   } catch (error) {

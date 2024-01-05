@@ -8,12 +8,13 @@ import BottomTabs from "../bottomTabNavigation";
 import Header from "../../components/header";
 import WelcomeNavigation from "../../screens/welcome";
 import AuthNavigation from "../../screens/Auth";
+import TopTabs from "../../screens/voucher/TopTabs";
 
 const Stack = createNativeStackNavigator();
 export default function Navigation() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={Routes.Welcome}>
+      <Stack.Navigator initialRouteName={Routes.homeScreen}>
         <Stack.Screen
           name={Routes.Welcome}
           component={WelcomeNavigation}
@@ -36,6 +37,11 @@ export default function Navigation() {
         <Stack.Screen
           name={Routes.homeScreen}
           component={BottomTabs}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name={Routes.voucher}
+          component={TopTabs}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

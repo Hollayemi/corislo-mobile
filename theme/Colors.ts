@@ -1,0 +1,31 @@
+export const Colors = {
+  primary50: "#6EB9D95C",
+  primary100: "#cae6f1",
+  primary200: "#049edf",
+  primary250: "#0E82B3F0",
+  primary300: "#1188BA",
+  primary400: "#05709D",
+  primaryMain: "#006894",
+  primary500: "#025D83",
+  primary600: "#03415C",
+  primary700: "#022D3F",
+  secondary100: "#FFA5598F",
+  secondary200: "#FFB16E",
+  secondary300: "#E59652",
+  secondary400: "#FFAA62ED",
+  secondaryMain: "#FF9842",
+  secondary500: "#FF8F31",
+  secondary600: "#E87C21",
+  secondary700: "#C35E0A",
+  secondary800: "#A54F07",
+
+  neutral50: "#E1E1E1",
+  neutral100: "#F4F3F3",
+  neutral200: "#AEA9A9",
+  neutral400: "#818080",
+
+  neutral600: "#484747",
+  neutral700: "#434141ED",
+
+  success400: "#42ED42",
+};

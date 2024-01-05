@@ -3,12 +3,19 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Home from "../../screens/tabsHome";
 import Category from "../../screens/category";
 import Profile from "../../screens/profile";
-import { Ionicons, AntDesign, FontAwesome5 } from "@expo/vector-icons";
+import {
+  Ionicons,
+  AntDesign,
+  FontAwesome5,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
 import TabBar from "./TabBar";
 import Header from "./Header";
 import CartStackScreen from "./BottomStackNavigation";
 import { useAppSelector } from "../../hooks";
 import { Routes } from "../routes";
+import Inbox from "../../screens/inbox";
+import HomeHeader from "./BottomStackNavigation/HomeHeader";
 
 const Tab = createBottomTabNavigator();
 
@@ -35,6 +42,7 @@ export default function BottomTabs() {
               color={color}
             />
           ),
+          header: (props) => <HomeHeader {...props} />,
         }}
       />
       <Tab.Screen
@@ -51,6 +59,7 @@ export default function BottomTabs() {
               />
             );
           },
+          header: (props) => <HomeHeader {...props} category />,
         }}
       />
       <Tab.Screen
@@ -63,6 +72,22 @@ export default function BottomTabs() {
             return (
               <Ionicons
                 name={focused ? "cart-sharp" : "cart-outline"}
+                size={size}
+                color={color}
+              />
+            );
+          },
+        }}
+      />
+      <Tab.Screen
+        name={Routes.inbox}
+        component={Inbox}
+        options={{
+          tabBarLabel: "Inbox",
+          tabBarIcon: ({ color, size, focused }) => {
+            return (
+              <MaterialCommunityIcons
+                name={focused ? "message-badge" : "message-badge-outline"}
                 size={size}
                 color={color}
               />

@@ -19,4 +19,6 @@ export enum Routes {
   AccountCreated = "AccountCreated",
   Login = "Login",
   ForgetPassword = "ForgetPassword",
+  voucher = "Voucher",
+  inbox = "Inbox",
 }

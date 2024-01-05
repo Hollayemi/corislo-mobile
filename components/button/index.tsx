@@ -57,8 +57,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
+    maxHeight: 60,
   },
   btnText: {
+    // maxHeight: 100,
     fontSize: 15,
     fontWeight: "700",
     color: "#fff",

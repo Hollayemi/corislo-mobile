@@ -9,12 +9,14 @@ import Header from "../../components/header";
 import WelcomeNavigation from "../../screens/welcome";
 import AuthNavigation from "../../screens/Auth";
 import TopTabs from "../../screens/voucher/TopTabs";
+import NotificationStack from "../../screens/notification";
+import ChangePhoneNumberStack from "../../screens/changePhoneNumber";
 
 const Stack = createNativeStackNavigator();
 export default function Navigation() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={Routes.homeScreen}>
+      <Stack.Navigator initialRouteName={Routes.changePhoneNumber}>
         <Stack.Screen
           name={Routes.Welcome}
           component={WelcomeNavigation}
@@ -43,6 +45,24 @@ export default function Navigation() {
           name={Routes.voucher}
           component={TopTabs}
           options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name={Routes.notification}
+          component={NotificationStack}
+          options={{
+            header: ({ navigation, route }) => (
+              <Header navigation={navigation} title={route.name} />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name={Routes.changePhoneNumber}
+          component={ChangePhoneNumberStack}
+          options={{
+            header: ({ navigation, route }) => (
+              <Header navigation={navigation} title={"Change Phone Number"} />
+            ),
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>

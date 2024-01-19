@@ -11,11 +11,11 @@ import {
 } from "@expo/vector-icons";
 import TabBar from "./TabBar";
 import Header from "./Header";
-import CartStackScreen from "./BottomStackNavigation";
+import CartStackScreen from "./BottomStackCartNavigation";
 import { useAppSelector } from "../../hooks";
 import { Routes } from "../routes";
 import Inbox from "../../screens/inbox";
-import HomeHeader from "./BottomStackNavigation/HomeHeader";
+import HomeHeader from "./HomeHeader";
 
 const Tab = createBottomTabNavigator();
 

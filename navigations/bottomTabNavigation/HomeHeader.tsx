@@ -1,21 +1,16 @@
 import React from "react";
 import { Image, Text, View } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import Checkbox from "expo-checkbox";
 import { BottomTabHeaderProps } from "@react-navigation/bottom-tabs";
 import { Platform, NativeModules } from "react-native";
 
 const { StatusBarManager } = NativeModules;
-interface prop extends BottomTabHeaderProps {
+interface prop {
   category?: boolean;
+  settings?: boolean;
 }
-export default function HomeHeader({
-  layout,
-  navigation,
-  options,
-  route,
-  category,
-}: prop) {
+export default function HomeHeader({ category, settings }: prop) {
   const [isChecked, setChecked] = React.useState(false);
 
   return (
@@ -25,14 +20,17 @@ export default function HomeHeader({
         justifyContent: "space-between",
         paddingHorizontal: "5%",
         paddingBottom: 20,
-        backgroundColor: "#fff",
-        paddingTop:
-          Platform.OS === "android" ? StatusBarManager.HEIGHT + 20 : 0,
+        paddingTop: settings
+          ? 20
+          : Platform.OS === "android"
+          ? StatusBarManager.HEIGHT + 20
+          : 0,
+        backgroundColor: settings ? "#F5F5F5" : "#fff",
       }}
     >
       <View style={{ flexDirection: "row" }}>
         <Image
-          source={require("../../../assets/userPics.png")}
+          source={require("../../assets/userPics.png")}
           style={{ marginRight: 10 }}
         />
         <View>
@@ -43,23 +41,27 @@ export default function HomeHeader({
         </View>
       </View>
 
-      <View style={{ flexDirection: "row", alignItems: "center" }}>
-        {category ? (
+      {settings ? (
+        <MaterialIcons name="keyboard-arrow-right" size={24} color="black" />
+      ) : (
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          {category ? (
+            <Ionicons
+              style={{ marginRight: 20 }}
+              name="search"
+              size={24}
+              color="#292D32"
+            />
+          ) : null}
+          <Ionicons name="cart-outline" size={24} color="#292D32" />
           <Ionicons
-            style={{ marginRight: 20 }}
-            name="search"
+            style={{ marginLeft: 20 }}
+            name="notifications-outline"
             size={24}
             color="#292D32"
           />
-        ) : null}
-        <Ionicons name="cart-outline" size={24} color="#292D32" />
-        <Ionicons
-          style={{ marginLeft: 20 }}
-          name="notifications-outline"
-          size={24}
-          color="#292D32"
-        />
-      </View>
+        </View>
+      )}
     </View>
   );
 }

@@ -21,4 +21,9 @@ export enum Routes {
   ForgetPassword = "ForgetPassword",
   voucher = "Voucher",
   inbox = "Inbox",
+  notification = "Notification",
+  notificationAccess = "NotificationAccess",
+  notificationList = "NotificationList",
+  notificationDetails = "NotificationDetails",
+  changePhoneNumber = "ChangePhoneNumber",
 }

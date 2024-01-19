@@ -19,6 +19,7 @@ function Header({ layout, navigation, options, route }: BottomTabHeaderProps) {
         paddingBottom: 20,
         paddingTop:
           Platform.OS === "android" ? StatusBarManager.HEIGHT + 20 : 0,
+        backgroundColor: "#fff",
       }}
     >
       <View style={{ flexDirection: "row" }}>

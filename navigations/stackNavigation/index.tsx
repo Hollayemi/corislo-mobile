@@ -11,12 +11,16 @@ import AuthNavigation from "../../screens/Auth";
 import TopTabs from "../../screens/voucher/TopTabs";
 import NotificationStack from "../../screens/notification";
 import ChangePhoneNumberStack from "../../screens/changePhoneNumber";
+import ChangePassword from "../../screens/changePassword";
+import VerifyEmail from "../../screens/changePassword/VerifyEmail";
+import CustomerSupport from "../../screens/customerSupport";
+import Error from "../../screens/error";
 
 const Stack = createNativeStackNavigator();
 export default function Navigation() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={Routes.changePhoneNumber}>
+      <Stack.Navigator initialRouteName={Routes.customerSupport}>
         <Stack.Screen
           name={Routes.Welcome}
           component={WelcomeNavigation}
@@ -61,6 +65,42 @@ export default function Navigation() {
           options={{
             header: ({ navigation, route }) => (
               <Header navigation={navigation} title={"Change Phone Number"} />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name={Routes.changePassword}
+          component={ChangePassword}
+          options={{
+            header: ({ navigation, route }) => (
+              <Header navigation={navigation} title={"Change Password"} />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name={Routes.verifyEmail}
+          component={VerifyEmail}
+          options={{
+            header: ({ navigation, route }) => (
+              <Header navigation={navigation} title={"Change Password"} />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name={Routes.customerSupport}
+          component={CustomerSupport}
+          options={{
+            header: ({ navigation, route }) => (
+              <Header navigation={navigation} title={"Customer Care"} />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name={Routes.error}
+          component={Error}
+          options={{
+            header: ({ navigation, route }) => (
+              <Header navigation={navigation} title={route.name} app />
             ),
           }}
         />

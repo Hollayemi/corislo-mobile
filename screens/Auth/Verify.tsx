@@ -13,21 +13,6 @@ export default function Verify({ navigation }: any) {
   const [message, setMessage] = React.useState("");
   const [_, setData] = React.useState();
 
-  const handleInputChange = (text: string, index: number) => {
-    const newOTP = [...otp];
-    newOTP[index] = text;
-    setOTP(newOTP);
-
-    // Auto-focus to the next input field if available
-    if (
-      index < otp.length - 1 &&
-      text.length === 1 &&
-      inputRefs.current[index + 1]
-    ) {
-      inputRefs.current[index + 1]?.focus();
-    }
-  };
-
   const checkDisable = otp.includes("");
   const handleSubmit = async () => {
     console.log(otp);
@@ -66,11 +51,7 @@ export default function Verify({ navigation }: any) {
       <Text style={styles.error}>{message ? message : null}</Text>
 
       <View style={{ paddingBottom: "10%", paddingTop: "30%" }}>
-        <OTPInput
-          handleInputChange={handleInputChange}
-          inputRefs={inputRefs}
-          otp={otp}
-        />
+        <OTPInput inputRefs={inputRefs} otp={otp} setOTP={setOTP} />
       </View>
       <Text
         style={{

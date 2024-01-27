@@ -5,7 +5,7 @@ type prop = {
   placeholder: string;
   label: string;
   password?: boolean;
-  Icon: JSX.Element;
+  Icon?: JSX.Element;
   value: string;
   onChangeText: any;
   onBlur: any;

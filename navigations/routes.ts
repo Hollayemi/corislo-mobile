@@ -26,4 +26,8 @@ export enum Routes {
   notificationList = "NotificationList",
   notificationDetails = "NotificationDetails",
   changePhoneNumber = "ChangePhoneNumber",
+  changePassword = "ChangePassword",
+  verifyEmail = "VerifyEmail",
+  customerSupport = "CustomerSupport",
+  error = "Error",
 }

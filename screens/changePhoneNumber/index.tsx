@@ -8,7 +8,7 @@ export default function ChangePhoneNumber() {
   const [isCounting, setIsCounting] = useState(false);
 
   useEffect(() => {
-    let countdown;
+    let countdown: any;
 
     if (isCounting) {
       countdown = setInterval(() => {
@@ -73,6 +73,7 @@ export default function ChangePhoneNumber() {
                 color: "#1F1F1F",
                 width: "90%",
               }}
+              keyboardType="number-pad"
               selectionColor={"#1f1f1f"}
             />
           </View>
@@ -94,7 +95,7 @@ export default function ChangePhoneNumber() {
               borderStyle: "solid",
               borderColor: "#E4E4E4",
               paddingHorizontal: "5%",
-              fontSize: 12,
+              // fontSize: 12,
             }}
           >
             <Text
@@ -118,6 +119,7 @@ export default function ChangePhoneNumber() {
                 color: "#1F1F1F",
                 width: "90%",
               }}
+              keyboardType="number-pad"
               selectionColor={"#1f1f1f"}
             />
           </View>
@@ -157,7 +159,7 @@ export default function ChangePhoneNumber() {
                   borderStyle: "solid",
                   borderColor: "#E4E4E4",
                   paddingHorizontal: "5%",
-                  fontSize: 12,
+                  // fontSize: 12,
                 }}
               >
                 <TextInput
@@ -171,6 +173,7 @@ export default function ChangePhoneNumber() {
                     width: "90%",
                     letterSpacing: 10,
                   }}
+                  keyboardType="number-pad"
                   selectionColor={"#1f1f1f"}
                 />
               </View>

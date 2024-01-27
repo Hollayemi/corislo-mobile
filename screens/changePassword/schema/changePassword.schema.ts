@@ -1,6 +1,10 @@
 import * as yup from "yup";
 
-const changePassword = yup.object().shape({
+const changePasswordSchema = yup.object().shape({
+  oldPassword: yup
+    .string()
+    .min(8, ({ min }: any) => `Password must be at least ${min} characters`)
+    .required("Old Password is required"),
   password: yup
     .string()
     .min(8, ({ min }: any) => `Password must be at least ${min} characters`)
@@ -12,4 +16,4 @@ const changePassword = yup.object().shape({
     .required("Password confirmation is required"),
 });
 
-export default Step2ValidationSchema;
+export default changePasswordSchema;

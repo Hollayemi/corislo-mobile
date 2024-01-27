@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: "#000",
-    fontSize: 14,
-    fontWeight: "500",
+    fontSize: 18,
+    fontFamily: "Poppins_500Medium",
   },
 });

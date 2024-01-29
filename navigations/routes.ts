@@ -31,4 +31,6 @@ export enum Routes {
   customerSupport = "CustomerSupport",
   error = "Error",
   savedItems = "SavedItems",
+  messages = "Messages",
+  chat = "Chat",
 }

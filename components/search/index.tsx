@@ -2,7 +2,9 @@ import { View, Text, Platform, Pressable, TextInput } from "react-native";
 import React from "react";
 import { FontAwesome } from "@expo/vector-icons";
 
-export default function SearchBox() {
+type prop = { placeholder: string };
+
+export default function SearchBox({ placeholder }: prop) {
   return (
     <View
       style={{
@@ -17,7 +19,7 @@ export default function SearchBox() {
         <FontAwesome name="search" size={22} color="#848080" />
 
         <TextInput
-          placeholder="What are you looking for?"
+          placeholder={placeholder}
           selectionColor="#848080"
           style={{
             fontFamily: "Poppins_500Medium",

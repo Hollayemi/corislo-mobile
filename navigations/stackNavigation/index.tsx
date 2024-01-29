@@ -16,12 +16,14 @@ import CustomerSupport from "../../screens/customerSupport";
 import Error from "../../screens/error";
 import VoucherTopTabs from "../../screens/voucher/TopTabs";
 import SavedItems from "../../screens/savedItems";
+import ChatsList from "../../screens/Chat";
+import UserChat from "../../screens/Chat/UserChat";
 
 const Stack = createNativeStackNavigator();
 export default function Navigation() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={Routes.savedItems}>
+      <Stack.Navigator initialRouteName={Routes.chat}>
         <Stack.Screen
           name={Routes.Welcome}
           component={WelcomeNavigation}
@@ -116,6 +118,24 @@ export default function Navigation() {
           options={{
             header: ({ navigation, route }) => (
               <Header navigation={navigation} title={"Saved Items"} app />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name={Routes.messages}
+          component={ChatsList}
+          options={{
+            header: ({ navigation, route }) => (
+              <Header navigation={navigation} title={route.name} app />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name={Routes.chat}
+          component={UserChat}
+          options={{
+            header: ({ navigation, route }) => (
+              <Header navigation={navigation} title={"User name"} app />
             ),
           }}
         />

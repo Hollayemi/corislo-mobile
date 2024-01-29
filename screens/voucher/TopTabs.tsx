@@ -5,45 +5,42 @@ import Used from "./Used";
 import { Colors } from "../../theme/Colors";
 import { useNavigation } from "@react-navigation/native";
 
-// const Tab = createMaterialTopTabNavigator();
+const Tab = createMaterialTopTabNavigator();
 
-export default function TopTabs() {
+export default function VoucherTopTabs() {
   return (
-    <Text>hi</Text>
-    // <Tab.Navigator
-    //   screenOptions={() => {
-    //     return {
-    //       tabBarIndicatorStyle: {
-    //         height: 40,
-    //         backgroundColor: Colors.primaryMain,
-    //         borderRadius: 20,
-    //         marginBottom: 4,
-    //         width: "47%",
-    //         marginLeft: 4,
-    //       },
-    //       tabBarActiveTintColor: "white",
-    //       tabBarInactiveTintColor: Colors.primaryMain,
-    //       tabBarLabelStyle: {
-    //         fontSize: 16,
-    //         fontWeight: "bold",
-    //         textTransform: "capitalize",
-    //       },
-    //       tabBarIndicatorContainerStyle: {},
-    //       tabBarStyle: {
-    //         elevation: 0,
-    //         borderWidth: 1,
-    //         margin: 20,
-    //         borderRadius: 30,
-    //         overflow: "hidden",
-    //         borderColor: Colors.primaryMain,
-    //       },
-    //     };
-    //   }}
-    //   sceneContainerStyle={{ backgroundColor: "white" }}
-    //   style={{ marginTop: 40 }}
-    // >
-    //   <Tab.Screen name="used" component={Used} />
-    //   <Tab.Screen name="active" component={Active} />
-    // </Tab.Navigator>
+    <Tab.Navigator
+      screenOptions={() => {
+        return {
+          tabBarIndicatorStyle: {
+            backgroundColor: "#fff",
+            marginBottom: 4,
+            width: "47%",
+            marginLeft: 4,
+            borderBottomWidth: 3,
+            borderBottomColor: "#2A347E",
+          },
+          tabBarActiveTintColor: "#2A347E",
+          tabBarInactiveTintColor: "#000",
+          tabBarLabelStyle: {
+            fontSize: 16,
+            fontWeight: "bold",
+            textTransform: "capitalize",
+          },
+          tabBarIndicatorContainerStyle: {},
+          tabBarStyle: {
+            elevation: 0,
+            marginHorizontal: "20%",
+            marginBottom: "5%",
+            overflow: "hidden",
+          },
+        };
+      }}
+      sceneContainerStyle={{ backgroundColor: "white" }}
+      style={{ flex: 1, backgroundColor: "#fff" }}
+    >
+      <Tab.Screen name="active" component={Active} />
+      <Tab.Screen name="used" component={Used} />
+    </Tab.Navigator>
   );
 }

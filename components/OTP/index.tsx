@@ -3,11 +3,25 @@ import { View, TextInput, StyleSheet } from "react-native";
 
 type prop = {
   otp: string[];
+  setOTP: any;
   inputRefs: React.MutableRefObject<(TextInput | null)[]>;
-  handleInputChange: (text: string, index: number) => void;
 };
 
-const OTPInput: React.FC<prop> = ({ otp, inputRefs, handleInputChange }) => {
+const OTPInput: React.FC<prop> = ({ otp, inputRefs, setOTP }) => {
+  const handleInputChange = (text: string, index: number) => {
+    const newOTP = [...otp];
+    newOTP[index] = text;
+    setOTP(newOTP);
+
+    // Auto-focus to the next input field if available
+    if (
+      index < otp.length - 1 &&
+      text.length === 1 &&
+      inputRefs.current[index + 1]
+    ) {
+      inputRefs.current[index + 1]?.focus();
+    }
+  };
   return (
     <View style={styles.container}>
       {otp.map((value, index) => (

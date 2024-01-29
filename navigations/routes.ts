@@ -30,4 +30,5 @@ export enum Routes {
   verifyEmail = "VerifyEmail",
   customerSupport = "CustomerSupport",
   error = "Error",
+  savedItems = "SavedItems",
 }

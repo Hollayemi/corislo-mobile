@@ -8,19 +8,20 @@ import BottomTabs from "../bottomTabNavigation";
 import Header from "../../components/header";
 import WelcomeNavigation from "../../screens/welcome";
 import AuthNavigation from "../../screens/Auth";
-import TopTabs from "../../screens/voucher/TopTabs";
 import NotificationStack from "../../screens/notification";
 import ChangePhoneNumberStack from "../../screens/changePhoneNumber";
 import ChangePassword from "../../screens/changePassword";
 import VerifyEmail from "../../screens/changePassword/VerifyEmail";
 import CustomerSupport from "../../screens/customerSupport";
 import Error from "../../screens/error";
+import VoucherTopTabs from "../../screens/voucher/TopTabs";
+import SavedItems from "../../screens/savedItems";
 
 const Stack = createNativeStackNavigator();
 export default function Navigation() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={Routes.customerSupport}>
+      <Stack.Navigator initialRouteName={Routes.savedItems}>
         <Stack.Screen
           name={Routes.Welcome}
           component={WelcomeNavigation}
@@ -47,8 +48,13 @@ export default function Navigation() {
         />
         <Stack.Screen
           name={Routes.voucher}
-          component={TopTabs}
-          options={{ headerShown: false }}
+          component={VoucherTopTabs}
+          options={{
+            header: ({ navigation, route }) => (
+              <Header navigation={navigation} title={route.name} app />
+            ),
+          }}
+          // options={{ headerShown: false }}
         />
         <Stack.Screen
           name={Routes.notification}
@@ -101,6 +107,15 @@ export default function Navigation() {
           options={{
             header: ({ navigation, route }) => (
               <Header navigation={navigation} title={route.name} app />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name={Routes.savedItems}
+          component={SavedItems}
+          options={{
+            header: ({ navigation, route }) => (
+              <Header navigation={navigation} title={"Saved Items"} app />
             ),
           }}
         />

@@ -14,8 +14,8 @@ import Header from "./Header";
 import CartStackScreen from "./BottomStackCartNavigation";
 import { useAppSelector } from "../../hooks";
 import { Routes } from "../routes";
-import Inbox from "../../screens/inbox";
 import HomeHeader from "./HomeHeader";
+import ChatsList from "../../screens/Chat";
 
 const Tab = createBottomTabNavigator();
 
@@ -42,7 +42,7 @@ export default function BottomTabs() {
               color={color}
             />
           ),
-          header: (props) => <HomeHeader {...props} />,
+          header: (props) => <HomeHeader />,
         }}
       />
       <Tab.Screen
@@ -80,8 +80,8 @@ export default function BottomTabs() {
         }}
       />
       <Tab.Screen
-        name={Routes.inbox}
-        component={Inbox}
+        name={Routes.messages}
+        component={ChatsList}
         options={{
           tabBarLabel: "Inbox",
           tabBarIcon: ({ color, size, focused }) => {

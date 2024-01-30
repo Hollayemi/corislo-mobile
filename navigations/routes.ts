@@ -20,7 +20,6 @@ export enum Routes {
   Login = "Login",
   ForgetPassword = "ForgetPassword",
   voucher = "Voucher",
-  inbox = "Inbox",
   notification = "Notification",
   notificationAccess = "NotificationAccess",
   notificationList = "NotificationList",
@@ -33,4 +32,5 @@ export enum Routes {
   savedItems = "SavedItems",
   messages = "Messages",
   chat = "Chat",
+  review = "Review",
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import { FlatList, View, Text } from "react-native";
-import MessageView from "../../../components/Chat/MessageView";
+import MessageView from "../../components/Chat/MessageView";
 
 export default function Archived() {
   return (

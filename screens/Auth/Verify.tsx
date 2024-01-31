@@ -7,14 +7,17 @@ import { Routes } from "../../navigations/routes";
 import { styles } from "./Step1";
 import fetcher from "../../hooks/useFetch";
 
-export default function Verify({ navigation }: any) {
+export default function Verify({ navigation, route }: any) {
+  const { type } = route.params;
+  console.log(type);
+
   const [otp, setOTP] = useState(["", "", "", ""]); // Initialize an array of 4 empty strings
   const inputRefs = useRef<(TextInput | null)[]>([]);
   const [message, setMessage] = React.useState("");
   const [_, setData] = React.useState();
 
   const checkDisable = otp.includes("");
-  const handleSubmit = async () => {
+  const handlectreateSubmit = async () => {
     console.log(otp);
     try {
       await fetcher(
@@ -72,9 +75,13 @@ export default function Verify({ navigation }: any) {
       >
         <Button
           onPress={() => {
-            handleSubmit();
+            type === "create"
+              ? handlectreateSubmit()
+              : type === "update"
+              ? navigation.navigate(Routes.updatePassword)
+              : null;
           }}
-          title="Verify"
+          title="Verify Email"
           disabled={checkDisable}
         />
       </View>

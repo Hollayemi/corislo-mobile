@@ -61,7 +61,9 @@ export default function Step2({ navigation }: any) {
                   key: "userToken",
                   data: data.token,
                 });
-                navigation.navigate(Routes.AuthenticationVerify);
+                navigation.navigate(Routes.AuthenticationVerify, {
+                  type: "create",
+                });
               }
             } catch (error: any) {
               setDisabled(false);

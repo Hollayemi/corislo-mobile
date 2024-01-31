@@ -1,10 +1,7 @@
 import * as yup from "yup";
 
 const LoginValidationSchema = yup.object().shape({
-  email: yup
-    .string()
-    .email("Please enter valid email")
-    .required("Email Address is Required"),
+  username: yup.string().required("UserName is Required"),
   password: yup
     .string()
     .min(8, ({ min }: any) => `Password must be at least ${min} characters`)

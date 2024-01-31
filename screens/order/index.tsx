@@ -1,10 +1,11 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import Active from "./Active";
-import Used from "./Used";
+import Ongoing from "./Ongoing";
+import Completed from "./Completed";
+import Cancelled from "./Cancelled";
 
 const Tab = createMaterialTopTabNavigator();
 
-export default function VoucherTopTabs() {
+export default function Order() {
   return (
     <Tab.Navigator
       screenOptions={() => {
@@ -12,7 +13,7 @@ export default function VoucherTopTabs() {
           tabBarIndicatorStyle: {
             backgroundColor: "#fff",
             marginBottom: 4,
-            width: "47%",
+            width: "30%",
             marginLeft: 4,
             borderBottomWidth: 3,
             borderBottomColor: "#2A347E",
@@ -27,7 +28,7 @@ export default function VoucherTopTabs() {
           tabBarIndicatorContainerStyle: {},
           tabBarStyle: {
             elevation: 0,
-            marginHorizontal: "20%",
+            marginHorizontal: "10%",
             marginBottom: "5%",
             overflow: "hidden",
           },
@@ -36,8 +37,9 @@ export default function VoucherTopTabs() {
       sceneContainerStyle={{ backgroundColor: "white" }}
       style={{ flex: 1, backgroundColor: "#fff" }}
     >
-      <Tab.Screen name="active" component={Active} />
-      <Tab.Screen name="used" component={Used} />
+      <Tab.Screen name="Ongoing" component={Ongoing} />
+      <Tab.Screen name="Completed" component={Completed} />
+      <Tab.Screen name="Cancelled" component={Cancelled} />
     </Tab.Navigator>
   );
 }

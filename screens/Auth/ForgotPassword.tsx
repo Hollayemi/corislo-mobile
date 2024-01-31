@@ -10,12 +10,14 @@ import { Routes } from "../../navigations/routes";
 import ForgetPasswordValidationSchema from "./schema/ForgetPassword.schema";
 import { styles } from "./Step1";
 import fetcher from "../../hooks/useFetch";
+import Popup from "../../components/Popup";
 
 export default function Login({ navigation }: any) {
   const [message, setMessage] = React.useState("");
   const [_, setData] = React.useState();
   return (
     <SafeAreaView style={{ padding: "5%", backgroundColor: "#fff", flex: 1 }}>
+      <Popup info="Verify your email to change your password." />
       <Heading
         description="Lost your password? Don't worry, we've got you covered. Simply provide your registered email address, and we'll help you regain access to your account."
         title="Forgot Password"
@@ -40,7 +42,9 @@ export default function Login({ navigation }: any) {
             console.warn(error.message);
             return;
           }
-          navigation.navigate(Routes.AuthenticationVerify);
+          navigation.navigate(Routes.AuthenticationVerify, {
+            type: "update",
+          });
         }}
       >
         {({
@@ -79,8 +83,24 @@ export default function Login({ navigation }: any) {
               )}
             </View>
             <View style={{ marginTop: "40%" }}>
-              <Button title="Next" onPress={handleSubmit} disabled={!isValid} />
+              <Button
+                title="Submit"
+                onPress={handleSubmit}
+                disabled={!isValid}
+              />
             </View>
+            <Text
+              style={{
+                fontSize: 14,
+                color: "#2A347E",
+                textAlign: "center",
+                fontFamily: "Poppins_500Medium",
+                marginVertical: 20,
+              }}
+              onPress={() => navigation.navigate(Routes.ForgetPassword)}
+            >
+              Back to Log In
+            </Text>
           </>
         )}
       </Formik>

@@ -33,7 +33,7 @@ export default function Login({ navigation }: any) {
         <Formik
           validationSchema={LoginValidationSchema}
           initialValues={{
-            email: "",
+            username: "",
             password: "",
           }}
           onSubmit={async (values) => {
@@ -77,13 +77,13 @@ export default function Login({ navigation }: any) {
                 <Text style={styles.error}>{message ? message : null}</Text>
 
                 <Input
-                  onChangeText={handleChange("email")}
-                  onBlur={handleBlur("email")}
-                  value={values.email}
+                  onChangeText={handleChange("username")}
+                  onBlur={handleBlur("username")}
+                  value={values.username}
                   label="Email"
                   placeholder="JohnDoe@mail.com"
                   Icon={
-                    errors.email && touched.email ? (
+                    errors.username && touched.username ? (
                       <MaterialIcons
                         name="error-outline"
                         size={24}
@@ -98,8 +98,8 @@ export default function Login({ navigation }: any) {
                     )
                   }
                 />
-                {errors.email && touched.email && (
-                  <Text style={styles.error}>{errors.email}</Text>
+                {errors.username && touched.username && (
+                  <Text style={styles.error}>{errors.username}</Text>
                 )}
                 <Input
                   onChangeText={handleChange("password")}
@@ -128,6 +128,18 @@ export default function Login({ navigation }: any) {
                   <Text style={styles.error}>{errors.password}</Text>
                 )}
               </View>
+              <Text
+                style={{
+                  fontSize: 14,
+                  color: "#2A347E",
+                  textAlign: "center",
+                  fontFamily: "Poppins_400Regular",
+                  marginVertical: 20,
+                }}
+                onPress={() => navigation.navigate(Routes.ForgetPassword)}
+              >
+                Forgot Password?
+              </Text>
               <View style={{ marginTop: "40%" }}>
                 <Button
                   title="Next"

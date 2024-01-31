@@ -27,6 +27,7 @@ export enum Routes {
   notificationDetails = "NotificationDetails",
   changePhoneNumber = "ChangePhoneNumber",
   changePassword = "ChangePassword",
+  changeEmail = "ChangeEmail",
   verifyEmail = "VerifyEmail",
   customerSupport = "CustomerSupport",
   error = "Error",
@@ -36,4 +37,6 @@ export enum Routes {
   review = "Review",
   order = "Order",
   orderDetails = "OrderDetails",
+  twoFactorAuth = "TwoFactorAuth",
+  deleteAccount = "DeleteAccount",
 }

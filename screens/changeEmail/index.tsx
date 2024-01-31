@@ -1,23 +1,23 @@
 import { Formik } from "formik";
 import React, { useEffect, useState } from "react";
 import { Text, View, TextInput } from "react-native";
-import changePasswordSchema from "./schema/changePassword.schema";
+import changeEmailSchema from "./schema/changeEmail.schema";
 import { styles } from "../Auth/Step1";
 import { Routes } from "../../navigations/routes";
 
-export default function ChangePhoneNumber({ navigation }: any) {
+export default function changeEmail({ navigation }: any) {
   return (
     <Formik
-      validationSchema={changePasswordSchema}
+      validationSchema={changeEmailSchema}
       initialValues={{
-        oldPassword: "",
-        password: "",
-        confirmPassword: "",
+        oldEmail: "",
+        email: "",
+        confirmEmail: "",
       }}
       onSubmit={async (values) => {
         console.log(values);
         navigation.navigate(Routes.AuthenticationVerify, {
-          type: "changePassword",
+          type: "changeEmail",
         });
       }}
     >
@@ -38,7 +38,7 @@ export default function ChangePhoneNumber({ navigation }: any) {
               marginVertical: 10,
             }}
           >
-            Old Password
+            Email Address
           </Text>
           <View
             style={{
@@ -54,8 +54,8 @@ export default function ChangePhoneNumber({ navigation }: any) {
           >
             <TextInput
               placeholder="**********"
-              onChangeText={handleChange("oldPassword")}
-              onBlur={handleBlur("oldPassword")}
+              onChangeText={handleChange("oldEmail")}
+              onBlur={handleBlur("oldEmail")}
               style={{
                 backgroundColor: "transparent",
                 fontFamily: "Poppins_500Medium",
@@ -64,13 +64,13 @@ export default function ChangePhoneNumber({ navigation }: any) {
                 color: "#1F1F1F",
                 width: "90%",
               }}
-              value={values.oldPassword}
+              value={values.oldEmail}
               secureTextEntry={true}
               selectionColor={"#1f1f1f"}
             />
           </View>
-          {errors.oldPassword && touched.oldPassword && (
-            <Text style={styles.error}>{errors.oldPassword}</Text>
+          {errors.oldEmail && touched.oldEmail && (
+            <Text style={styles.error}>{errors.oldEmail}</Text>
           )}
           <Text
             style={{
@@ -79,7 +79,7 @@ export default function ChangePhoneNumber({ navigation }: any) {
               marginVertical: 10,
             }}
           >
-            New Password
+            New Email Address
           </Text>
           <View
             style={{
@@ -95,8 +95,8 @@ export default function ChangePhoneNumber({ navigation }: any) {
           >
             <TextInput
               placeholder="**********"
-              onChangeText={handleChange("password")}
-              onBlur={handleBlur("password")}
+              onChangeText={handleChange("email")}
+              onBlur={handleBlur("email")}
               style={{
                 backgroundColor: "transparent",
                 fontFamily: "Poppins_500Medium",
@@ -105,13 +105,13 @@ export default function ChangePhoneNumber({ navigation }: any) {
                 color: "#1F1F1F",
                 width: "90%",
               }}
-              value={values.password}
+              value={values.email}
               secureTextEntry={true}
               selectionColor={"#1f1f1f"}
             />
           </View>
-          {errors.password && touched.password && (
-            <Text style={styles.error}>{errors.password}</Text>
+          {errors.email && touched.email && (
+            <Text style={styles.error}>{errors.email}</Text>
           )}
           <Text
             style={{
@@ -120,7 +120,7 @@ export default function ChangePhoneNumber({ navigation }: any) {
               marginVertical: 10,
             }}
           >
-            Confirm New Password
+            Confirm New Email Address
           </Text>
           <View
             style={{
@@ -136,8 +136,8 @@ export default function ChangePhoneNumber({ navigation }: any) {
           >
             <TextInput
               placeholder="Enter the new password"
-              onChangeText={handleChange("confirmPassword")}
-              onBlur={handleBlur("confirmPassword")}
+              onChangeText={handleChange("confirmEmail")}
+              onBlur={handleBlur("confirmEmail")}
               style={{
                 backgroundColor: "transparent",
                 fontFamily: "Poppins_500Medium",
@@ -146,13 +146,13 @@ export default function ChangePhoneNumber({ navigation }: any) {
                 color: "#1F1F1F",
                 width: "90%",
               }}
-              value={values.confirmPassword}
+              value={values.confirmEmail}
               secureTextEntry={true}
               selectionColor={"#1f1f1f"}
             />
           </View>
-          {errors.confirmPassword && touched.confirmPassword && (
-            <Text style={styles.error}>{errors.confirmPassword}</Text>
+          {errors.confirmEmail && touched.confirmEmail && (
+            <Text style={styles.error}>{errors.confirmEmail}</Text>
           )}
           <Text
             style={{
@@ -169,7 +169,7 @@ export default function ChangePhoneNumber({ navigation }: any) {
             disabled={!isValid}
             onPress={() => handleSubmit()}
           >
-            Change password
+            Change
           </Text>
         </View>
       )}

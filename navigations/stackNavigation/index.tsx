@@ -11,22 +11,23 @@ import AuthNavigation from "../../screens/Auth";
 import NotificationStack from "../../screens/notification";
 import ChangePhoneNumberStack from "../../screens/changePhoneNumber";
 import ChangePassword from "../../screens/changePassword";
-import VerifyEmail from "../../screens/changePassword/VerifyEmail";
 import CustomerSupport from "../../screens/customerSupport";
 import Error from "../../screens/error";
 import VoucherTopTabs from "../../screens/voucher/TopTabs";
 import SavedItems from "../../screens/savedItems";
-import ChatsList from "../../screens/Chat";
 import UserChat from "../../screens/Chat/UserChat";
 import Review from "../../screens/reviews";
 import Order from "../../screens/order";
 import OrderDetail from "../../screens/order/OrderDetail";
+import changeEmail from "../../screens/changeEmail";
+import TwoFactorAuth from "../../screens/2fa";
+import DeleteAccount from "../../screens/DeleteAccount";
 
 const Stack = createNativeStackNavigator();
 export default function Navigation() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={Routes.orderDetails}>
+      <Stack.Navigator initialRouteName={Routes.deleteAccount}>
         <Stack.Screen
           name={Routes.Welcome}
           component={WelcomeNavigation}
@@ -89,14 +90,15 @@ export default function Navigation() {
           }}
         />
         <Stack.Screen
-          name={Routes.verifyEmail}
-          component={VerifyEmail}
+          name={Routes.changeEmail}
+          component={changeEmail}
           options={{
             header: ({ navigation, route }) => (
-              <Header navigation={navigation} title={"Change Password"} />
+              <Header navigation={navigation} title={"Change Email Address"} />
             ),
           }}
         />
+
         <Stack.Screen
           name={Routes.customerSupport}
           component={CustomerSupport}
@@ -158,6 +160,28 @@ export default function Navigation() {
           options={{
             header: ({ navigation, route }) => (
               <Header navigation={navigation} title={"Order Details"} app />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name={Routes.twoFactorAuth}
+          component={TwoFactorAuth}
+          options={{
+            header: ({ navigation, route }) => (
+              <Header
+                navigation={navigation}
+                title={"Two-Factor Authentication"}
+                app
+              />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name={Routes.deleteAccount}
+          component={DeleteAccount}
+          options={{
+            header: ({ navigation, route }) => (
+              <Header navigation={navigation} title={"Delete Account"} app />
             ),
           }}
         />

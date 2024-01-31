@@ -5,9 +5,10 @@ import Method from "../../components/shipping/Method";
 import { style } from "../../style";
 import { itemData } from "./data";
 import CardRow from "./CardRow";
-import Voucher from "../cart/Voucher";
+
 import Button from "../../components/button";
 import { Routes } from "../../navigations/routes";
+import Balance from "./Balance";
 
 export default function Checkout({ navigation }: any) {
   return (
@@ -33,84 +34,7 @@ and matches your expected delivery location."
         // keyExtractor={(item: any) => item.id}
         ListFooterComponent={
           <>
-            <Voucher />
-            <Text style={{ color: "#1C2534", fontSize: 15, fontWeight: "600" }}>
-              Summary
-            </Text>
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                paddingVertical: 5,
-                paddingTop: 15,
-              }}
-            >
-              <Text
-                style={{ color: "#424242", fontSize: 13, fontWeight: "500" }}
-              >
-                Total items cost
-              </Text>
-              <Text
-                style={{ color: "#424242", fontSize: 13, fontWeight: "600" }}
-              >
-                ₦85,300
-              </Text>
-            </View>
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                paddingVertical: 5,
-              }}
-            >
-              <Text
-                style={{ color: "#424242", fontSize: 13, fontWeight: "500" }}
-              >
-                Saved
-              </Text>
-              <Text
-                style={{ color: "#FF0C0C", fontSize: 13, fontWeight: "600" }}
-              >
-                -₦3,700
-              </Text>
-            </View>
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                paddingVertical: 5,
-              }}
-            >
-              <Text
-                style={{ color: "#424242", fontSize: 13, fontWeight: "500" }}
-              >
-                Total Way-Billing Fee
-              </Text>
-              <Text
-                style={{ color: "#424242", fontSize: 13, fontWeight: "600" }}
-              >
-                ₦4500
-              </Text>
-            </View>
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                paddingTop: 15,
-                marginBottom: "10%",
-              }}
-            >
-              <Text
-                style={{ color: "#1C2534", fontSize: 15, fontWeight: "600" }}
-              >
-                Total
-              </Text>
-              <Text
-                style={{ color: "#424242", fontSize: 15, fontWeight: "600" }}
-              >
-                ₦86,100
-              </Text>
-            </View>
+            <Balance />
           </>
         }
       />

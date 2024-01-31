@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { Image, Text, TextInput, View } from "react-native";
+import { FlatList, Image, Text, TextInput, View } from "react-native";
 import {
   AntDesign,
   MaterialCommunityIcons,
   Ionicons,
   MaterialIcons,
 } from "@expo/vector-icons";
+import Stepper from "./Stepper";
+import { OrderStatus } from "../../screens/order/data";
 
 type prop = {
   status?: "In Progress" | "Completed" | "Cancelled";
@@ -13,6 +15,7 @@ type prop = {
 
 export default function ReviewCard({ status }: prop) {
   const [rate, setRate] = useState(false);
+  const [ShowDetails, setShowDetails] = useState(false);
   return (
     <View
       style={{
@@ -61,7 +64,13 @@ export default function ReviewCard({ status }: prop) {
               20 June 2023, 06:13 PM
             </Text>
             <Status status={status} />
-            <AntDesign name="down" size={20} color="black" />
+
+            <AntDesign
+              name={ShowDetails ? "up" : "down"}
+              size={20}
+              color="black"
+              onPress={() => setShowDetails(!ShowDetails)}
+            />
           </View>
           <Text
             style={{
@@ -74,7 +83,34 @@ export default function ReviewCard({ status }: prop) {
           </Text>
         </View>
       </View>
-
+      {ShowDetails ? (
+        <>
+          <FlatList
+            data={OrderStatus}
+            renderItem={({ item, index }) => (
+              <Stepper
+                {...item}
+                last={index === OrderStatus.length - 1 ? true : false}
+              />
+            )}
+          />
+          <Text
+            style={{
+              width: "100%",
+              textAlign: "center",
+              backgroundColor: "#F5F5F5",
+              padding: 10,
+              fontSize: 14,
+              fontFamily: "Poppins_600SemiBold",
+              color: "#1F1F1F",
+              marginTop: 10,
+            }}
+            onPress={() => {}}
+          >
+            View Order Details
+          </Text>
+        </>
+      ) : null}
       {!status ? (
         <View>
           {rate ? (

@@ -27,19 +27,22 @@ export default function Card({
         padding: "2%",
         backgroundColor: "#F6F6F6",
         justifyContent: "space-between",
+        flex: 1,
       }}
     >
-      <Checkbox
-        style={{}}
-        value={isChecked}
-        onValueChange={setChecked}
-        color={isChecked ? "#2A347E" : undefined}
-      />
+      {checkout ? null : (
+        <Checkbox
+          style={{}}
+          value={isChecked}
+          onValueChange={setChecked}
+          color={isChecked ? "#2A347E" : undefined}
+        />
+      )}
       <Image
         source={require("../../assets/icon.png")}
         style={{ width: 80, height: 80, objectFit: "cover" }}
       />
-      <View>
+      <View style={{ flex: 0.9 }}>
         <Text style={{ fontSize: 12, fontWeight: "500", color: "#424242" }}>
           {title.slice(0, 34)}...
         </Text>

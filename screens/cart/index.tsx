@@ -9,6 +9,7 @@ import Voucher from "./Voucher";
 import { Routes } from "../../navigations/routes";
 import useSWR from "swr";
 import Loader from "../../components/loader";
+import { cart } from "./data";
 
 type prop = {
   navigation: any;
@@ -17,7 +18,7 @@ type prop = {
 export default function Cart({ navigation }: prop) {
   const [isAllChecked, setIsAllChecked] = React.useState(false);
   const {
-    data: cart,
+    data: cartData,
     error,
     isLoading,
     isValidating,
@@ -154,7 +155,9 @@ export default function Cart({ navigation }: prop) {
                 <Text style={{ color: "#1C2534", fontSize: 18 }}>₦85,300</Text>
               </View>
               <Button
-                title={`Checkout(${cart ? "" : cart?.length})`}
+                title={`Checkout${
+                  cart && cart?.length > 0 ? " ( " + cart?.length + " )" : ""
+                }`}
                 onPress={() => {
                   try {
                     navigation.navigate(Routes.Checkout);
@@ -162,6 +165,7 @@ export default function Cart({ navigation }: prop) {
                     console.log("an error occured");
                   }
                 }}
+                disabled={cart?.length < 1}
               />
             </View>
           </>

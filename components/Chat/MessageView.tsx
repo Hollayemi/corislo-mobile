@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, Pressable, Image } from "react-native";
 
 import { useNavigation } from "@react-navigation/native";
+import { Routes } from "../../navigations/routes";
 
 export default function MessageView() {
   const navigation = useNavigation<any>();
@@ -9,7 +10,7 @@ export default function MessageView() {
   return (
     <Pressable
       onPress={() => {
-        navigation.navigate("Compose");
+        navigation.navigate(Routes.chat);
       }}
       style={{
         justifyContent: "space-between",

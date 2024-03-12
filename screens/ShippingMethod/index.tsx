@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FlatList, View } from "react-native";
 import Method from "../../components/shipping/Method";
+import Button from "../../components/button";
 
 type data = {
   title: string;
@@ -40,6 +41,11 @@ function ShippingMethod() {
             <Method {...item} />
           </View>
         )}
+        ListFooterComponent={
+          <View style={{ marginTop: "30%" }}>
+            <Button title="Select" onPress={() => {}} />
+          </View>
+        }
       />
     </View>
   );

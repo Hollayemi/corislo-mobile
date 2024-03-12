@@ -13,11 +13,13 @@ export default function Popup({ info }: prop) {
         backgroundColor: "#2A347E",
         borderRadius: 10,
         padding: 10,
+        marginTop: 50,
         color: "#fff",
         fontSize: 12,
         fontFamily: "Poppins_500Medium",
         position: "absolute",
-        left: "5%",
+        left: "10%",
+        width: "80%",
         zIndex: 100,
       }}
     >

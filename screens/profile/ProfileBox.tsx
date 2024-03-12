@@ -1,15 +1,18 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 type prop = {
   name: string;
   type: string;
   last?: boolean;
+  to?: string;
 };
 
-export default function ProfileBox({ last, name, type }: prop) {
+export default function ProfileBox({ last, name, type, to }: prop) {
+  const navigation = useNavigation<any>();
   return (
-    <View
+    <Pressable
       style={{
         flexDirection: "row",
         justifyContent: "space-between",
@@ -18,6 +21,7 @@ export default function ProfileBox({ last, name, type }: prop) {
         borderStyle: "solid",
         padding: "5%",
       }}
+      onPress={() => (to ? navigation.navigate(to!) : null)}
     >
       <Text
         style={{
@@ -33,6 +37,6 @@ export default function ProfileBox({ last, name, type }: prop) {
         size={24}
         color={name === "Delete Account" ? "#f00" : "black"}
       />
-    </View>
+    </Pressable>
   );
 }

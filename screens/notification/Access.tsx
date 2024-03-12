@@ -62,6 +62,9 @@ export default function NotificationAccess({ navigation }: any) {
           color: "#1F1F1F",
           borderRadius: 40,
         }}
+        onPress={() => {
+          navigation.navigate(Routes.homeScreen);
+        }}
       >
         Maybe Later
       </Text>

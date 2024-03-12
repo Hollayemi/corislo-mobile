@@ -5,7 +5,7 @@ import changeEmailSchema from "./schema/changeEmail.schema";
 import { styles } from "../Auth/Step1";
 import { Routes } from "../../navigations/routes";
 
-export default function changeEmail({ navigation }: any) {
+export default function ChangeEmail({ navigation }: any) {
   return (
     <Formik
       validationSchema={changeEmailSchema}

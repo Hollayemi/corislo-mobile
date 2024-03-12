@@ -12,7 +12,7 @@ import { styles } from "./Step1";
 import fetcher from "../../hooks/useFetch";
 import Popup from "../../components/Popup";
 
-export default function Login({ navigation }: any) {
+export default function ForgetPassword({ navigation }: any) {
   const [message, setMessage] = React.useState("");
   const [_, setData] = React.useState();
   return (
@@ -29,19 +29,19 @@ export default function Login({ navigation }: any) {
         }}
         onSubmit={async (values) => {
           console.log(values);
-          try {
-            await fetcher(
-              "https://corislo-backend.onrender.com/api/v1/auth/forgot-password",
-              values,
-              "POST",
-              setMessage,
-              setData
-            );
-          } catch (error: any) {
-            console.log("Error : ", error);
-            console.warn(error.message);
-            return;
-          }
+          // try {
+          //   await fetcher(
+          //     "https://corislo-backend.onrender.com/api/v1/auth/forgot-password",
+          //     values,
+          //     "POST",
+          //     setMessage,
+          //     setData
+          //   );
+          // } catch (error: any) {
+          //   console.log("Error : ", error);
+          //   console.warn(error.message);
+          //   return;
+          // }
           navigation.navigate(Routes.AuthenticationVerify, {
             type: "update",
           });
@@ -61,11 +61,11 @@ export default function Login({ navigation }: any) {
               <Text style={styles.error}>{message ? message : null}</Text>
 
               <Input
-                onChangeText={handleChange("username")}
-                onBlur={handleBlur("username")}
+                onChangeText={handleChange("email")}
+                onBlur={handleBlur("email")}
                 value={values.email}
-                label="User Name"
-                placeholder="John Doe"
+                label="Email"
+                placeholder="creativebox@gmail.com"
                 Icon={
                   errors.email && touched.email ? (
                     <MaterialIcons name="error-outline" size={24} color="red" />
@@ -97,16 +97,13 @@ export default function Login({ navigation }: any) {
                 fontFamily: "Poppins_500Medium",
                 marginVertical: 20,
               }}
-              onPress={() => navigation.navigate(Routes.ForgetPassword)}
+              onPress={() => navigation.navigate(Routes.Login)}
             >
               Back to Log In
             </Text>
           </>
         )}
       </Formik>
-      <Text style={{ color: "#2A347E", fontSize: 15, fontWeight: "500" }}>
-        Back to Log In
-      </Text>
     </SafeAreaView>
   );
 }

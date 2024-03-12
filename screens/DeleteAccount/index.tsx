@@ -50,7 +50,14 @@ export default function DeleteAccount() {
           us.
         </Text>
       </View>
-      <View style={{ flexDirection: "row", flex: 1, alignItems: "center" }}>
+      <View
+        style={{
+          flexDirection: "row",
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
         <Text
           style={{
             color: "#1F1F1F",
@@ -71,7 +78,7 @@ export default function DeleteAccount() {
         </Text>
         <Text
           style={{
-            backgroundColor: "##FF4141",
+            backgroundColor: "#FF4141",
             color: "#fff",
             marginTop: 30,
             textAlign: "center",
@@ -81,9 +88,10 @@ export default function DeleteAccount() {
             flex: 0.4,
             fontFamily: "Poppins_500Medium",
             width: "100%",
+            marginLeft:20
           }}
         >
-          Done
+          Confirm Delete
         </Text>
       </View>
     </View>

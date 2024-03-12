@@ -6,6 +6,8 @@ import Step1 from "./Step1";
 import Verify from "./Verify";
 import Created from "./Created";
 import Login from "./Login";
+import ForgetPassword from "./ForgotPassword";
+import UpdatePassword from "./UpdatePassword";
 
 const Stack = createNativeStackNavigator();
 export default function AuthNavigation() {
@@ -32,8 +34,18 @@ export default function AuthNavigation() {
         options={{ headerShown: false }}
       />
       <Stack.Screen
+        name={Routes.ForgetPassword}
+        component={ForgetPassword}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
         name={Routes.Login}
         component={Login}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name={Routes.updatePassword}
+        component={UpdatePassword}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

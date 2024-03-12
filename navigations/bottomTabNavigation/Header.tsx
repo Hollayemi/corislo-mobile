@@ -34,6 +34,7 @@ function Header({ layout, navigation, options, route }: BottomTabHeaderProps) {
             borderRadius: 30 / 2,
             marginRight: "15%",
           }}
+          onPress={() => navigation.goBack()}
         />
         <Text style={{ fontWeight: "500", fontSize: 16 }}>
           {options.tabBarLabel?.toString()}

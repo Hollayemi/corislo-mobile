@@ -39,38 +39,38 @@ export default function Step2({ navigation }: any) {
           }}
           onSubmit={async (values) => {
             setDisabled(true);
-            try {
-              const user1 = await storage.load({
-                key: "step1",
-              });
-              console.log({ ...user1, password: values.password });
-              await fetcher(
-                "https://corislo-backend.onrender.com/api/v1/auth/create-account",
-                { ...user1, password: values.password },
-                "POST",
-                setMessage,
-                setData
-              );
-              // if (data && !message) {
-              if (data) {
-                storage.save({
-                  key: "otp",
-                  data: data.otp,
-                });
-                storage.save({
-                  key: "userToken",
-                  data: data.token,
-                });
+            // try {
+            //   const user1 = await storage.load({
+            //     key: "step1",
+            //   });
+            //   console.log({ ...user1, password: values.password });
+            //   await fetcher(
+            //     "https://corislo-backend.onrender.com/api/v1/auth/create-account",
+            //     { ...user1, password: values.password },
+            //     "POST",
+            //     setMessage,
+            //     setData
+            //   );
+            //   // if (data && !message) {
+            //   if (data) {
+            //     storage.save({
+            //       key: "otp",
+            //       data: data.otp,
+            //     });
+            //     storage.save({
+            //       key: "userToken",
+            //       data: data.token,
+            //     });
                 navigation.navigate(Routes.AuthenticationVerify, {
                   type: "create",
                 });
-              }
-            } catch (error: any) {
-              setDisabled(false);
-              console.log("Error : ", error);
-              console.warn(error.message);
-              return;
-            }
+            //   }
+            // } catch (error: any) {
+            //   setDisabled(false);
+            //   console.log("Error : ", error);
+            //   console.warn(error.message);
+            //   return;
+            // }
           }}
         >
           {({

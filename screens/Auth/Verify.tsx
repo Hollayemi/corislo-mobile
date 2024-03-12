@@ -14,25 +14,26 @@ export default function Verify({ navigation, route }: any) {
   const [otp, setOTP] = useState(["", "", "", ""]); // Initialize an array of 4 empty strings
   const inputRefs = useRef<(TextInput | null)[]>([]);
   const [message, setMessage] = React.useState("");
-  const [_, setData] = React.useState();
+  // const [_, setData] = React.useState();
 
   const checkDisable = otp.includes("");
   const handlectreateSubmit = async () => {
-    console.log(otp);
-    try {
-      await fetcher(
-        "https://corislo-backend.onrender.com/api/v1/auth/create-account",
-        { otp: otp },
-        "POST",
-        setMessage,
-        setData
-      );
-    } catch (error: any) {
-      console.log("Error : ", error);
-      console.warn(error.message);
-      return;
-    }
+    // console.log(otp);
+    // try {
+    //   await fetcher(
+    //     "https://corislo-backend.onrender.com/api/v1/auth/create-account",
+    //     { otp: otp },
+    //     "POST",
+    //     setMessage,
+    //     setData
+    //   );
+    // } catch (error: any) {
+    //   console.log("Error : ", error);
+    //   console.warn(error.message);
+    //   return;
+    // }
     navigation.navigate(Routes.AccountCreated);
+    setOTP(["", "", "", ""]);
   };
 
   return (

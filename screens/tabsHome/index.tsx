@@ -10,7 +10,7 @@ export default function Home() {
       <FlatList
         ListHeaderComponent={
           <>
-            <Search />
+            <Search placeholder="What are you looking for?" />
             <Image
               source={require("../../assets/productOff.png")}
               style={{ width: "100%", marginVertical: 20 }}

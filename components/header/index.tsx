@@ -25,6 +25,7 @@ export default function Header({ title, navigation, app }: prop) {
           size={24}
           color="black"
           style={{ paddingRight: "15%" }}
+          onPress={() => navigation.goBack()}
         />
         <Text style={styles.title}>{title}</Text>
       </View>

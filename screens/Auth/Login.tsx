@@ -37,30 +37,30 @@ export default function Login({ navigation }: any) {
             password: "",
           }}
           onSubmit={async (values) => {
-            try {
-              console.log("Request Payload:", values);
-              setDisabled(true);
-              await fetcher(
-                "https://corislo-backend.onrender.com/api/v1/auth/login",
-                values,
-                "POST",
-                setMessage,
-                setData
-              );
-              if (data?.user?.accessToken) {
-                console.log("done");
-                storage.save({
-                  key: "userToken",
-                  data: data.user.accessToken,
-                });
+            // try {
+            //   console.log("Request Payload:", values);
+            //   setDisabled(true);
+            //   await fetcher(
+            //     "https://corislo-backend.onrender.com/api/v1/auth/login",
+            //     values,
+            //     "POST",
+            //     setMessage,
+            //     setData
+            //   );
+            //   if (data?.user?.accessToken) {
+            //     console.log("done");
+            //     storage.save({
+            //       key: "userToken",
+            //       data: data.user.accessToken,
+            //     });
                 navigation.navigate(Routes.homeScreen);
-                // navigation.navigate(Routes.AuthenticationVerify);
-              }
-              setDisabled(false);
-            } catch (error) {
-              console.error("Error:", error);
-              setDisabled(false);
-            }
+            //     // navigation.navigate(Routes.AuthenticationVerify);
+            //   }
+            //   setDisabled(false);
+            // } catch (error) {
+            //   console.error("Error:", error);
+            //   setDisabled(false);
+            // }
           }}
         >
           {({

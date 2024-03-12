@@ -9,7 +9,7 @@ export enum Routes {
   product = "product",
   homeScreen = "homeScreen",
   Welcome = "welcome",
-  Shipping = "ShippingMethod",
+  Shipping = "Shipping Method",
   WelcomeStep1 = "WelcomeStep1",
   WelcomeStep2 = "WelcomeStep2",
   WelcomeStep3 = "WelcomeStep3",

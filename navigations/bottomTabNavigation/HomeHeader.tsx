@@ -4,6 +4,8 @@ import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import Checkbox from "expo-checkbox";
 import { BottomTabHeaderProps } from "@react-navigation/bottom-tabs";
 import { Platform, NativeModules } from "react-native";
+import { Routes } from "../routes";
+import { useNavigation } from "@react-navigation/native";
 
 const { StatusBarManager } = NativeModules;
 interface prop {
@@ -11,7 +13,8 @@ interface prop {
   settings?: boolean;
 }
 export default function HomeHeader({ category, settings }: prop) {
-  const [isChecked, setChecked] = React.useState(false);
+  // const [isChecked, setChecked] = React.useState(false);
+  const navigation = useNavigation<any>();
 
   return (
     <View
@@ -53,12 +56,18 @@ export default function HomeHeader({ category, settings }: prop) {
               color="#292D32"
             />
           ) : null}
-          <Ionicons name="cart-outline" size={24} color="#292D32" />
+          <Ionicons
+            name="cart-outline"
+            size={24}
+            color="#292D32"
+            onPress={() => navigation.navigate(Routes.Cart)}
+          />
           <Ionicons
             style={{ marginLeft: 20 }}
             name="notifications-outline"
             size={24}
             color="#292D32"
+            onPress={() => navigation.navigate(Routes.notification)}
           />
         </View>
       )}

@@ -7,7 +7,6 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import Heading from "../../components/Auth/Heading";
-import Footer from "../../components/Auth/Footer";
 import Input from "../../components/forms/Input";
 import { Ionicons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -16,10 +15,9 @@ import { Formik } from "formik";
 import { Routes } from "../../navigations/routes";
 import Step2ValidationSchema from "./schema/Step2.schema";
 import { styles } from "./Step1";
-import storage from "../../services/storage";
-import fetcher from "../../hooks/useFetch";
+import Popup from "../../components/Popup";
 
-export default function Step2({ navigation }: any) {
+export default function UpdatePassword({ navigation }: any) {
   const [disabled, setDisabled] = React.useState<boolean>(false);
   const [message, setMessage] = React.useState("");
   const [data, setData] = React.useState<any>();
@@ -40,6 +38,7 @@ export default function Step2({ navigation }: any) {
           onSubmit={async (values) => {
             setDisabled(true);
             console.log(values);
+            navigation.navigate(Routes.homeScreen);
           }}
         >
           {({
@@ -53,6 +52,9 @@ export default function Step2({ navigation }: any) {
           }) => (
             <>
               <View style={{ marginVertical: "7%" }}>
+                {disabled && (
+                  <Popup info="Your password has been successfully reset" />
+                )}
                 <Text style={styles.error}>{message ? message : null}</Text>
                 <Input
                   onChangeText={handleChange("password")}

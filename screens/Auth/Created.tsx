@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { SafeAreaView, Text, TextInput, View } from "react-native";
+import { Image, SafeAreaView, Text, TextInput, View } from "react-native";
 import Heading from "../../components/Auth/Heading";
 import Button from "../../components/button";
 import { Routes } from "../../navigations/routes";
@@ -22,10 +22,13 @@ export default function Created({ navigation }: any) {
       <View style={{ width: "100%", marginTop: "15%" }}>
         <Heading />
       </View>
+      <Image
+        source={require("../../assets/accountCreated.png")}
+        style={{ marginVertical: "25%" }}
+      />
+
       <View
         style={{
-          position: "absolute",
-          bottom: "10%",
           alignItems: "center",
         }}
       >
@@ -48,7 +51,7 @@ export default function Created({ navigation }: any) {
           onPress={() => {
             handleSubmit();
           }}
-          title="Verify"
+          title="Log in"
         />
       </View>
     </SafeAreaView>

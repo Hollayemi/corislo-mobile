@@ -27,7 +27,7 @@ const Stack = createNativeStackNavigator();
 export default function Navigation() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={Routes.deleteAccount}>
+      <Stack.Navigator>
         <Stack.Screen
           name={Routes.Welcome}
           component={WelcomeNavigation}

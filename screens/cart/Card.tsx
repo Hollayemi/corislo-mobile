@@ -124,8 +124,8 @@ export default function Card({
                 style={{ marginLeft: 5 }}
               />
             </View>
-            <Text style={{ color: "#FF4141", fontWeight: "500", fontSize: 10 }}>
-              <AntDesign name="delete" size={10} color="#FF4141" /> Delete
+            <Text style={{ color: "#FF4141", fontWeight: "500", fontSize: 15 }}>
+              <AntDesign name="delete" size={15} color="#FF4141" /> Delete
             </Text>
           </View>
         )}

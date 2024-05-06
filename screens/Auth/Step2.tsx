@@ -16,13 +16,15 @@ import { Formik } from "formik";
 import { Routes } from "../../navigations/routes";
 import Step2ValidationSchema from "./schema/Step2.schema";
 import { styles } from "./Step1";
-import storage from "../../services/storage";
-import fetcher from "../../hooks/useFetch";
+import { registerHandler } from "../../redux/state/slices/auth/Signup";
+import { useDispatch } from "react-redux";
 
-export default function Step2({ navigation }: any) {
+export default function Step2({ route, navigation }: any) {
   const [disabled, setDisabled] = React.useState<boolean>(false);
   const [message, setMessage] = React.useState("");
   const [data, setData] = React.useState<any>();
+  // const { fullname, username, email, phoneNumber } = route.params;
+  const dispatch = useDispatch();
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -39,38 +41,11 @@ export default function Step2({ navigation }: any) {
           }}
           onSubmit={async (values) => {
             setDisabled(true);
-            // try {
-            //   const user1 = await storage.load({
-            //     key: "step1",
-            //   });
-            //   console.log({ ...user1, password: values.password });
-            //   await fetcher(
-            //     "https://corislo-backend.onrender.com/api/v1/auth/create-account",
-            //     { ...user1, password: values.password },
-            //     "POST",
-            //     setMessage,
-            //     setData
-            //   );
-            //   // if (data && !message) {
-            //   if (data) {
-            //     storage.save({
-            //       key: "otp",
-            //       data: data.otp,
-            //     });
-            //     storage.save({
-            //       key: "userToken",
-            //       data: data.token,
-            //     });
-                navigation.navigate(Routes.AuthenticationVerify, {
-                  type: "create",
-                });
-            //   }
-            // } catch (error: any) {
-            //   setDisabled(false);
-            //   console.log("Error : ", error);
-            //   console.warn(error.message);
-            //   return;
-            // }
+            const payload = { ...route.params, ...values };
+            registerHandler(payload, navigation, dispatch);
+            navigation.navigate(Routes.AuthenticationVerify, {
+              type: "create",
+            });
           }}
         >
           {({

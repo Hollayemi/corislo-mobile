@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FlatList, Text, View } from "react-native";
 import HomeHeader from "../../navigations/bottomTabNavigation/HomeHeader";
 import {
@@ -9,8 +9,19 @@ import {
 } from "./profileList";
 import ProfileBox from "./ProfileBox";
 import { AntDesign } from "@expo/vector-icons";
+import { useDispatch } from "react-redux";
+import { userLogout } from "../../redux/state/slices/auth/Login";
+import { Routes } from "../../navigations/routes";
 
-export default function Profile() {
+export default function Profile({ navigation }: any) {
+  const Logout = () => {
+    const dispatch = useDispatch();
+    useEffect(() => {
+      dispatch(userLogout());
+    }, []);
+    navigation.navigate(Routes.Login);
+  };
+
   return (
     <FlatList
       contentContainerStyle={{
@@ -162,6 +173,7 @@ export default function Profile() {
               fontFamily: "Poppins_500Medium",
               fontSize: 13,
             }}
+            onPress={() => Logout()}
           >
             Log Out
           </Text>

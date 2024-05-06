@@ -16,7 +16,6 @@ import Button from "../../components/button";
 import { Formik } from "formik";
 import { Routes } from "../../navigations/routes";
 import Step1ValidationSchema from "./schema/Step1.schema";
-import storage from "../../services/storage";
 
 export default function Step1({ navigation }: any) {
   return (
@@ -36,11 +35,7 @@ export default function Step1({ navigation }: any) {
           }}
           onSubmit={(values) => {
             console.log(values);
-            storage.save({
-              key: "step1",
-              data: values,
-            });
-            navigation.navigate(Routes.AuthenticationStep2);
+            navigation.navigate(Routes.AuthenticationStep2, { values });
           }}
         >
           {({

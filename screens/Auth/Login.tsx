@@ -16,13 +16,17 @@ import { Formik } from "formik";
 import { Routes } from "../../navigations/routes";
 import LoginValidationSchema from "./schema/login.schema";
 import { styles } from "./Step1";
-import fetcher from "../../hooks/useFetch";
-import storage from "../../services/storage";
+import { loginHandler } from "../../redux/state/slices/auth/Login";
+import { useDispatch } from "react-redux";
+import { useUserData } from "../../hooks/useData";
 
 export default function Login({ navigation }: any) {
   const [Disabled, setDisabled] = React.useState(false);
   const [message, setMessage] = React.useState("");
   const [data, setData] = React.useState<any>();
+  const dispatch = useDispatch();
+  const { setLoading } = useUserData();
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <SafeAreaView style={{ padding: "5%", backgroundColor: "#fff", flex: 1 }}>
@@ -37,30 +41,7 @@ export default function Login({ navigation }: any) {
             password: "",
           }}
           onSubmit={async (values) => {
-            // try {
-            //   console.log("Request Payload:", values);
-            //   setDisabled(true);
-            //   await fetcher(
-            //     "https://corislo-backend.onrender.com/api/v1/auth/login",
-            //     values,
-            //     "POST",
-            //     setMessage,
-            //     setData
-            //   );
-            //   if (data?.user?.accessToken) {
-            //     console.log("done");
-            //     storage.save({
-            //       key: "userToken",
-            //       data: data.user.accessToken,
-            //     });
-                navigation.navigate(Routes.homeScreen);
-            //     // navigation.navigate(Routes.AuthenticationVerify);
-            //   }
-            //   setDisabled(false);
-            // } catch (error) {
-            //   console.error("Error:", error);
-            //   setDisabled(false);
-            // }
+            loginHandler(values, navigation, dispatch, null, setLoading);
           }}
         >
           {({

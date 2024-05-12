@@ -42,10 +42,11 @@ export default function Step2({ route, navigation }: any) {
           onSubmit={async (values) => {
             setDisabled(true);
             const payload = { ...route.params, ...values };
-            registerHandler(payload, navigation, dispatch);
-            navigation.navigate(Routes.AuthenticationVerify, {
-              type: "create",
-            });
+            try {
+              registerHandler(payload, navigation, dispatch);
+            } catch (error) {
+              console.log(error);
+            }
           }}
         >
           {({

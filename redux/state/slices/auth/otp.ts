@@ -22,7 +22,12 @@ export const otpVerificationApi = (payload: any) =>
     return data;
   });
 
-export const verifyOtp = (payload: any, router: any, dispatch: any) => {
+export const verifyOtp = (
+  payload: any,
+  router: any,
+  dispatch: any,
+  type: string
+) => {
   dispatch(otpVerificationApi(payload))
     .then(unwrapResult)
     .then((res: any) => {
@@ -30,7 +35,11 @@ export const verifyOtp = (payload: any, router: any, dispatch: any) => {
       toaster({ ...res });
       console.log("here");
       if (res.type === "success") {
-        router.navigate(res.to || Routes.homeScreen);
+        type === "create"
+          ? router.navigate(Routes.AccountCreated)
+          : type === "update"
+          ? router.navigate(Routes.updatePassword)
+          : null;
       }
     })
     .catch((err: any) => {

@@ -4,6 +4,7 @@ import toaster from "../../../../configs/toaster";
 
 import martApi from "../api/baseApi";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Routes } from "../../../../navigations/routes";
 
 const forgotPasswordApi = (payload: any) =>
   createAsyncThunk("post/FP", async (payload1) => {
@@ -18,7 +19,7 @@ const forgotPasswordApi = (payload: any) =>
 
 export const ForgotPasswordHandler = (
   email: any,
-  navigate: any,
+  navigation: any,
   dispatch: any
 ) => {
   dispatch(forgotPasswordApi({ email }))
@@ -27,7 +28,10 @@ export const ForgotPasswordHandler = (
       console.log(res);
       if (res.type === "success") {
         await AsyncStorage.setItem("sending-email-to", email);
-        navigate("/email-sent");
+        navigation.navigate(Routes.AuthenticationVerify, {
+          type: "update",
+          email,
+        });
       }
     })
     .catch((err: any) => {

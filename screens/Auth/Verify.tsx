@@ -6,33 +6,27 @@ import OTPInput from "../../components/OTP";
 import { Routes } from "../../navigations/routes";
 import { styles } from "./Step1";
 import fetcher from "../../hooks/useFetch";
+import { resendOtp, verifyOtp } from "../../redux/state/slices/auth/otp";
+import { useDispatch } from "react-redux";
 
 export default function Verify({ navigation, route }: any) {
-  const { type } = route.params;
+  const { type, email } = route.params;
   console.log(type);
 
   const [otp, setOTP] = useState(["", "", "", ""]); // Initialize an array of 4 empty strings
   const inputRefs = useRef<(TextInput | null)[]>([]);
   const [message, setMessage] = React.useState("");
   // const [_, setData] = React.useState();
+  const dispatch = useDispatch();
 
   const checkDisable = otp.includes("");
-  const handlectreateSubmit = async () => {
-    // console.log(otp);
-    // try {
-    //   await fetcher(
-    //     "https://corislo-backend.onrender.com/api/v1/auth/create-account",
-    //     { otp: otp },
-    //     "POST",
-    //     setMessage,
-    //     setData
-    //   );
-    // } catch (error: any) {
-    //   console.log("Error : ", error);
-    //   console.warn(error.message);
-    //   return;
-    // }
-    navigation.navigate(Routes.AccountCreated);
+  const handleVerifyOtp = async (otp: string, type: string) => {
+    try {
+      verifyOtp(otp, navigation, dispatch, type);
+    } catch (error) {
+      console.log(error);
+    }
+
     setOTP(["", "", "", ""]);
   };
 
@@ -66,7 +60,12 @@ export default function Verify({ navigation, route }: any) {
         }}
       >
         <Text>Didn’t receive code? </Text>
-        <Text style={{ color: "#2A347E" }}>Resend</Text>
+        <Text
+          style={{ color: "#2A347E" }}
+          onPress={() => resendOtp({ email }, dispatch)}
+        >
+          Resend
+        </Text>
       </Text>
       <View
         style={{
@@ -76,13 +75,9 @@ export default function Verify({ navigation, route }: any) {
       >
         <Button
           onPress={() => {
-            type === "create"
-              ? handlectreateSubmit()
-              : type === "update"
-              ? navigation.navigate(Routes.updatePassword)
-              : null;
+            handleVerifyOtp(otp.join(), type);
           }}
-          title="Verify Email"
+          title="Verify"
           disabled={checkDisable}
         />
       </View>

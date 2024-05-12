@@ -11,10 +11,14 @@ import ForgetPasswordValidationSchema from "./schema/ForgetPassword.schema";
 import { styles } from "./Step1";
 import fetcher from "../../hooks/useFetch";
 import Popup from "../../components/Popup";
+import { ForgotPasswordHandler } from "../../redux/state/slices/auth/forgotpassword";
+import { useDispatch } from "react-redux";
 
 export default function ForgetPassword({ navigation }: any) {
   const [message, setMessage] = React.useState("");
   const [_, setData] = React.useState();
+  const dispatch = useDispatch();
+
   return (
     <SafeAreaView style={{ padding: "5%", backgroundColor: "#fff", flex: 1 }}>
       <Popup info="Verify your email to change your password." />
@@ -29,22 +33,11 @@ export default function ForgetPassword({ navigation }: any) {
         }}
         onSubmit={async (values) => {
           console.log(values);
-          // try {
-          //   await fetcher(
-          //     "https://corislo-backend.onrender.com/api/v1/auth/forgot-password",
-          //     values,
-          //     "POST",
-          //     setMessage,
-          //     setData
-          //   );
-          // } catch (error: any) {
-          //   console.log("Error : ", error);
-          //   console.warn(error.message);
-          //   return;
-          // }
-          navigation.navigate(Routes.AuthenticationVerify, {
-            type: "update",
-          });
+          try {
+            ForgotPasswordHandler(values.email, navigation, dispatch);
+          } catch (error) {
+            console.log(error);
+          }
         }}
       >
         {({

@@ -41,7 +41,11 @@ export default function Login({ navigation }: any) {
             password: "",
           }}
           onSubmit={async (values) => {
-            loginHandler(values, navigation, dispatch, null, setLoading);
+            try {
+              loginHandler(values, navigation, dispatch, null, setLoading);
+            } catch (error) {
+              console.log(error);
+            }
           }}
         >
           {({

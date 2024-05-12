@@ -27,6 +27,7 @@ import {
   Poppins_900Black_Italic,
 } from "@expo-google-fonts/poppins";
 import { View } from "react-native";
+import ToastManager from "toastify-react-native";
 
 SplashScreen.preventAutoHideAsync();
 export default function Main() {
@@ -63,6 +64,7 @@ export default function Main() {
 
   return (
     <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
+      <ToastManager />
       <Provider store={store}>
         <SWRConfig value={{ fetcher }}>
           <Navigation />

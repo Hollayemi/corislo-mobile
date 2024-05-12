@@ -16,11 +16,17 @@ import { Routes } from "../../navigations/routes";
 import Step2ValidationSchema from "./schema/Step2.schema";
 import { styles } from "./Step1";
 import Popup from "../../components/Popup";
+import {
+  ResetPasswordHandler,
+  changePasswordHandler,
+} from "../../redux/state/slices/auth/resetPassword";
+import { useDispatch } from "react-redux";
 
 export default function UpdatePassword({ navigation }: any) {
   const [disabled, setDisabled] = React.useState<boolean>(false);
   const [message, setMessage] = React.useState("");
   const [data, setData] = React.useState<any>();
+  const dispatch = useDispatch();
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -38,7 +44,12 @@ export default function UpdatePassword({ navigation }: any) {
           onSubmit={async (values) => {
             setDisabled(true);
             console.log(values);
-            navigation.navigate(Routes.homeScreen);
+            try {
+              changePasswordHandler(values, navigation);
+              navigation.navigate(Routes.homeScreen);
+            } catch (error) {
+              console.log(error);
+            }
           }}
         >
           {({

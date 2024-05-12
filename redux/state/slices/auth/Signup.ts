@@ -40,7 +40,10 @@ export const registerHandler = (payload: any, router: any, dispatch: any) => {
         console.log("register successful");
         if (await mutate("/user/get-account"))
           console.log("register mutation successful");
-        router.navigate(Routes.AuthenticationVerify);
+        router.navigate(Routes.AuthenticationVerify, {
+          type: "create",
+          email: payload.email,
+        });
       }
     })
     .catch((err: any) => {

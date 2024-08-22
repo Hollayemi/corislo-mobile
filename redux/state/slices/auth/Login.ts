@@ -5,8 +5,10 @@ import { jsonHeader } from "../api/setAuthHeaders";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Routes } from "../../../../navigations/routes";
 
-const UserLoginApi = (payload: any) =>
-  createAsyncThunk("post/UserLogin", async (payload1) => {
+const UserLoginApi = createAsyncThunk(
+  "post/UserLogin",
+  async (payload: any) => {
+    console.log(payload);
     const { data } = await martApi
       .post("/auth/login", {
         ...payload,
@@ -19,7 +21,8 @@ const UserLoginApi = (payload: any) =>
       .catch((err) => err.response);
 
     return data;
-  });
+  }
+);
 
 export const getAccount = createAsyncThunk("post/loginSlice", async () => {
   const data = await martApi
@@ -107,6 +110,7 @@ export const loginHandler = (
   returnUrl: any,
   setLoading: any
 ) => {
+  console.log("inside login");
   console.log(returnUrl);
   setLoading(true);
   dispatch(UserLoginApi(payload))
@@ -126,6 +130,7 @@ export const loginHandler = (
           });
         setLoading(false);
       }
+
       setLoading(false);
     })
     .catch((err: any) => {

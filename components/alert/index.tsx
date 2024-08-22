@@ -30,7 +30,7 @@ export default function Alert({ label, onPress, type }: prop) {
         }}
       >
         <Ionicons
-          name={type == "warning" ? "warning" : "ios-card"}
+          name={type == "warning" ? "warning" : "card"}
           size={18}
           color={type == "warning" ? "#ED6C0E" : "#2A347E"}
         />

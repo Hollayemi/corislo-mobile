@@ -29,13 +29,13 @@ export const store = configureStore({
     reducer: persistedReducer,
   },
 
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-        ignoredPaths: ["chatsContacts.0.chat.lastMessage.time"],
-      },
-    }),
+  // middleware: (getDefaultMiddleware) =>
+  //   getDefaultMiddleware({
+  //     serializableCheck: {
+  //       ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+  //       ignoredPaths: ["chatsContacts.0.chat.lastMessage.time"],
+  //     },
+  //   }),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

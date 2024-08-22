@@ -6,16 +6,15 @@ import martApi from "../api/baseApi";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Routes } from "../../../../navigations/routes";
 
-const forgotPasswordApi = (payload: any) =>
-  createAsyncThunk("post/FP", async (payload1) => {
-    console.log(payload);
-    const { data } = await martApi
-      .post("/user/forgot-password", payload, {})
-      .then((res) => res)
-      .catch((err) => err.response);
+const forgotPasswordApi = createAsyncThunk("post/FP", async (payload: any) => {
+  console.log(payload);
+  const { data } = await martApi
+    .post("/user/forgot-password", payload, {})
+    .then((res) => res)
+    .catch((err) => err.response);
 
-    return data;
-  });
+  return data;
+});
 
 export const ForgotPasswordHandler = (
   email: any,

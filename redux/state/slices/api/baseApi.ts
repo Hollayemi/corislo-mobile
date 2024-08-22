@@ -14,7 +14,8 @@ const authToken: string | undefined = tokens.auth!;
 if (authToken) {
   requestHeaders.Authorization = `${authToken}`;
 }
-let server: string = "http://localhost:5001/api/v1/";
+let server = "https://corislo-backend.onrender.com/api/v1/";
+// let server: string = "http://localhost:5001/api/v1/";
 if (process.env.NODE_ENV === "production") {
   console.log("in production");
   server = "https://corislo-backend.onrender.com/api/v1/";

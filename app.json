@@ -11,9 +11,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#2A347E"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.anonymous.corisioapp"

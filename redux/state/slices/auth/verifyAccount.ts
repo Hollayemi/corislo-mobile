@@ -3,20 +3,19 @@ import { createAsyncThunk, unwrapResult } from "@reduxjs/toolkit";
 import toaster from "../../../../configs/toaster";
 import martApi from "../api/baseApi";
 
-const verifyApi = (payload: any) =>
-  createAsyncThunk("post/VA", async (payload1) => {
-    console.log(payload, payload1);
-    const { data } = await martApi
-      .patch(
-        `/user/verify-account?token=${payload.token}&email=${payload.email}`,
-        {},
-        {}
-      )
-      .then((res) => res)
-      .catch((err) => err.response);
+const verifyApi = createAsyncThunk("post/VA", async (payload: any) => {
+  console.log(payload);
+  const { data } = await martApi
+    .patch(
+      `/user/verify-account?token=${payload.token}&email=${payload.email}`,
+      {},
+      {}
+    )
+    .then((res) => res)
+    .catch((err) => err.response);
 
-    return data;
-  });
+  return data;
+});
 
 export const VerifyHandler = (
   email: any,

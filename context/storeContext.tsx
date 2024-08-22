@@ -8,6 +8,7 @@ import { useUserData } from "../hooks/useData";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Routes } from "../navigations/routes";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useContext } from "react";
 
 const { createContext, useEffect, useState } = require("react");
 
@@ -22,7 +23,7 @@ const defaultProvider = {
 const StoreDataContext = createContext(defaultProvider);
 
 const StoreDataProvider = ({ children }: any) => {
-  const { setOverflow } = useUserData();
+  const { setOverflow } = StoreDataContext();
   // const router = useRouter();
   // const pathname = usePathname();
   const route = useRoute();
@@ -168,4 +169,6 @@ const StoreDataProvider = ({ children }: any) => {
     </StoreDataContext.Provider>
   );
 };
+export const useStoreData = () => useContext(StoreDataContext);
+
 export { StoreDataProvider, StoreDataContext };

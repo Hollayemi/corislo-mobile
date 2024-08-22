@@ -3,7 +3,7 @@ import Navigation from "./navigations/stackNavigation";
 import { Provider } from "react-redux";
 import store from "./store";
 import { SWRConfig } from "swr";
-import { fetcher } from "./services/axios/fetcher";
+// import { fetcher } from "./services/axios/fetcher";
 import * as SplashScreen from "expo-splash-screen";
 import {
   useFonts,
@@ -28,6 +28,9 @@ import {
 } from "@expo-google-fonts/poppins";
 import { View } from "react-native";
 import ToastManager from "toastify-react-native";
+import { jsonHeader } from "./redux/state/slices/api/setAuthHeaders";
+import martApi from "./redux/state/slices/api/baseApi";
+import { AxiosRequestConfig } from "axios";
 
 SplashScreen.preventAutoHideAsync();
 export default function Main() {
@@ -66,7 +69,21 @@ export default function Main() {
     <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
       <ToastManager />
       <Provider store={store}>
-        <SWRConfig value={{ fetcher }}>
+        <SWRConfig
+          value={{
+            // refreshInterval: false,
+            revalidateOnFocus: true,
+
+            fetcher: async (resource, init) => {
+              const getToken = jsonHeader("user");
+              const res = await martApi.get(
+                resource,
+                getToken as AxiosRequestConfig
+              );
+              return res.data;
+            },
+          }}
+        >
           <Navigation />
         </SWRConfig>
       </Provider>

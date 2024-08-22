@@ -7,8 +7,9 @@ import { mutate } from "swr";
 import { jsonHeader } from "../api/setAuthHeaders";
 import { Routes } from "../../../../navigations/routes";
 
-export const otpVerificationApi = (payload: any) =>
-  createAsyncThunk("post/RegNewUser", async (payload1) => {
+export const otpVerificationApi = createAsyncThunk(
+  "post/RegNewUser",
+  async (payload: any) => {
     console.log(payload);
     const { data } = await martApi
       .post("/auth/verify", payload, await jsonHeader(""))
@@ -20,7 +21,8 @@ export const otpVerificationApi = (payload: any) =>
         return err.response;
       });
     return data;
-  });
+  }
+);
 
 export const verifyOtp = (
   payload: any,
@@ -47,8 +49,9 @@ export const verifyOtp = (
     });
 };
 
-const resendOtpApi = (payload: any) =>
-  createAsyncThunk("post/resendOtp", async (payload1) => {
+const resendOtpApi = createAsyncThunk(
+  "post/resendOtp",
+  async (payload: any) => {
     const { data } = await martApi
       .post("/new/otp", payload)
       .then((e) => {
@@ -59,7 +62,8 @@ const resendOtpApi = (payload: any) =>
         return err.response;
       });
     return data;
-  });
+  }
+);
 
 export const resendOtp = (payload: any, dispatch: any) => {
   dispatch(resendOtpApi(payload))

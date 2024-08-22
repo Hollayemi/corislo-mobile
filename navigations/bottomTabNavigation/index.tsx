@@ -37,7 +37,7 @@ export default function BottomTabs() {
           tabBarLabel: "Home",
           tabBarIcon: ({ color, size, focused }) => (
             <Ionicons
-              name={focused ? "ios-home-sharp" : "ios-home-outline"}
+              name={focused ? "home-sharp" : "home-outline"}
               size={size}
               color={color}
             />

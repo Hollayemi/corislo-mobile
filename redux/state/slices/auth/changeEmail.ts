@@ -5,16 +5,15 @@ import martApi from "../api/baseApi";
 import { jsonHeader } from "../api/setAuthHeaders";
 import { userLogout } from "./Login";
 
-const changeEmailApi = (payload: any) =>
-  createAsyncThunk("post/RP", async (payload1) => {
-    console.log(payload);
-    const { data } = await martApi
-      .post("/auth/change-email", payload, await jsonHeader(""))
-      .then((res) => res)
-      .catch((err) => err.response);
+const changeEmailApi = createAsyncThunk("post/RP", async (payload: any) => {
+  console.log(payload);
+  const { data } = await martApi
+    .post("/auth/change-email", payload, await jsonHeader(""))
+    .then((res) => res)
+    .catch((err) => err.response);
 
-    return data;
-  });
+  return data;
+});
 
 export const changeEmailHandler = (payload: any, dispatch: any) => {
   dispatch(changeEmailApi(payload))

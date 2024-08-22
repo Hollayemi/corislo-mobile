@@ -4,16 +4,15 @@ import toaster from "../../../../configs/toaster";
 import martApi from "../api/baseApi";
 import { jsonHeader } from "../api/setAuthHeaders";
 
-const resetPasswordApi = (payload: any) =>
-  createAsyncThunk("post/RP", async (payload1) => {
-    console.log(payload, payload1);
-    const { data } = await martApi
-      .patch("/user/reset-password", payload, {})
-      .then((res) => res)
-      .catch((err) => err.response);
+const resetPasswordApi = createAsyncThunk("post/RP", async (payload: any) => {
+  console.log(payload);
+  const { data } = await martApi
+    .patch("/user/reset-password", payload, {})
+    .then((res) => res)
+    .catch((err) => err.response);
 
-    return data;
-  });
+  return data;
+});
 
 export const ResetPasswordHandler = (
   formData: any,
@@ -33,16 +32,18 @@ export const ResetPasswordHandler = (
     });
 };
 
-const changePasswordApi = (payload: any) =>
-  createAsyncThunk("post/changePassword", async (payload1) => {
-    console.log(payload, payload1);
+const changePasswordApi = createAsyncThunk(
+  "post/changePassword",
+  async (payload: any) => {
+    console.log(payload);
     const { data } = await martApi
       .patch("/auth/change-password", payload, await jsonHeader(""))
       .then((res) => res)
       .catch((err) => err.response);
 
     return data;
-  });
+  }
+);
 
 export const changePasswordHandler = (payload: any, dispatch: any) => {
   dispatch(changePasswordApi(payload))

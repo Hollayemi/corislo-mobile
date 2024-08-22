@@ -22,12 +22,25 @@ import OrderDetail from "../../screens/order/OrderDetail";
 import changeEmail from "../../screens/changeEmail";
 import TwoFactorAuth from "../../screens/2fa";
 import DeleteAccount from "../../screens/DeleteAccount";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Stack = createNativeStackNavigator();
+
 export default function Navigation() {
+  const [user, setUser] = React.useState("");
+  const getUser = async () => {
+    return await AsyncStorage.getItem("user_token").then((usr) =>
+      setUser(usr!)
+    );
+  };
+  React.useEffect(() => {
+    getUser();
+  }, [getUser]);
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator
+        initialRouteName={user ? Routes.homeScreen : Routes.Welcome}
+      >
         <Stack.Screen
           name={Routes.Welcome}
           component={WelcomeNavigation}

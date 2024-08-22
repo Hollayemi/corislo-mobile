@@ -7,8 +7,9 @@ import { mutate } from "swr";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Routes } from "../../../../navigations/routes";
 
-export const RegNewUser = (payload: any) =>
-  createAsyncThunk("post/RegNewUser", async (payload1) => {
+export const RegNewUser = createAsyncThunk(
+  "post/RegNewUser",
+  async (payload: any) => {
     console.log(payload);
     const { data } = await martApi
       .post("/auth/create-account", payload, {})
@@ -27,7 +28,8 @@ export const RegNewUser = (payload: any) =>
         return err.response;
       });
     return data;
-  });
+  }
+);
 
 export const registerHandler = (payload: any, router: any, dispatch: any) => {
   dispatch(RegNewUser(payload))

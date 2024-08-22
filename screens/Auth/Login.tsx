@@ -25,7 +25,10 @@ export default function Login({ navigation }: any) {
   const [message, setMessage] = React.useState("");
   const [data, setData] = React.useState<any>();
   const dispatch = useDispatch();
-  const { setLoading } = useUserData();
+  const { setLoading, loading } = useUserData() as {
+    setLoading: (isLoading: boolean) => void;
+    loading: boolean;
+  };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -37,14 +40,18 @@ export default function Login({ navigation }: any) {
         <Formik
           validationSchema={LoginValidationSchema}
           initialValues={{
-            username: "",
+            email: "",
             password: "",
           }}
           onSubmit={async (values) => {
             try {
+              setDisabled(true);
+              console.log("inside login", values);
               loginHandler(values, navigation, dispatch, null, setLoading);
+              setDisabled(false);
             } catch (error) {
               console.log(error);
+              setDisabled(false);
             }
           }}
         >
@@ -62,13 +69,13 @@ export default function Login({ navigation }: any) {
                 <Text style={styles.error}>{message ? message : null}</Text>
 
                 <Input
-                  onChangeText={handleChange("username")}
-                  onBlur={handleBlur("username")}
-                  value={values.username}
+                  onChangeText={handleChange("email")}
+                  onBlur={handleBlur("email")}
+                  value={values.email}
                   label="Email"
                   placeholder="JohnDoe@mail.com"
                   Icon={
-                    errors.username && touched.username ? (
+                    errors.email && touched.email ? (
                       <MaterialIcons
                         name="error-outline"
                         size={24}
@@ -83,8 +90,8 @@ export default function Login({ navigation }: any) {
                     )
                   }
                 />
-                {errors.username && touched.username && (
-                  <Text style={styles.error}>{errors.username}</Text>
+                {errors.email && touched.email && (
+                  <Text style={styles.error}>{errors.email}</Text>
                 )}
                 <Input
                   onChangeText={handleChange("password")}
@@ -129,7 +136,7 @@ export default function Login({ navigation }: any) {
                 <Button
                   title="Next"
                   onPress={() => handleSubmit()}
-                  disabled={!isValid || Disabled}
+                  disabled={!isValid || Disabled || loading}
                 />
               </View>
             </>

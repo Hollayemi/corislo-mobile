@@ -5,7 +5,7 @@ import Rating from "../rating";
 type prop = {
   image?: string;
   category?: boolean;
-  name: string;
+  prodName: string;
   price?: string | number;
   oldPrice?: string | number;
   rating?: number;
@@ -17,13 +17,13 @@ type prop = {
 function ProductCard({
   category,
   off,
-  price,
+  prodPrice,
   oldPrice,
   rating,
-  name,
+  prodName,
   type,
   noMargin,
-}: prop) {
+}: any) {
   return (
     <View
       style={{
@@ -81,11 +81,12 @@ function ProductCard({
         }}
         numberOfLines={category ? 2 : 1}
       >
-        {name.length > 19 && !category ? `${name.substring(0, 20)}...` : name}
+        {prodName}
+        {/* {prodName.length > 19 && !category ? `${prodName.substring(0, 20)}...` : prodName} */}
       </Text>
       {category ? null : (
         <>
-          {price ? (
+          {prodPrice ? (
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Text
                 style={{
@@ -94,7 +95,7 @@ function ProductCard({
                   fontFamily: "Poppins_700Bold",
                 }}
               >
-                # {price}
+                # {prodPrice}
               </Text>
               {type === "flash" ? null : (
                 <Text
@@ -106,12 +107,12 @@ function ProductCard({
                     marginLeft: 5,
                   }}
                 >
-                  # {oldPrice}
+                  # {prodPrice}
                 </Text>
               )}
             </View>
           ) : null}
-          {type === "flash" ? null : <Rating rate={rating!} small />}
+          {type === "flash" ? null : <Rating rate={4} small />}
         </>
       )}
     </View>

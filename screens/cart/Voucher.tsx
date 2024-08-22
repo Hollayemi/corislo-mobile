@@ -9,12 +9,12 @@ function Voucher() {
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
-        paddingVertical: "5%",  
+        paddingVertical: "5%",
         marginHorizontal: "5%",
       }}
     >
       <View style={{ flexDirection: "row", alignItems: "center" }}>
-        <Ionicons name="ios-card" size={18} color="#2A347E" />   
+        <Ionicons name="card" size={18} color="#2A347E" />
         <Text
           style={{
             color: "#2A347E",

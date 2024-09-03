@@ -28,12 +28,12 @@ export const getAccount = createAsyncThunk("post/loginSlice", async () => {
   const data = await martApi
     .get(`/user/get-account`, await jsonHeader(""))
     .then(async (res) => {
-      console.log(res);
       const { accessToken } = res.data.user;
+      console.log(accessToken, "access");
       await AsyncStorage.setItem("user_token", accessToken);
       return res;
     })
-    .catch((e) => console.log(e.response));
+    .catch((e) => {});
   return data;
 });
 export type InitialState = {
@@ -116,7 +116,6 @@ export const loginHandler = (
   dispatch(UserLoginApi(payload))
     .then(unwrapResult)
     .then((res: any) => {
-      console.log(res);
       toaster({ ...res });
       if (res.type === "success") {
         dispatch(getAccount())

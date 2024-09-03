@@ -33,7 +33,7 @@ export default function Input({
       }}
     >
       <View style={{ flex: 0.95 }}>
-        <Text style={{ fontSize: 11, color: "#7C7C7C" }}>{label}</Text>
+        <Text style={{ fontSize: 12, color: "#7C7C7C" }}>{label}</Text>
         <TextInput
           value={value}
           onChangeText={onChangeText}
@@ -42,7 +42,7 @@ export default function Input({
           style={{
             backgroundColor: "transparent",
             color: "#424242",
-            fontSize: 14,
+            fontSize: 16,
             fontWeight: "500",
           }}
           secureTextEntry={password ? true : false}

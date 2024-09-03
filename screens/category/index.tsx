@@ -19,7 +19,7 @@ export default function Category() {
           flexWrap: "wrap",
         }}
         data={category}
-        renderItem={({ item }: any) => <ProductCard {...item} noMargin />}
+        renderItem={({ item }: any) => <ProductCard {...item} noMargin isCategory />}
         keyExtractor={(item: any) => item.id}
       />
     </View>

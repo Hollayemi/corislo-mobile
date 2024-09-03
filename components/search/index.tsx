@@ -9,13 +9,13 @@ export default function SearchBox({ placeholder }: prop) {
     <View
       style={{
         borderRadius: 50,
-        padding: 20,
+        padding: 10,
         backgroundColor: "#F3F3F3",
         flexDirection: "row",
         alignItems: "center",
       }}
     >
-      <View style={{ flexDirection: "row", alignItems: "center", gap: 20 }}>
+      <View style={{ flexDirection: "row", alignItems: "center", gap: 20, marginLeft: 9 }}>
         <FontAwesome name="search" size={22} color="#848080" />
 
         <TextInput

@@ -9,7 +9,7 @@ import {
     View,
 } from "react-native";
 import { Routes } from "../../navigations/routes";
-import image1 from "../../assets/Welcome/image1.png";
+// import image1 from "../../assets/Welcome/image1.PNG";
 
 const { StatusBarManager } = NativeModules;
 
@@ -48,10 +48,8 @@ export default function Step1({ navigation }: any) {
                     Skip
                 </Text>
             </Pressable>
-            <Image
-                source={{ uri: "assets:/Welcome/image1.png" }}
-                style={{ width: 40, height: 80 }}
-            />
+            <Image source={require("../../assets/Welcome/image1.png")} />
+
             <View>
                 <Text
                     style={{

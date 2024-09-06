@@ -14,8 +14,8 @@ const authToken: string | undefined = tokens.auth!;
 if (authToken) {
   requestHeaders.Authorization = `${authToken}`;
 }
-let server = "https://corislo-backend.onrender.com/api/v1/";
-// let server = "http://localhost:5001/api/v1/";
+// let server = "https://corislo-backend.onrender.com/api/v1/";
+let server = "http://192.168.65.225:5001/api/v1/";
 if (process.env.NODE_ENV === "production") {
   console.log("in production");
   server = "https://corislo-backend.onrender.com/api/v1/";
@@ -41,9 +41,9 @@ Axios.interceptors.request.use(
 // Add a response interceptor
 Axios.interceptors.response.use(
   function (response: AxiosResponse) {
-    // Any status code that lies within the range of 2xx causes this function to trigger
-    // Do something with response data
-    return response;
+      // Any status code that lies within the range of 2xx causes this function to trigger
+      // Do something with response data
+      return response;
   },
   function (error: AxiosError) {
     // Any status codes that fall outside the range of 2xx cause this function to trigger

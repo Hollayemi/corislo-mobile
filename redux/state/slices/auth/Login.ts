@@ -8,7 +8,6 @@ import { Routes } from "../../../../navigations/routes";
 const UserLoginApi = createAsyncThunk(
   "post/UserLogin",
   async (payload: any) => {
-    console.log(payload);
     const { data } = await martApi
       .post("/auth/login", {
         ...payload,
@@ -28,9 +27,6 @@ export const getAccount = createAsyncThunk("post/loginSlice", async () => {
   const data = await martApi
     .get(`/user/get-account`, await jsonHeader(""))
     .then(async (res) => {
-      const { accessToken } = res.data.user;
-      console.log(accessToken, "access");
-      await AsyncStorage.setItem("user_token", accessToken);
       return res;
     })
     .catch((e) => {});
@@ -110,8 +106,8 @@ export const loginHandler = (
   returnUrl: any,
   setLoading: any
 ) => {
-  console.log("inside login");
-  console.log(returnUrl);
+  
+  
   setLoading(true);
   dispatch(UserLoginApi(payload))
     .then(unwrapResult)
@@ -144,11 +140,9 @@ export const loginHandler = (
 
 const oAuth = (payload: any) =>
   createAsyncThunk("post/oAuth", async (payload1) => {
-    console.log(payload, payload1);
     const data = await martApi
       .get(`/auth/refresh-token?token=${payload.token}`)
       .then(async (res) => {
-        console.log(res);
         const { accessToken } = res.data.user;
         await AsyncStorage.setItem("user_token", accessToken);
         return res;
@@ -157,11 +151,9 @@ const oAuth = (payload: any) =>
     return data;
   });
 export const oAuthHandler = (payload: any, router: any, dispatch: any) => {
-  console.log(payload, router, dispatch);
   dispatch(oAuth(payload))
     .then(unwrapResult)
     .then((res: any) => {
-      console.log(res);
       toaster({ ...res });
       if (res.type === "success") {
         dispatch(getAccount())

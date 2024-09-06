@@ -68,8 +68,9 @@ export default function Step1({ navigation }: any) {
                         textAlign: "center",
                         fontSize: 14,
                         fontWeight: "300",
+                        lineHeight: 23,
                         letterSpacing: -0.06,
-                        marginTop: "5%",
+                        marginTop: "3%",
                     }}
                 >
                     Experience shopping like never before, connect with trusted
@@ -78,7 +79,10 @@ export default function Step1({ navigation }: any) {
                 </Text>
             </View>
             <View style={{ alignItems: "center" }}>
-                {/* <Image source={image1} /> */}
+                <Image
+                    source={require("../../assets/Welcome/step1.png")}
+                    style={{ width: 38, height: 22, marginTop: "5%" }}
+                />
             </View>
             <Pressable
                 onPress={() => {
@@ -88,6 +92,7 @@ export default function Step1({ navigation }: any) {
             >
                 <Image
                     source={require("../../assets/Welcome/ProgressButton1.png")}
+                    style={{ width: 75, height: 75, marginTop: "5%" }}
                 />
             </Pressable>
         </SafeAreaView>

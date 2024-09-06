@@ -5,13 +5,13 @@ import ProductCard from "../../components/ProductCard";
 import { category, product } from "./data";
 import useSWR from "swr";
 import useSWRWithCoordinates from "../../hooks/fetchWithCoordinates";
+import { useUserData } from "../../hooks/useData";
 
 export default function Home() {
+    const { userInfo } = useUserData() as any
     const { data: ProductData, isLoading } =
-        useSWRWithCoordinates("/products?limit=30");
+        useSWRWithCoordinates("/products?limit=30") as any;
     console.log("in home data ", ProductData);
-    console.log("in product data ", ProductData?.result);
-    console.log("faaa", ProductData);
     console.log("prototype  product data  ", ProductData?.data?.result[0]);
     return (
         <>
@@ -23,7 +23,7 @@ export default function Home() {
                         paddingHorizontal: "5%",
                     }}
                     ListHeaderComponent={
-                        <>
+                        <View style={{ paddingTop: 10 }}>
                             <Search placeholder="What are you looking for?" />
                             <Image
                                 source={require("../../assets/productOff.png")}
@@ -119,7 +119,7 @@ export default function Home() {
                             >
                                 Products
                             </Text>
-                        </>
+                        </View>
                     }
                     contentContainerStyle={{
                         justifyContent: "space-between",

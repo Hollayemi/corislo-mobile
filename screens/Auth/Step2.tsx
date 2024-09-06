@@ -24,6 +24,7 @@ export default function Step2({ route, navigation }: any) {
   const [message, setMessage] = React.useState("");
   const [data, setData] = React.useState<any>();
   // const { fullname, username, email, phoneNumber } = route.params;
+  console.log(route.params);
   const dispatch = useDispatch();
 
   return (
@@ -41,7 +42,7 @@ export default function Step2({ route, navigation }: any) {
           }}
           onSubmit={async (values) => {
             setDisabled(true);
-            const payload = { ...route.params, ...values };
+            const payload = { ...route.params.values, password: values.password };
             try {
               registerHandler(payload, navigation, dispatch);
             } catch (error) {

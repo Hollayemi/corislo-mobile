@@ -9,7 +9,7 @@ export default function SearchBox({ placeholder }: prop) {
     <View
       style={{
         borderRadius: 50,
-        padding: 10,
+        padding: 8,
         backgroundColor: "#F3F3F3",
         flexDirection: "row",
         alignItems: "center",

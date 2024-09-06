@@ -29,7 +29,7 @@ export default function Input({
         borderRadius: 5,
         backgroundColor: "#F2F3F9",
         padding: "4%",
-        marginVertical: 10,
+        marginVertical: 8,
       }}
     >
       <View style={{ flex: 0.95 }}>
@@ -42,7 +42,7 @@ export default function Input({
           style={{
             backgroundColor: "transparent",
             color: "#424242",
-            fontSize: 16,
+            fontSize: 15,
             fontWeight: "500",
           }}
           secureTextEntry={password ? true : false}

@@ -149,7 +149,7 @@ export default function Login({ navigation }: any) {
                             >
                                 Forgot Password?
                             </Text>
-                            <View style={{ marginTop: "40%" }}>
+                            <View style={{ marginTop: "30%" }}>
                                 <Button
                                     title="Next"
                                     onPress={() => handleSubmit()}

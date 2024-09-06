@@ -21,7 +21,7 @@ export default function Footer({ navigation, login }: prop) {
       >
         <Text>{login ? "Don’t have an account?" : "Have an account?"} </Text>
         <Text
-          style={{ color: "#2A347E" }}
+          style={{ color: "#2A347E"}}
           onPress={() =>
             navigation.navigate(
               login ? Routes.AuthenticationStep1 : Routes.Login

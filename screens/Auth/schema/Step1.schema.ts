@@ -9,8 +9,8 @@ const Step1ValidationSchema = yup.object().shape({
     .required("Email Address is Required"),
   phoneNumber: yup
     .string()
-    .min(10, ({ min }: any) => `Phone Number must have ${min} characters`)
-    .max(10, ({ max }: any) => `Phone Number must have ${max} characters`)
+    .min(11, ({ min }: any) => `Phone Number must have ${min} characters`)
+    .max(13, ({ max }: any) => `Phone Number must have ${max} characters`)
     .required("Phone Number is required"),
 });
 

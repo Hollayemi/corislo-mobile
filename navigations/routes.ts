@@ -20,6 +20,7 @@ export enum Routes {
   Login = "Login",
   ForgetPassword = "ForgetPassword",
   updatePassword = "updatePassword",
+  // changePassword = "changePasswordHandler",
   voucher = "Voucher",
   notification = "Notification",
   notificationAccess = "NotificationAccess",

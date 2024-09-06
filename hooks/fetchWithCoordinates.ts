@@ -2,20 +2,19 @@ import useSWR from "swr";
 import useGeolocation from "./useGeolocation";
 import { useEffect, useState } from "react";
 
-
 interface ProductResponse {
     result: object;
-    // Add other fields if needed
 }
 
-
-// Define types for SWR response
 interface SWRResponse<T> {
-    data: ProductResponse;
+    data: T | undefined;
     error: any;
     isLoading: boolean;
+    status: string;
+    isset: string;
+    lat: number | null;
+    lng: number | null;
 }
-
 
 // Define type for coordinates
 interface Coordinates {
@@ -39,9 +38,11 @@ const useSWRWithCoordinates = <T>(url: string) => {
     }, [lat]);
 
     // SWR hook for fetching data
-    const { data , error } = useSWR<T>(lat && lng ? [url, lat, lng] : null);
+    const { data, error } = useSWR<T>(
+        lat && lng ? [url, lat, lng] : null
+    );
 
-    return {
+    const response: SWRResponse<T> = {
         data,
         error,
         isLoading: loading || (!data && !error),
@@ -52,6 +53,8 @@ const useSWRWithCoordinates = <T>(url: string) => {
         lat,
         lng,
     };
+
+    return response;
 };
 
 export default useSWRWithCoordinates;

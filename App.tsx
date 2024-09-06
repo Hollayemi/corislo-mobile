@@ -33,6 +33,7 @@ import { jsonHeader } from "./redux/state/slices/api/setAuthHeaders";
 import martApi from "./redux/state/slices/api/baseApi";
 import { AxiosRequestConfig } from "axios";
 import queryString from "query-string";
+import { UserDataProvider } from "./context/userContext";
 
 const appendParamsToUrl = (
     url: string,
@@ -45,7 +46,7 @@ const appendParamsToUrl = (
         const qry = x?.split("=");
         existingParams = { ...existingParams, [qry[0]]: qry[1] };
     });
-    let realParam = "?"
+    let realParam = "?";
     // Add or update parameters
     for (const [key, value] of Object.entries(existingParams)) {
         if (value !== null && value !== undefined) {
@@ -99,24 +100,25 @@ export default function Main() {
                         refreshInterval: 0,
                         revalidateOnFocus: true,
                         fetcher: async (
-                            resource: [string, number | null, number | null],
+                            resource:
+                                | [string, number | null, number | null]
+                                | string,
                             init?: RequestInit
                         ) => {
-                            let url = resource[0];
-                            console.log(resource, "url");
-
-                            if (url.startsWith("/")) {
-                                console.log("here");
-                                url = appendParamsToUrl(url, {
-                                    lat: resource[1],
-                                    lng: resource[2],
-                                });
-                                
+                            let url = resource;
+                            if (Array.isArray(resource)) {
+                                url = resource[0];
+                                if (url.startsWith("/")) {
+                                    url = appendParamsToUrl(url, {
+                                        lat: resource[1],
+                                        lng: resource[2],
+                                    });
+                                }
+                            } else {
+                                url = resource;
                             }
 
                             const getToken = await jsonHeader("user");
-                            console.log(getToken, "getToken");
-                            console.log(url);
                             const res = await martApi.get(
                                 url,
                                 getToken as AxiosRequestConfig
@@ -125,7 +127,9 @@ export default function Main() {
                         },
                     }}
                 >
-                    <Navigation />
+                    <UserDataProvider>
+                        <Navigation />
+                    </UserDataProvider>
                 </SWRConfig>
             </Provider>
         </View>

@@ -10,50 +10,51 @@ export default function Created({ navigation }: any) {
   };
 
   return (
-    <SafeAreaView
-      style={{
-        padding: "5%",
-        backgroundColor: "#fff",
-        flex: 1,
-        position: "relative",
-        alignItems: "center",
-      }}
-    >
-      <View style={{ width: "100%", marginTop: "15%" }}>
-        <Heading />
-      </View>
-      <Image
-        source={require("../../assets/accountCreated.png")}
-        style={{ marginVertical: "25%" }}
-      />
-
-      <View
-        style={{
-          alignItems: "center",
-        }}
-      >
-        <Text style={{ color: "#2A347E", fontSize: 25, fontWeight: "700" }}>
-          Account Created
-        </Text>
-        <Text
+      <SafeAreaView
           style={{
-            fontSize: 15,
-            marginTop: "5%",
-            marginBottom: "10%",
-            textAlign: "center",
-            paddingHorizontal: "13%",
+              padding: "5%",
+              backgroundColor: "#fff",
+              flex: 1,
+              position: "relative",
+              alignItems: "center",
           }}
-        >
-          Welldone, your perseverance has finally paid off, all that is left for
-          you is to login.
-        </Text>
-        <Button
-          onPress={() => {
-            handleSubmit();
-          }}
-          title="Log in"
-        />
-      </View>
-    </SafeAreaView>
+      >
+          <View style={{ width: "100%", marginTop: "15%" }}></View>
+          <Image
+              source={require("../../assets/accountCreated.png")}
+              style={{ marginVertical: "25%" }}
+          />
+
+          <View
+              style={{
+                  alignItems: "center",
+              }}
+          >
+              <Text
+                  style={{ color: "#2A347E", fontSize: 25, fontWeight: "700" }}
+              >
+                  Account Created
+              </Text>
+              <Text
+                  style={{
+                      fontSize: 15,
+                      marginTop: "5%",
+                      marginBottom: "10%",
+                      textAlign: "center",
+                      lineHeight: 18,
+                      paddingHorizontal: "13%",
+                  }}
+              >
+                  Welldone, your perseverance has finally paid off, all that is
+                  left for you is to login.
+              </Text>
+              <Button
+                  onPress={() => {
+                      handleSubmit();
+                  }}
+                  title="Log in"
+              />
+          </View>
+      </SafeAreaView>
   );
 }

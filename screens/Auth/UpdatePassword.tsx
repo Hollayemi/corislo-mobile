@@ -22,115 +22,130 @@ import {
 } from "../../redux/state/slices/auth/resetPassword";
 import { useDispatch } from "react-redux";
 
-export default function UpdatePassword({ navigation }: any) {
-  const [disabled, setDisabled] = React.useState<boolean>(false);
-  const [message, setMessage] = React.useState("");
-  const [data, setData] = React.useState<any>();
-  const dispatch = useDispatch();
+export default function UpdatePassword({ navigation, route }: any) {
+    const [disabled, setDisabled] = React.useState<boolean>(false);
+    const [message, setMessage] = React.useState("");
+    const { token } = route.params;
+    console.log(token);
+    const [data, setData] = React.useState<any>();
+    const dispatch = useDispatch();
 
-  return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <SafeAreaView style={{ padding: "5%", backgroundColor: "#fff", flex: 1 }}>
-        <Heading
-          description="Since you have verified your email, all left now is to update your password."
-          title="Update Password"
-        />
-        <Formik
-          validationSchema={Step2ValidationSchema}
-          initialValues={{
-            password: "",
-            confirmPassword: "",
-          }}
-          onSubmit={async (values) => {
-            setDisabled(true);
-            console.log(values);
-            try {
-              changePasswordHandler(values, navigation);
-              navigation.navigate(Routes.homeScreen);
-            } catch (error) {
-              console.log(error);
-            }
-          }}
-        >
-          {({
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            values,
-            errors,
-            touched,
-            isValid,
-          }) => (
-            <>
-              <View style={{ marginVertical: "7%" }}>
-                {disabled && (
-                  <Popup info="Your password has been successfully reset" />
-                )}
-                <Text style={styles.error}>{message ? message : null}</Text>
-                <Input
-                  onChangeText={handleChange("password")}
-                  onBlur={handleBlur("password")}
-                  value={values.password}
-                  label="Password"
-                  password
-                  placeholder="*********"
-                  Icon={
-                    errors.password && touched.password ? (
-                      <MaterialIcons
-                        name="error-outline"
-                        size={24}
-                        color="red"
-                      />
-                    ) : (
-                      <Ionicons
-                        name="checkmark-circle"
-                        size={24}
-                        color="#233974"
-                      />
-                    )
-                  }
+    return (
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <SafeAreaView
+                style={{ padding: "5%", backgroundColor: "#fff", flex: 1 }}
+            >
+                <Heading
+                    description="Since you have verified your email, all left now is to update your password."
+                    title="Update Password"
                 />
-                {errors.password && touched.password && (
-                  <Text style={styles.error}>{errors.password}</Text>
-                )}
-                <Input
-                  onChangeText={handleChange("confirmPassword")}
-                  onBlur={handleBlur("confirmPassword")}
-                  value={values.confirmPassword}
-                  password
-                  placeholder="*********"
-                  label="Confirm Password"
-                  Icon={
-                    errors.confirmPassword && touched.confirmPassword ? (
-                      <MaterialIcons
-                        name="error-outline"
-                        size={24}
-                        color="red"
-                      />
-                    ) : (
-                      <Ionicons
-                        name="checkmark-circle"
-                        size={24}
-                        color="#233974"
-                      />
-                    )
-                  }
-                />
-                {errors.confirmPassword && touched.confirmPassword && (
-                  <Text style={styles.error}>{errors.confirmPassword}</Text>
-                )}
-              </View>
-              <View style={{ marginTop: "40%" }}>
-                <Button
-                  title="Update"
-                  onPress={handleSubmit}
-                  disabled={!isValid || disabled}
-                />
-              </View>
-            </>
-          )}
-        </Formik>
-      </SafeAreaView>
-    </TouchableWithoutFeedback>
-  );
+                <Formik
+                    validationSchema={Step2ValidationSchema}
+                    initialValues={{
+                        password: "",
+                        confirmPassword: "",
+                        prevToken: token
+                    }}
+                    onSubmit={async (values) => {
+                        setDisabled(true);
+                        console.log(values);
+                        try {
+                            ResetPasswordHandler(values, navigation, dispatch);
+                            navigation.navigate(Routes.homeScreen);
+                        } catch (error) {
+                            console.log(error);
+                        }
+                    }}
+                >
+                    {({
+                        handleChange,
+                        handleBlur,
+                        handleSubmit,
+                        values,
+                        errors,
+                        touched,
+                        isValid,
+                    }) => (
+                        <>
+                            <View style={{ marginVertical: "7%" }}>
+                                {disabled && (
+                                    <Popup info="Your password has been successfully reset" />
+                                )}
+                                <Text style={styles.error}>
+                                    {message ? message : null}
+                                </Text>
+                                <Input
+                                    onChangeText={handleChange("password")}
+                                    onBlur={handleBlur("password")}
+                                    value={values.password}
+                                    label="Password"
+                                    password
+                                    placeholder="*********"
+                                    Icon={
+                                        errors.password && touched.password ? (
+                                            <MaterialIcons
+                                                name="error-outline"
+                                                size={24}
+                                                color="red"
+                                            />
+                                        ) : (
+                                            <Ionicons
+                                                name="checkmark-circle"
+                                                size={24}
+                                                color="#233974"
+                                            />
+                                        )
+                                    }
+                                />
+                                {errors.password && touched.password && (
+                                    <Text style={styles.error}>
+                                        {errors.password}
+                                    </Text>
+                                )}
+                                <Input
+                                    onChangeText={handleChange(
+                                        "confirmPassword"
+                                    )}
+                                    onBlur={handleBlur("confirmPassword")}
+                                    value={values.confirmPassword}
+                                    password
+                                    placeholder="*********"
+                                    label="Confirm Password"
+                                    Icon={
+                                        errors.confirmPassword &&
+                                        touched.confirmPassword ? (
+                                            <MaterialIcons
+                                                name="error-outline"
+                                                size={24}
+                                                color="red"
+                                            />
+                                        ) : (
+                                            <Ionicons
+                                                name="checkmark-circle"
+                                                size={24}
+                                                color="#233974"
+                                            />
+                                        )
+                                    }
+                                />
+                                {errors.confirmPassword &&
+                                    touched.confirmPassword && (
+                                        <Text style={styles.error}>
+                                            {errors.confirmPassword}
+                                        </Text>
+                                    )}
+                            </View>
+                            <View style={{ marginTop: "40%" }}>
+                                <Button
+                                    title="Update"
+                                    onPress={handleSubmit}
+                                    disabled={!isValid || disabled}
+                                />
+                            </View>
+                        </>
+                    )}
+                </Formik>
+            </SafeAreaView>
+        </TouchableWithoutFeedback>
+    );
 }

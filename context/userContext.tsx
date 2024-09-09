@@ -1,12 +1,10 @@
 "use client";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { jwtDecode } from "jwt-decode";
 import useSWR from "swr";
 import io from "socket.io-client";
-import { useRoute, useNavigation } from "@react-navigation/native";
-import { Routes } from "../navigations/routes";
-import { RootState } from "../store";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { server } from "../redux/state/slices/api/baseApi";
 // import {InitialState} from '../redux/state/slices/auth/Login'
 
 const isOffline = async () => {
@@ -86,46 +84,47 @@ const UserDataProvider = ({ children }: { children: React.ReactNode }) => {
     }, []);
 
     console.log(connection);
-    // useEffect(async () => {
-    //     if (!socket) {
-    //         // let server = "http://localhost:5001";
-    //         let server = "https://corislo-backend.onrender.com";
-    //         if (process.env.NODE_ENV === "production") {
-    //             server = "https://corislo-backend.onrender.com";
-    //         }
-    //         const newSocket = io(server, {
-    //             query: {
-    //                 token: await AsyncStorage.getItem("user_token"),
-    //                 by: "user_token",
-    //                 port: 3033,
-    //             },
-    //         });
-    //         setSocket(newSocket);
+    useEffect(() => {
+        const setupSocket = async () => {
+            // Get token from AsyncStorage
+            const token = await AsyncStorage.getItem("user_token");
 
-    //         newSocket.on("connect", () => {
-    //             console.log("Socket connected");
-    //         });
+            // Initialize new socket connection
+            const newSocket = io(server, {
+                query: {
+                    token: token,
+                    by: "user_token",
+                    port: 3033,
+                },
+            });
 
-    //         newSocket.on("disconnect", () => {
-    //             console.log("Socket disconnected");
-    //         });
+            setSocket(newSocket); // Set the new socket instance to state
 
-    //         newSocket.on("roomJoined", ({ room }: any) => {
-    //             console.log(`Successfully joined room: ${room}`);
-    //         });
+            // Listeners
+            newSocket.on("connect", () => {
+                console.log("Socket connected");
+            });
 
-    //         newSocket.on("newMessage", (data: any) => {
-    //             console.log(data);
-    //         });
-    //     }
+            newSocket.on("disconnect", () => {
+                console.log("Socket disconnected");
+            });
 
-    //     // Cleanup when the component unmounts
-    //     return () => {
-    //         if (socket) {
-    //             socket.disconnect();
-    //         }
-    //     };
-    // }, [socket]);
+            newSocket.on("roomJoined", ({ room }) => {
+                console.log(`Successfully joined room: ${room}`);
+            });
+
+            newSocket.on("newMessage", (data) => {
+                console.log(data);
+            });
+
+            return () => {
+                newSocket.disconnect();
+                console.log("Socket disconnected and cleaned up");
+            };
+        };
+
+        setupSocket(); 
+    }, []);
 
     //
     //
@@ -198,6 +197,7 @@ const UserDataProvider = ({ children }: { children: React.ReactNode }) => {
                     (!savedErr && !savedIsLoading && savedData?.data) || [],
                 following: (!folErr && !folIsLoading && following?.data) || [],
                 cartData: (!cartErr && !cartIsLoading && cartData?.data) || {},
+                cartIsLoading,
                 userInfo: (!userErr && !userIsLoading && userInfo?.user) || {},
                 notifications:
                     (!notifErr && !notifIsLoading && notif?.data) || [],

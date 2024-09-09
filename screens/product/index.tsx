@@ -1,304 +1,485 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
-  Image,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-  FlatList,
+    Image,
+    SafeAreaView,
+    ScrollView,
+    StyleSheet,
+    Text,
+    View,
+    FlatList,
 } from "react-native";
 import Header from "../../components/header";
 import { style } from "../../style";
 import {
-  AntDesign,
-  MaterialIcons,
-  Ionicons,
-  SimpleLineIcons,
+    AntDesign,
+    MaterialIcons,
+    Ionicons,
+    SimpleLineIcons,
 } from "@expo/vector-icons";
 import { color, review, similar, size } from "./data";
 import Rating from "../../components/rating";
 import Button from "../../components/button";
 import Card from "./Card";
 import Coment from "./Coment";
+import { reshapePrice } from "../../utils/format";
+import useSWR from "swr";
+import Review from "./review";
+import { addCartHandler, saveProduct } from "../../redux/state/slices/home/cart";
+import { useDispatch } from "react-redux";
+import { useUserData } from "../../hooks/useData";
+import { addNewViewProduct } from "../../redux/state/slices/home";
+import { followStore } from "../../redux/state/slices/users/following";
 
 type prop = {
-  navigation: any;
+    navigation: any;
+    product: object | null;
 };
 
-export default function Product({ navigation }: prop) {
-  return (
-    <ScrollView style={style.container}>
-      <FlatList
-        ListHeaderComponent={
-          <>
-            <View style={[styles.slider, styles.shadowProp, styles.elevation]}>
-              <Image
-                source={require("../../assets/icon.png")}
-                style={{ width: "100%", objectFit: "contain" }}
-              />
-            </View>
-            <View style={{ marginHorizontal: "5%", paddingBottom: "15%" }}>
-              <Text style={styles.title}>Denim Athletic Sneakers</Text>
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  marginTop: 10,
-                }}
-              >
+export default function Product({ navigation, route }: any) {
+    const product = route.params;
+    const dispatch = useDispatch()
+    const { cartedProds, savedProds, socket, following } = useUserData() as any;
+    const { data, error } = useSWR(`/branch/info?branchId=${product.branchId}`);
+    const storeInfo = data?.data || {};
+    const isFollowing = following.includes(storeInfo.branchId);
+    console.log(following, isFollowing);
+    const [selectedSizes, selectSize] = useState([])
+    const [selectedColors, selectColor] = useState([]);
+    const payload = {
+        productId: product?._id,
+        variation: {
+            size: selectedSizes,
+            color: selectedColors,
+        },
+        store: product?.store,
+        branch: product?.branch,
+    };
+    useEffect(() => {
+        addNewViewProduct(
+            {
+                productId: product?._id,
+                branchId: product?.branchId,
+                store: product?.store,
+                branch: product?.branch,
+            },
+            dispatch
+        );
+    }, [data]);
+    return (
+        <>
+            <ScrollView style={style.container}>
                 <View
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    flex: 0.7,
-                  }}
+                    style={[styles.slider, styles.shadowProp, styles.elevation]}
                 >
-                  <Text style={styles.price}>₦25,000</Text>
-                  <Text style={styles.discount}>
-                    Save 12% {"\n"} With tax inclusive.
-                  </Text>
+                    <Image
+                        source={require("../../assets/demo/1.png")}
+                        style={{
+                            width: "100%",
+                            objectFit: "contain",
+                        }}
+                    />
                 </View>
                 <View
-                  style={{
-                    flexDirection: "row",
-                    flex: 0.2,
-                    justifyContent: "space-between",
-                  }}
+                    style={{
+                        marginHorizontal: "4%",
+                        paddingBottom: "5%",
+                    }}
                 >
-                  <AntDesign name="sharealt" size={24} color="black" />
-                  <MaterialIcons
-                    name="favorite-outline"
-                    size={24}
-                    color="black"
-                  />
+                    <Text style={styles.title}>{product.prodName}</Text>
+                    <View
+                        style={{
+                            flexDirection: "row",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            marginTop: 10,
+                        }}
+                    >
+                        <View
+                            style={{
+                                flexDirection: "row",
+                                alignItems: "center",
+                                flex: 0.7,
+                            }}
+                        >
+                            <Text style={styles.price}>
+                                {reshapePrice(product.prodPrice)}
+                            </Text>
+                            {product.discount && (
+                                <Text style={styles.discount}>
+                                    Save {product.discount}% {"\n"} With tax
+                                    inclusive.
+                                </Text>
+                            )}
+                        </View>
+                        <View
+                            style={{
+                                flexDirection: "row",
+                                flex: 0.2,
+                                justifyContent: "space-between",
+                            }}
+                        >
+                            <AntDesign
+                                name="sharealt"
+                                size={24}
+                                color="black"
+                            />
+                            <MaterialIcons
+                                name="favorite-outline"
+                                size={24}
+                                color={
+                                    savedProds.includes(product?._id)
+                                        ? "black"
+                                        : "red"
+                                }
+                                onPress={() => saveProduct(payload, dispatch)}
+                            />
+                        </View>
+                    </View>
+                    <Text
+                        style={{
+                            fontSize: 17,
+                            fontWeight: "600",
+                            marginTop: 20,
+                        }}
+                    >
+                        Available sizes
+                    </Text>
+                    <View
+                        style={{
+                            flexDirection: "row",
+                            marginTop: 10,
+                        }}
+                    >
+                        {size.map((text, index) => (
+                            <Text key={index} style={styles.size}>
+                                {text.toLocaleUpperCase()}
+                            </Text>
+                        ))}
+                    </View>
+                    <Text
+                        style={{
+                            fontSize: 17,
+                            fontWeight: "600",
+                            marginTop: 24,
+                        }}
+                    >
+                        Select Color
+                    </Text>
+                    <View
+                        style={{
+                            flexDirection: "row",
+                            marginTop: 10,
+                        }}
+                    >
+                        {color.map((text, index) => (
+                            <Text
+                                key={index}
+                                style={{
+                                    height: 26,
+                                    width: 26,
+                                    borderRadius: 13,
+                                    backgroundColor: text,
+                                    marginLeft: 10,
+                                }}
+                            />
+                        ))}
+                    </View>
+                    <Text
+                        style={{
+                            fontSize: 17,
+                            fontWeight: "600",
+                            marginTop: 18,
+                        }}
+                    >
+                        Description
+                    </Text>
+                    <Text
+                        style={{
+                            color: "#505050",
+                            fontSize: 14,
+                            fontWeight: "400",
+                            marginTop: "2%",
+                            lineHeight: 28,
+                        }}
+                    >
+                        {product.prodInfo}
+                    </Text>
+                    <View
+                        style={{
+                            backgroundColor: "#eee",
+                            padding: 10,
+                            marginVertical: 20,
+                            borderRadius: 5,
+                        }}
+                    >
+                        <View
+                            style={{
+                                flexDirection: "row",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                                marginTop: 10,
+                            }}
+                        >
+                            <View style={{ flexDirection: "row" }}>
+                                <Text
+                                    style={{
+                                        color: "#2A347E",
+                                        fontSize: 23,
+                                        fontWeight: "500",
+                                    }}
+                                >
+                                    {storeInfo.businessName}
+                                </Text>
+                                <Text
+                                    style={{
+                                        color: "#000",
+                                        fontSize: 15,
+                                        borderRadius: 11,
+                                        borderWidth: 0.5,
+                                        borderColor: "#6D6D6D",
+                                        borderStyle: "solid",
+                                        paddingVertical: 5,
+                                        paddingHorizontal: 15,
+                                        marginLeft: 10,
+                                    }}
+                                    onPress={() =>
+                                        followStore(
+                                            storeInfo,
+                                            dispatch,
+                                            socket,
+                                            isFollowing
+                                        )
+                                    }
+                                >
+                                    {isFollowing ? "Following" : "Follow"}
+                                </Text>
+                            </View>
+                            <Text
+                                style={{
+                                    color: "#2A347E",
+                                    fontSize: 16,
+                                    alignItems: "center",
+                                }}
+                            >
+                                <Ionicons
+                                    name="chatbubbles"
+                                    size={26}
+                                    color="#2A347E"
+                                />
+                            </Text>
+                        </View>
+                        <View
+                            style={{
+                                flexDirection: "row",
+                                alignItems: "center",
+                            }}
+                        >
+                            <Text
+                                style={{
+                                    fontWeight: "600",
+                                    color: "#FDB415",
+                                    fontSize: 13,
+                                }}
+                            >
+                                @{storeInfo.branchName}
+                            </Text>
+                            <Text
+                                style={{
+                                    fontWeight: "600",
+                                    color: "#505050",
+                                    fontSize: 13,
+                                    marginLeft: 19,
+                                }}
+                            >
+                                {storeInfo.followers} Followers
+                            </Text>
+                        </View>
+                        <View
+                            style={{
+                                flexDirection: "row",
+                                marginTop: 19,
+                            }}
+                        >
+                            <SimpleLineIcons
+                                name="location-pin"
+                                size={14}
+                                color="#505050"
+                            />
+                            <Text
+                                style={{
+                                    color: "#505050",
+                                    fontSize: 14,
+                                    lineHeight: 18,
+                                    marginLeft: 10,
+                                }}
+                            >
+                                {storeInfo.address}
+                            </Text>
+                        </View>
+                        <Text
+                            style={{
+                                color: "#2A347E",
+                                fontSize: 14,
+                                marginTop: 5,
+                                fontWeight: "600",
+                                textDecorationLine: "underline",
+                            }}
+                        >
+                            Show and track on Map{" "}
+                            <Ionicons name="open-outline" size={12} />
+                        </Text>
+                        <View
+                            style={{
+                                flexDirection: "row",
+                                justifyContent: "space-between",
+                                marginVertical: 15,
+                            }}
+                        >
+                            <Text
+                                style={{
+                                    color: "#000",
+                                    fontSize: 16,
+                                    fontWeight: "600",
+                                }}
+                            >
+                                Store Review (
+                                {storeInfo.feedback
+                                    ? storeInfo.feedback.totalReviews
+                                    : 0}
+                                )
+                            </Text>
+                            <Rating
+                                rate={
+                                    storeInfo.feedback
+                                        ? storeInfo.feedback?.averageRating?.toFixed()
+                                        : 0
+                                }
+                            />
+                        </View>
+                    </View>
                 </View>
-              </View>
-              <Text style={{ fontSize: 14, fontWeight: "600", marginTop: 15 }}>
-                Available sizes
-              </Text>
-              <View style={{ flexDirection: "row", marginTop: 10 }}>
-                {size.map((text, index) => (
-                  <Text key={index} style={styles.size}>
-                    {text.toLocaleUpperCase()}
-                  </Text>
-                ))}
-              </View>
-              <Text style={{ fontSize: 14, fontWeight: "600", marginTop: 15 }}>
-                Select Color
-              </Text>
-              <View style={{ flexDirection: "row", marginTop: 10 }}>
-                {color.map((text, index) => (
-                  <Text
-                    key={index}
-                    style={{
-                      height: 26,
-                      width: 26,
-                      borderRadius: 13,
-                      backgroundColor: text,
-                      marginLeft: 10,
-                    }}
-                  />
-                ))}
-              </View>
-              <Text style={{ fontSize: 14, fontWeight: "600", marginTop: 15 }}>
-                Description
-              </Text>
-              <Text
-                style={{
-                  color: "#505050",
-                  fontSize: 12,
-                  fontWeight: "400",
-                  marginTop: "3%",
-                }}
-              >
-                The perfect blend of contemporary design and casual comfort.
-                Crafted with meticulous attention to detail, this shoe combines
-                the timeless appeal of denim with the versatility of a classic
-                footwear staple. Made from high-quality denim fabric, these
-                shoes offer a unique and fashionable twist to your everyday
-                look. The rugged yet refined denim material adds a touch of
-                urban flair, allowing you to effortlessly elevate your style.
-                Designed for both comfort and durability, these shoes feature a
-                cushioned insole that provides all-day support, ensuring a
-                comfortable stride from morning to night. The sturdy rubber
-                outsole offers excellent traction on various surfaces, making
-                them ideal for both indoor and outdoor activities.
-              </Text>
-              <Text
-                style={{ fontSize: 14, fontWeight: "600", marginVertical: 15 }}
-              >
-                Vendor
-              </Text>
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                }}
-              >
-                <View style={{ flexDirection: "row" }}>
-                  <Text
-                    style={{
-                      color: "#2A347E",
-                      fontSize: 20,
-                      fontWeight: "500",
-                    }}
-                  >
-                    Disto Ventures
-                  </Text>
-                  <Text
-                    style={{
-                      color: "#000",
-                      fontSize: 10,
-                      borderRadius: 11,
-                      borderWidth: 0.5,
-                      borderColor: "#6D6D6D",
-                      borderStyle: "solid",
-                      paddingVertical: 5,
-                      paddingHorizontal: 15,
-                      marginLeft: 10,
-                    }}
-                  >
-                    Follow
-                  </Text>
-                </View>
-                <Text style={{ color: "#2A347E", fontSize: 13 }}>
-                  <Ionicons name="md-chatbubbles" size={15} color="#2A347E" />
-                  Message
-                </Text>
-              </View>
-              <Text
-                style={{ fontWeight: "600", color: "#505050", fontSize: 10 }}
-              >
-                323 Followers
-              </Text>
-              <View
-                style={{
-                  flexDirection: "row",
-                  marginVertical: 15,
-                }}
-              >
-                <SimpleLineIcons name="location-pin" size={20} color="black" />
-                <Text style={{ color: "#505050", fontSize: 12 }}>
-                  76, Olorunsogo street, Okeigbo {"\n"}(Ondo State, Nigeria)
-                </Text>
-              </View>
-              <Text
-                style={{
-                  color: "#2A347E",
-                  fontSize: 11,
-                  fontWeight: "600",
-                  textDecorationLine: "underline",
-                }}
-              >
-                Show and track on Map{" "}
-                <Ionicons name="md-open-outline" size={12} />
-              </Text>
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  marginVertical: 15,
-                }}
-              >
-                <Text
-                  style={{ color: "#000", fontSize: 12, fontWeight: "600" }}
-                >
-                  Product Review (15)
-                </Text>
-                <Rating rate={4} />
-              </View>
-            </View>
-          </>
-        }
-        style={{ marginVertical: 20, flex: 1 }}
-        data={review}
-        renderItem={({ item }: any) => <Coment {...item} />}
-        keyExtractor={(item: any) => item.id}
-        ListFooterComponent={
-          <View style={{ marginHorizontal: "5%", paddingBottom: "15%" }}>
-            <Text
-              style={{
-                color: "#2A347E",
-                fontSize: 12,
-                fontWeight: "600",
-                textAlign: "center",
-                marginVertical: 12,
-              }}
-            >
-              Show all comment
-            </Text>
-            <Text
-              style={{
-                fontSize: 16,
-                fontWeight: "600",
-                marginVertical: 15,
-                textAlign: "center",
-              }}
-            >
-              Similar Products
-            </Text>
-            <FlatList
-              style={{ marginVertical: 20, flex: 1 }}
-              horizontal
-              data={similar}
-              renderItem={({ item }: any) => <Card {...item} />}
-              keyExtractor={(item: any) => item.id}
-            />
 
+                <View
+                    style={{
+                        marginHorizontal: "1%",
+                        paddingBottom: "15%",
+                    }}
+                >
+                    {product._id && <Review productId={product._id} />}
+                    {/* <View
+                        style={{
+                            flexDirection: "row",
+                            justifyContent: "center",
+                            marginTop: 28,
+                        }}
+                    >
+                        <Text
+                            style={{
+                                color: "#2A347E",
+                                width: 150,
+                                fontSize: 15,
+                                fontWeight: "600",
+                                textAlign: "center",
+                                borderRadius: 11,
+                                borderWidth: 0.5,
+                                borderColor: "#6D6D6D",
+                                borderStyle: "solid",
+                                paddingVertical: 10,
+                            }}
+                        >
+                            Show all comment
+                        </Text>
+                    </View> */}
+
+                    <Text
+                        style={{
+                            fontSize: 20,
+                            fontWeight: "600",
+                            marginTop: 38,
+                            textAlign: "center",
+                        }}
+                    >
+                        Similar Products
+                    </Text>
+                    <FlatList
+                        style={{ marginVertical: 30, flex: 1 }}
+                        horizontal
+                        data={similar}
+                        renderItem={({ item }: any) => <Card {...item} />}
+                        keyExtractor={(item: any) => item.id}
+                    />
+                </View>
+            </ScrollView>
             <Button
-              onPress={() => {
-                console.log("cart pressed");
-              }}
-              title="Add to cart"
-              IconBefore={
-                <AntDesign name="shoppingcart" size={24} color="white" />
-              }
+                onPress={() => addCartHandler(payload, dispatch)}
+                mystyles={{
+                    position: "absolute",
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    borderTopWidth: 2,
+                    borderTopColor: "#fff",
+                    borderRadius: 0,
+                    fontSize: 40,
+                    // backgroundColor: "#fff",
+                    color: "#2A347E",
+                }}
+                textSize={20}
+                title={
+                    cartedProds.includes(product?._id)
+                        ? "Remove from cart"
+                        : "Add to cart"
+                }
+                IconBefore={
+                    <Text style={{ marginHorizontal: 60 }}>
+                        <AntDesign
+                            name="shoppingcart"
+                            size={26}
+                            color="white"
+                        />
+                    </Text>
+                }
             />
-          </View>
-        }
-      />
-    </ScrollView>
-  );
+        </>
+    );
 }
 
 const styles = StyleSheet.create({
-  slider: {
-    minHeight: 264,
-  },
-  // box shadow for ios
-  shadowProp: {
-    shadowColor: "rgba(0, 0, 0, 0.15)",
-    shadowOffset: { width: -2, height: 4 },
-    shadowOpacity: 1,
-    shadowRadius: 3,
-  },
-  // box shadow for android
-  elevation: {
-    elevation: 10,
-    shadowColor: "rgba(0, 0, 0, 0.4)",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "600",
-    marginTop: "10%",
-  },
-  price: { color: "#1C2534", fontSize: 20, fontWeight: "700" },
-  discount: {
-    color: "#2769B7",
-    fontSize: 7,
-    fontWeight: "400",
-    marginLeft: "5%",
-  },
-  size: {
-    color: "#707070",
-    fontSize: 10,
-    fontWeight: "500",
-    borderRadius: 3,
-    backgroundColor: "#ECECEC",
-    padding: "3%",
-    width: "auto",
-    marginLeft: 10,
-  },
+    slider: {
+        minHeight: 264,
+    },
+    // box shadow for ios
+    shadowProp: {
+        shadowColor: "rgba(0, 0, 0, 0.15)",
+        shadowOffset: { width: 12, height: 4 },
+        shadowOpacity: 1,
+        shadowRadius: 3,
+    },
+    // box shadow for android
+    elevation: {
+        elevation: 10,
+        shadowColor: "rgba(0, 0, 0, 0.4)",
+    },
+    title: {
+        fontSize: 28,
+        fontWeight: "600",
+        marginTop: "10%",
+    },
+    price: { color: "#1C2534", fontSize: 24, fontWeight: "700" },
+    discount: {
+        color: "#2769B7",
+        fontSize: 11,
+        fontWeight: "400",
+        marginLeft: "5%",
+    },
+    size: {
+        color: "#707070",
+        fontSize: 10,
+        fontWeight: "500",
+        borderRadius: 3,
+        backgroundColor: "#ECECEC",
+        padding: "3%",
+        width: "auto",
+        marginLeft: 10,
+    },
 });

@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, Text, View } from "react-native";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import Checkbox from "expo-checkbox";
 import { BottomTabHeaderProps } from "@react-navigation/bottom-tabs";
@@ -78,12 +78,15 @@ export default function HomeHeader({ category, settings }: prop) {
                             color="#292D32"
                         />
                     ) : null}
-                    <Ionicons
-                        name="cart-outline"
-                        size={24}
-                        color="#292D32"
-                        onPress={() => navigation.navigate(Routes.Cart)}
-                    />
+
+                    <TouchableOpacity
+                        onPress={() => navigation.navigate(Routes.Cart, { title: "Cart" })}
+                    >
+                        <Image
+                            source={require("../../assets/shopping-cart.png")}
+                            style={{ width: 24, height: 24 }}
+                        />
+                    </TouchableOpacity>
                     <Ionicons
                         style={{ marginLeft: 20 }}
                         name="notifications-outline"

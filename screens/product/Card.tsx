@@ -5,36 +5,39 @@ import Rating from "../../components/rating";
 
 export default function Card({ price, rating, description }: Similar) {
   return (
-    <View
-      style={{
-        borderRadius: 5,
-        borderWidth: 1,
-        borderStyle: "solid",
-        borderColor: "#E6E6E6",
-        marginLeft: 20,
-        width: 250,
-      }}
-    >
-      <Image
-        source={require("../../assets/icon.png")}
-        style={{ objectFit: "cover", height: 200, width: "100%" }}
-      />
-      <View style={{ padding: 10 }}>
-        <Text style={{ fontSize: 13, fontWeight: "500", marginVertical: 15 }}>
-          {description}
-        </Text>
-        <Rating rate={4} small />
-        <Text
+      <View
           style={{
-            fontSize: 16,
-            fontWeight: "700",
-            color: "#1C2534",
-            marginTop: 10,
+              borderRadius: 5,
+              borderWidth: 1,
+              borderStyle: "solid",
+              borderColor: "#E6E6E6",
+              marginLeft: 20,
+              width: 230,
           }}
-        >
-          ₦{price}
-        </Text>
+      >
+          <Image
+              source={require("../../assets/demo/2.png")}
+              style={{ objectFit: "cover", height: 180, width: "100%" }}
+          />
+          <View style={{ padding: 10 }}>
+              <Text
+                  style={{ fontSize: 14, fontWeight: "500", marginBottom: 5 }}
+                  numberOfLines={1}
+              >
+                  {description}
+              </Text>
+              <Text
+                  style={{
+                      fontSize: 16,
+                      fontWeight: "700",
+                      color: "#1C2534",
+                      marginBottom: 10,
+                  }}
+              >
+                  ₦{price}
+              </Text>
+              <Rating rate={4} size={15} />
+          </View>
       </View>
-    </View>
   );
 }

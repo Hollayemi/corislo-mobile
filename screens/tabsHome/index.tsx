@@ -6,13 +6,32 @@ import { category, product } from "./data";
 import useSWR from "swr";
 import useSWRWithCoordinates from "../../hooks/fetchWithCoordinates";
 import { useUserData } from "../../hooks/useData";
+import CategoryCard from "../../components/ProductCard/categoryCard";
+import Loader from "../../components/loader";
+import PopularAd from "../../components/ProductCard/ads";
 
-export default function Home() {
-    const { userInfo } = useUserData() as any
-    const { data: ProductData, isLoading } =
-        useSWRWithCoordinates("/products?limit=30") as any;
-    console.log("in home data ", ProductData);
-    console.log("prototype  product data  ", ProductData?.data?.result[0]);
+export default function Home({ navigation }: any) {
+    const { userInfo } = useUserData() as any;
+    const { data: ProductData, isLoading } = useSWRWithCoordinates(
+        "/products?limit=20"
+    ) as any;
+
+    // get categories
+    const { data: cateDate, isLoading: cateLoading } = useSWR(
+        "/corisio/all-categories"
+    );
+    const categories = cateDate ? cateDate.data : [];
+
+    // get popular products
+    const { data: popuProd, isLoading: popularLoading } = useSWR(
+        "/home/popular-products"
+    );
+    const popular = popuProd ? popuProd.data : [];
+
+    // get popular ads
+    const { data: popuAds, isLoading: popularAdsLoading } = useSWR("/home/ads");
+    const popularAds = popuAds ? popuAds.data : [];
+
     return (
         <>
             {ProductData?.data?.result ? (
@@ -27,7 +46,11 @@ export default function Home() {
                             <Search placeholder="What are you looking for?" />
                             <Image
                                 source={require("../../assets/productOff.png")}
-                                style={{ width: "100%", marginVertical: 20 }}
+                                style={{
+                                    width: "100%",
+                                    marginVertical: 20,
+                                    borderRadius: 10,
+                                }}
                             />
                             <Text
                                 style={{
@@ -39,11 +62,11 @@ export default function Home() {
                                 Top Sub-Categories
                             </Text>
                             <FlatList
-                                style={{ marginBottom: 20, flex: 1 }}
+                                style={{ marginBottom: 5, flex: 1 }}
                                 horizontal
-                                data={category.slice(0, 8)}
+                                data={categories}
                                 renderItem={({ item }: any) => (
-                                    <ProductCard {...item} />
+                                    <CategoryCard {...item} />
                                 )}
                                 keyExtractor={(item: any) => item.id}
                             />
@@ -57,7 +80,7 @@ export default function Home() {
                                 Flash Sales
                             </Text>
                             <FlatList
-                                style={{ marginBottom: 20, flex: 1 }}
+                                style={{ marginBottom: 0, flex: 1 }}
                                 horizontal
                                 data={product.filter(
                                     (item) => item.type === "flash"
@@ -79,15 +102,9 @@ export default function Home() {
                             <FlatList
                                 style={{ marginBottom: 20, flex: 1 }}
                                 horizontal
-                                data={[0, 1]}
-                                renderItem={() => (
-                                    <Image
-                                        source={require("../../assets/popularAds.png")}
-                                        style={{
-                                            marginBottom: 10,
-                                            marginRight: 20,
-                                        }}
-                                    />
+                                data={popularAds}
+                                renderItem={({ item }: any) => (
+                                    <PopularAd {...item} />
                                 )}
                             />
                             <Text
@@ -102,11 +119,9 @@ export default function Home() {
                             <FlatList
                                 style={{ marginBottom: 20, flex: 1 }}
                                 horizontal
-                                data={product
-                                    .filter((item) => item.type !== "flash")
-                                    .slice(0, 4)}
+                                data={popular}
                                 renderItem={({ item }: any) => (
-                                    <ProductCard {...item} />
+                                    <ProductCard {...item.product} />
                                 )}
                                 keyExtractor={(item: any) => item._id}
                             />
@@ -129,13 +144,27 @@ export default function Home() {
                     }}
                     // data={product.filter((item) => item.type !== "flash")}
                     data={ProductData?.data?.result}
-                    renderItem={({ item }: any) => (
-                        <ProductCard {...item} noMargin />
+                    renderItem={({ item, index }: any) => (
+                        <ProductCard
+                            {...item}
+                            index={index}
+                            key={index}
+                            noMargin
+                            navigation={navigation}
+                        />
                     )}
                     keyExtractor={(item: any) => item._id}
                 />
             ) : (
-                <Text>Loading</Text>
+                <View
+                    style={{
+                        height: "100%",
+                        justifyContent: "center",
+                        alignItems: "center",
+                    }}
+                >
+                    <Loader />
+                </View>
             )}
         </>
     );

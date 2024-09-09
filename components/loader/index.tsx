@@ -52,15 +52,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   loader: {
-    width: 100,
+    width: 80,
     height: 100,
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
   },
   loaderDot: {
-    width: 16,
-    height: 16,
+    width: 10,
+    height: 10,
     backgroundColor: "#2A347E",
     borderRadius: 8,
   },

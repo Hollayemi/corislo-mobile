@@ -30,7 +30,6 @@ const Stack = createNativeStackNavigator();
 export default function Navigation() {
   const [user, setUser] = React.useState("");
   const { userInfo } = useUserData() as any
-   console.log(userInfo, "userInfo");
   const getUser = async () => {
     return await AsyncStorage.getItem("user_token").then((usr) =>
       setUser(usr!)
@@ -61,7 +60,7 @@ export default function Navigation() {
                   component={Product}
                   options={{
                       header: ({ navigation, route }) => (
-                          <Header navigation={navigation} title={route.name} />
+                          <Header navigation={navigation} title={route.params } />
                       ),
                   }}
               />

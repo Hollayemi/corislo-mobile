@@ -1,13 +1,15 @@
 import React, { useRef, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import RNPickerSelect from "react-native-picker-select";
+import ModalSelector from "react-native-modal-selector";
+import { formatName } from "../../utils/get-initials";
 
 interface optionProps {
     icon?: any;
     options: any;
-    selectedValue: string;
+    selectedValue?: string;
     setSelectedValue: any;
     others?: object;
+    Component?: any;
 }
 
 const OptionsMenu: React.FC<optionProps> = ({
@@ -16,39 +18,25 @@ const OptionsMenu: React.FC<optionProps> = ({
     selectedValue,
     setSelectedValue,
     others,
+    Component,
 }) => {
-    const pickerRef = useRef<RNPickerSelect>(null);
-
-    const handlePress = () => {
-        // Programmatically open the picker
-        if (pickerRef.current) {
-            (pickerRef.current as any).togglePicker();
-        }
-    };
 
     return (
         <View style={styles.container}>
-            <TouchableOpacity
-                onPress={handlePress}
-                style={styles.customComponent}
-                
-            >
-                <Text style={styles.customPlaceholderText}>
-                    Custom Placeholder
-                </Text>
-            </TouchableOpacity>
-            <RNPickerSelect
+            <ModalSelector
+                data={options}
                 {...others}
-                ref={pickerRef}
-                Icon={icon}
-                value={selectedValue}
-                onValueChange={(value) => setSelectedValue(value)}
-                items={options.map((x: any) => {
-                    return { label: x, value: x };
-                })}
-                placeholder={{}}
-                style={pickerSelectStyles}
-            />
+                initValue="Select something!"
+                onChange={(option) => {
+                    console.log(option)
+                    setSelectedValue(option.key);
+                }}
+                backdropPressToClose
+                cancelText={"Close"}
+                touchableActiveOpacity={0}
+            >
+                <Component />
+            </ModalSelector>
         </View>
     );
 };
@@ -82,36 +70,36 @@ const styles = StyleSheet.create({
 });
 
 const pickerSelectStyles = StyleSheet.create({
-    // inputIOS: {
-    //     fontSize: 16,
-    //     paddingVertical: 12,
-    //     paddingHorizontal: 10,
-    //     borderWidth: 1,
-    //     borderColor: "gray",
-    //     borderRadius: 4,
-    //     color: "black",
-    //     paddingRight: 30,
-    // },
-    // inputAndroid: {
-    //     fontSize: 16,
-    //     paddingVertical: 8,
-    //     paddingHorizontal: 10,
-    //     borderWidth: 1,
-    //     borderColor: "gray",
-    //     borderRadius: 4,
-    //     color: "black",
-    //     paddingRight: 30,
-    // },
     inputIOS: {
-        // This hides the actual input
-        height: 0,
-        width: 0,
+        fontSize: 16,
+        paddingVertical: 12,
+        paddingHorizontal: 10,
+        borderWidth: 1,
+        borderColor: "gray",
+        borderRadius: 4,
+        color: "black",
+        paddingRight: 30,
     },
     inputAndroid: {
-        // This hides the actual input
-        height: 0,
-        width: 0,
+        fontSize: 16,
+        paddingVertical: 8,
+        paddingHorizontal: 10,
+        borderWidth: 1,
+        borderColor: "gray",
+        borderRadius: 4,
+        color: "black",
+        paddingRight: 30,
     },
+    // inputIOS: {
+    //     // This hides the actual input
+    //     height: 0,
+    //     width: 0,
+    // },
+    // inputAndroid: {
+    //     // This hides the actual input
+    //     height: 0,
+    //     width: 0,
+    // },
 });
 
 export default OptionsMenu;

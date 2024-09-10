@@ -15,7 +15,7 @@ if (authToken) {
   requestHeaders.Authorization = `${authToken}`;
 }
 // let server = "https://corislo-backend.onrender.com/api/v1/";
-let server = "http://192.168.28.178:5001/api/v1/";
+let server = "http://192.168.22.43:5001/api/v1/";
 if (process.env.NODE_ENV === "production") {
   console.log("in production");
   server = "https://corislo-backend.onrender.com/api/v1/";

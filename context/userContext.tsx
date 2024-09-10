@@ -5,6 +5,7 @@ import useSWR from "swr";
 import io from "socket.io-client";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { server } from "../redux/state/slices/api/baseApi";
+import { Alert } from "react-native";
 // import {InitialState} from '../redux/state/slices/auth/Login'
 
 const isOffline = async () => {
@@ -23,6 +24,7 @@ const checkStatus = async () => {
 };
 
 const { createContext, useEffect, useState } = require("react");
+const getToken = async () => await AsyncStorage.getItem("user_token");
 
 const defaultProvider = {
     cartedProds: [],
@@ -32,6 +34,7 @@ const defaultProvider = {
     userInfo: {},
     selectedAddress: {},
     isOffline: true,
+    token: getToken(),
     notifications: [],
     loading: false,
     setLoading: () => {},
@@ -48,7 +51,7 @@ const UserDataProvider = ({ children }: { children: React.ReactNode }) => {
     // const route = useRoute();
     // const navigation = useNavigation<any>();
     const dispatch = useDispatch();
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [connection, setConnection] = useState(null);
     const [socket, setSocket] = useState(null);
     const [temp, addTemp] = useState({});
@@ -78,12 +81,14 @@ const UserDataProvider = ({ children }: { children: React.ReactNode }) => {
         const fetchConnectionStatus = async () => {
             const isOnline = await checkStatus();
             setConnection(isOnline);
+            setLoading(false);
         };
 
         fetchConnectionStatus();
     }, []);
 
-    console.log(connection);
+    console.log("\nconnection ---->", connection);
+    console.log("\ntoken ---->", Boolean(defaultProvider.token));
     useEffect(() => {
         const setupSocket = async () => {
             // Get token from AsyncStorage
@@ -123,7 +128,7 @@ const UserDataProvider = ({ children }: { children: React.ReactNode }) => {
             };
         };
 
-        setupSocket(); 
+        setupSocket();
     }, []);
 
     //
@@ -185,9 +190,32 @@ const UserDataProvider = ({ children }: { children: React.ReactNode }) => {
         isLoading: folIsLoading,
     } = useSWR(connection && "/user/following");
 
+    interface alertProps {
+        title: string;
+        message: string;
+        buttons?: [];
+    }
+
+    const showAlert = ({ title, message, buttons = [] }: alertProps) => {
+        Alert.alert(
+            title,
+            message,
+            [
+                {
+                    text: "Cancel", // First Button
+                    onPress: () => console.log("Cancel Pressed"),
+                    style: "cancel",
+                },
+                ...buttons,
+            ],
+            { cancelable: false }
+        );
+    };
+
     return (
         <DataContext.Provider
             value={{
+                ...defaultProvider,
                 cartedProds:
                     (!cartErr &&
                         !cartIsLoading &&
@@ -208,6 +236,7 @@ const UserDataProvider = ({ children }: { children: React.ReactNode }) => {
                 popMap: popMap,
                 overLay: overLay,
                 isOffline: !Boolean(connection),
+                showAlert,
                 temp,
                 addTemp,
             }}

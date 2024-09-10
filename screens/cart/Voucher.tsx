@@ -9,8 +9,8 @@ function Voucher() {
               flexDirection: "row",
               alignItems: "center",
               justifyContent: "space-between",
-              paddingVertical: "2%",
-              marginHorizontal: "5%",
+              paddingVertical: "5%",
+              marginHorizontal: "0%",
           }}
       >
           <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -38,7 +38,7 @@ function Voucher() {
               >
                   Click to add or check Voucher
               </Text>
-              <Ionicons name="chevron-forward" size={18} color="#2A347E" />
+              <Ionicons name="chevron-forward" size={18} style={{marginLeft: 10}} color="#2A347E" />
           </View>
       </View>
   );

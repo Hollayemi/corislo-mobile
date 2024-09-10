@@ -1,10 +1,17 @@
 import { Routes } from "../../navigations/routes";
 
+export const accountInfo = [
+    { id: 1, name: "Pickers", type: "link", to: Routes.pickers },
+    { id: 2, name: "Shipping Addresses", type: "link", to: Routes.addresses },
+    { id: 3, name: "Followed Sellers", type: "link", to: Routes.voucher },
+];
+
 export const productManagement = [
-  { id: 1, name: "Orders", type: "link", to: Routes.order },
-  { id: 2, name: "Pending Reviews", type: "link", to: Routes.review },
-  { id: 3, name: "Vouchers", type: "link", to: Routes.voucher },
-  { id: 4, name: "Saved Items", type: "link", to: Routes.savedItems },
+    { id: 1, name: "Orders", type: "link", to: Routes.order },
+    { id: 2, name: "Pending Reviews", type: "link", to: Routes.review },
+    { id: 3, name: "Vouchers", type: "link", to: Routes.voucher },
+    { id: 4, name: "Saved Items", type: "link", to: Routes.savedItems },
+    { id: 4, name: "Recently Viewed", type: "link", to: Routes.savedItems },
 ];
 export const accountManagement = [
   {

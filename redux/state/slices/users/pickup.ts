@@ -3,96 +3,61 @@ import toaster from "../../../../configs/toaster";
 import martApi from "../api/baseApi";
 import { jsonHeader } from "../api/setAuthHeaders";
 import tokens from "../../../../configs/tokens";
+import { mutate } from "swr";
+import { Routes } from "../../../../navigations/routes";
 
-const addPickupAgent = (payload: any) =>
-  createAsyncThunk("post/addPickupAgent", async (payload1) => {
-    const userToken = tokens.auth;
-    const { data } = await martApi
-      .post("/user/pickup", payload.body, jsonHeader(userToken!))
-      .then((res: any) => res)
-      .catch((e: any) => e.response);
-    return data;
-  });
+const addPickupAgent = createAsyncThunk(
+    "post/addPickupAgent",
+    async (payload: any) => {
+        const { data } = await martApi
+            .post("/user/pickup", payload, await jsonHeader(""))
+            .then((res: any) => res)
+            .catch((e: any) => e.response);
+        return data;
+    }
+);
 
 export const addPickupPerson = (
-  formData: any,
-  auth: any,
-  dispatch: any,
-  setData: any
+    formData: any,
+    dispatch: any,
+    navigation: any
 ) => {
-  const payload = {
-    body: formData,
-    auth,
-  };
-  dispatch(addPickupAgent(payload))
-    .then(unwrapResult)
-    .then((res: any) => {
-      toaster({ ...res });
-      res.type === "success" && window.location.reload();
-    })
-    .catch((e: any) => {});
+    dispatch(addPickupAgent(formData))
+        .then(unwrapResult)
+        .then((res: any) => {
+            toaster({ ...res });
+            if(res.type === "success") {
+              mutate("/user/pickers");
+              navigation.navigate(Routes.pickers);
+            }
+        })
+        .catch((e: any) => {});
 };
 
 //
 // delete pickup agent
-const myPickupsApi = (payload: any) =>
-  createAsyncThunk("post/deletePickup", async (payload1) => {
-    const userToken = tokens.auth;
-    const { data } = await martApi
-      .get("/user/pickup", jsonHeader(userToken!))
-      .then((res: any) => res)
-      .catch((e: any) => e);
-    return data;
-  });
-
-export const getPickupPerson = (
-  formData: any,
-  auth: any,
-  dispatch: any,
-  setData: any
-) => {
-  const payload = {
-    id: formData,
-    auth,
-  };
-  dispatch(myPickupsApi(payload))
-    .then(unwrapResult)
-    .then((res: any) => {
-      toaster({ ...res });
-      res.type === "success" && setData(res.data);
-    })
-    .catch((e: any) => {});
-};
-//
 //
 //
 //
 // delete pickup agent
-const deletePickupAgent = (payload: any) =>
-  createAsyncThunk("post/deletePickup", async (payload1) => {
-    const userToken = tokens.auth;
-    const { data } = await martApi
-      .delete(`/user/pickup/${payload.id}`, jsonHeader(userToken!))
-      .then((res: any) => res)
-      .catch((e: any) => e);
-    return data;
-  });
+const deletePickupAgent = createAsyncThunk(
+    "post/deletePickup",
+    async (payload: any) => {
+        const userToken = tokens.auth;
+        const { data } = await martApi
+            .delete(`/user/pickup/${payload.id}`, await jsonHeader(""))
+            .then((res: any) => res)
+            .catch((e: any) => e);
+        return data;
+    }
+);
 
-export const deletePickupPerson = (
-  formData: any,
-  auth: any,
-  dispatch: any,
-  setData: any
-) => {
-  const payload = {
-    id: formData,
-    auth,
-  };
-  dispatch(deletePickupAgent(payload))
-    .then(unwrapResult)
-    .then((res: any) => {
-      toaster({ ...res });
-      res.type === "success" && window.location.reload();
-    })
-    .catch((e: any) => {});
+export const deletePickupPerson = (formData: any, dispatch: any) => {
+    dispatch(deletePickupAgent(formData))
+        .then(unwrapResult)
+        .then((res: any) => {
+            toaster({ ...res });
+            mutate("/user/pickers");
+        })
+        .catch((e: any) => {});
 };

@@ -9,7 +9,7 @@ export enum Routes {
   product = "product",
   homeScreen = "homeScreen",
   Welcome = "welcome",
-  Shipping = "Shipping Method",
+  Shipping = "Delivery Method",
   WelcomeStep1 = "WelcomeStep1",
   WelcomeStep2 = "WelcomeStep2",
   WelcomeStep3 = "WelcomeStep3",
@@ -40,4 +40,11 @@ export enum Routes {
   orderDetails = "OrderDetails",
   twoFactorAuth = "TwoFactorAuth",
   deleteAccount = "DeleteAccount",
+  // stephen
+  pickers = "My Pickers",
+  addPickers = "New Picker",
+  addresses = "Shipping Address",
+  addAddresses = "New Shipping Address",
+  map = "Map",
+  paymentOption = "Payment"
 }

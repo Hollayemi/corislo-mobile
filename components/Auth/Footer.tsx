@@ -83,7 +83,7 @@ export default function Footer({ navigation, login }: prop) {
         </View>
       </View>
       {login ? null : (
-        <Text style={{ textAlign: "center", padding: "5%", fontSize: 12 }}>
+        <Text style={{ textAlign: "center", padding: "5%", fontSize: 12, lineHeight: 20 }}>
           <Text>By continuing, you agree to the </Text>
           <Text style={{ color: "#233974" }}>
             Library Terms {"\n"} Conditions{" "}

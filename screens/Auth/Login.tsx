@@ -47,8 +47,6 @@ export default function Login({ navigation }: any) {
                     }}
                     onSubmit={async (values) => {
                         try {
-                            setDisabled(true);
-                            console.log("inside login", values);
                             loginHandler(
                                 values,
                                 navigation,

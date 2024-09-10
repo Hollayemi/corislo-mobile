@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FlatList, Image, ScrollView, Text, View } from "react-native";
 import Search from "../../components/search";
 import ProductCard from "../../components/ProductCard";
@@ -12,6 +12,7 @@ import PopularAd from "../../components/ProductCard/ads";
 
 export default function Home({ navigation }: any) {
     const { userInfo } = useUserData() as any;
+    const [search, setSearch] = useState("");
     const { data: ProductData, isLoading } = useSWRWithCoordinates(
         "/products?limit=20"
     ) as any;
@@ -43,7 +44,11 @@ export default function Home({ navigation }: any) {
                     }}
                     ListHeaderComponent={
                         <View style={{ paddingTop: 10 }}>
-                            <Search placeholder="What are you looking for?" />
+                            <Search
+                                placeholder="What are you looking for?"
+                                value={search}
+                                onChange={(e: any) => setSearch(e.target.value)}
+                            />
                             <Image
                                 source={require("../../assets/productOff.png")}
                                 style={{

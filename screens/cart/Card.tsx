@@ -24,7 +24,7 @@ export default function Card({ checkout, selected, selectCart, ...data }: any) {
         store: data?.store,
         branch: data?.branch,
     };
-    console.log(data);
+   
     const isSelected = selected?.includes(data.productId);
     return (
         <View

@@ -10,12 +10,12 @@ type prop = {
     title: any;
     navigation: any;
     app?: boolean;
+    transparent?: boolean;
 };
 
-export default function Header({ title, navigation, app }: prop) {
-    console.log(title)
+export default function Header({ title, navigation, app, transparent }: prop) {
     return (
-        <View style={styles.header}>
+        <View style={{ ...styles.header }}>
             <View
                 style={[
                     styles.titleGroup,
@@ -24,7 +24,7 @@ export default function Header({ title, navigation, app }: prop) {
             >
                 <AntDesign
                     name="left"
-                    size={24}
+                    size={20}
                     color="black"
                     style={{ paddingRight: "15%" }}
                     onPress={() => navigation.goBack()}
@@ -38,7 +38,9 @@ export default function Header({ title, navigation, app }: prop) {
                     {/* <AntDesign name="search1" size={24} color="black" />
                   <AntDesign name="shoppingcart" size={24} color="black" /> */}
                     <TouchableOpacity
-                        onPress={() => navigation.navigate(Routes.Cart, { title: "Cart" })}
+                        onPress={() =>
+                            navigation.navigate(Routes.Cart, { title: "Cart" })
+                        }
                     >
                         <Image
                             source={require("../../assets/shopping-cart.png")}

@@ -11,6 +11,7 @@ import Loader from "../../components/loader";
 import { cart } from "./data";
 import { useUserData } from "../../hooks/useData";
 import { reshapePrice } from "../../utils/format";
+import { style } from "../../style";
 
 type prop = {
     navigation: any;
@@ -21,8 +22,6 @@ export default function Cart({ navigation }: prop) {
     const addresses = addrs?.data || [];
     const addr = addresses[0] || {};
     const { cartedProds, cartData, cartIsLoading } = useUserData() as any;
-
-    
 
     // const { data, error, isLoading, isValidating, mutate } = useSWR("/user/cart");
     const [selected, selectCart] = useState([]);
@@ -39,7 +38,7 @@ export default function Cart({ navigation }: prop) {
     ) : (
         <FlatList
             ListHeaderComponent={
-                <>
+                <View style={style.container}>
                     <Alert
                         label="You have a discount voucher for this products"
                         type="action"
@@ -50,7 +49,7 @@ export default function Cart({ navigation }: prop) {
                             flexDirection: "row",
                             justifyContent: "space-between",
                             paddingVertical: "5%",
-                            marginHorizontal: "5%",
+                            marginHorizontal: "4%",
                             borderBottomWidth: 1,
                             borderColor: "#D2D2D2",
                             borderStyle: "solid",
@@ -94,10 +93,10 @@ export default function Cart({ navigation }: prop) {
                             {cartedProds.length})
                         </Text>
                     </View>
-                </>
+                </View>
             }
             style={{
-                paddingHorizontal: "5%",
+                paddingHorizontal: "2%",
                 flex: 1,
                 backgroundColor: "#fff",
             }}
@@ -110,9 +109,6 @@ export default function Cart({ navigation }: prop) {
                 <>
                     <View
                         style={{
-                            flexDirection: "row",
-                            alignItems: "center",
-                            justifyContent: "space-between",
                             paddingVertical: "2%",
                             marginHorizontal: "0%",
                             borderStyle: "solid",
@@ -195,10 +191,10 @@ export default function Cart({ navigation }: prop) {
                             })`}
                             onPress={() => {
                                 try {
-                                    navigation.navigate(Routes.Checkout, { selected });
-                                } catch (error) {
-                                    console.log("an error occured");
-                                }
+                                    navigation.navigate(Routes.Checkout, {
+                                        selected,
+                                    });
+                                } catch (error) {}
                             }}
                             mystyles={{ height: 50 }}
                             disabled={cartedProds?.length < 1}

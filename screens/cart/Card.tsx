@@ -60,7 +60,8 @@ export default function Card({ checkout, selected, selectCart, ...data }: any) {
             <View style={{ flex: 0.9 }}>
                 <Text
                     style={{
-                        fontSize: 14,
+                        fontSize: checkout ? 16 : 14,
+                        marginBottom: checkout ? 10 : 0,
                         fontWeight: "500",
                         color: "#424242",
                     }}
@@ -84,7 +85,7 @@ export default function Card({ checkout, selected, selectCart, ...data }: any) {
                         <Text
                             style={{
                                 fontSize: 20,
-                                fontWeight: "600",
+                                fontWeight: "700",
                                 color: "#1C2534",
                             }}
                         >

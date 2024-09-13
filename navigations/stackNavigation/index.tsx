@@ -31,319 +31,332 @@ import Addresses from "../../screens/Address";
 import NewAddress from "../../screens/Address/newAddress";
 import Map from "../../screens/map";
 import PaymentOption from "../../screens/payment";
+import OrderConfirmation from "../../screens/payment/confirmation";
 
 const Stack = createNativeStackNavigator();
 
 export default function Navigation() {
-  const [user, setUser] = React.useState("");
-  const { userInfo,token, loading, isOffline } = useUserData() as any
-  const getUser = async () => {
-    return await AsyncStorage.getItem("user_token").then((usr) =>
-      setUser(usr!)
+    const [user, setUser] = React.useState("");
+    const { userInfo, token, loading, isOffline } = useUserData() as any;
+    const getUser = async () => {
+        return await AsyncStorage.getItem("user_token").then((usr) =>
+            setUser(usr!)
+        );
+    };
+    React.useEffect(() => {
+        getUser();
+    }, [getUser]);
+
+    console.log(isOffline);
+    return (
+        !loading && (
+            <NavigationContainer>
+                <Stack.Navigator
+                    initialRouteName={
+                        !isOffline ? Routes.homeScreen : Routes.Login
+                    }
+                >
+                    <Stack.Screen
+                        name={Routes.Welcome}
+                        component={WelcomeNavigation}
+                        options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                        name={Routes.Authentication}
+                        component={AuthNavigation}
+                        options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                        name={Routes.product}
+                        component={Product}
+                        options={{
+                            header: ({ navigation, route }) => (
+                                <Header
+                                    navigation={navigation}
+                                    title={route.params}
+                                />
+                            ),
+                        }}
+                    />
+                    <Stack.Screen
+                        name={Routes.homeScreen}
+                        component={BottomTabs}
+                        options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                        name={Routes.voucher}
+                        component={VoucherTopTabs}
+                        options={{
+                            header: ({ navigation, route }) => (
+                                <Header
+                                    navigation={navigation}
+                                    title={route.name}
+                                    app
+                                />
+                            ),
+                        }}
+                        // options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                        name={Routes.notification}
+                        component={NotificationStack}
+                        options={{
+                            header: ({ navigation, route }) => (
+                                <Header
+                                    navigation={navigation}
+                                    title={route.name}
+                                />
+                            ),
+                        }}
+                    />
+                    <Stack.Screen
+                        name={Routes.changePhoneNumber}
+                        component={ChangePhoneNumberStack}
+                        options={{
+                            header: ({ navigation, route }) => (
+                                <Header
+                                    navigation={navigation}
+                                    title={"Change Phone Number"}
+                                />
+                            ),
+                        }}
+                    />
+                    <Stack.Screen
+                        name={Routes.changePassword}
+                        component={ChangePassword}
+                        options={{
+                            header: ({ navigation, route }) => (
+                                <Header
+                                    navigation={navigation}
+                                    title={"Change Password"}
+                                />
+                            ),
+                        }}
+                    />
+                    <Stack.Screen
+                        name={Routes.changeEmail}
+                        component={changeEmail}
+                        options={{
+                            header: ({ navigation, route }) => (
+                                <Header
+                                    navigation={navigation}
+                                    title={"Change Email Address"}
+                                />
+                            ),
+                        }}
+                    />
+
+                    <Stack.Screen
+                        name={Routes.customerSupport}
+                        component={CustomerSupport}
+                        options={{
+                            header: ({ navigation, route }) => (
+                                <Header
+                                    navigation={navigation}
+                                    title={"Customer Care"}
+                                />
+                            ),
+                        }}
+                    />
+                    <Stack.Screen
+                        name={Routes.error}
+                        component={Error}
+                        options={{
+                            header: ({ navigation, route }) => (
+                                <Header
+                                    navigation={navigation}
+                                    title={route.name}
+                                    app
+                                />
+                            ),
+                        }}
+                    />
+                    <Stack.Screen
+                        name={Routes.savedItems}
+                        component={SavedItems}
+                        options={{
+                            header: ({ navigation, route }) => (
+                                <Header
+                                    navigation={navigation}
+                                    title={"Saved Items"}
+                                    app
+                                />
+                            ),
+                        }}
+                    />
+
+                    <Stack.Screen
+                        name={Routes.chat}
+                        component={UserChat}
+                        options={{
+                            header: ({ navigation, route }) => (
+                                <Header
+                                    navigation={navigation}
+                                    title={"User name"}
+                                    app
+                                />
+                            ),
+                        }}
+                    />
+                    <Stack.Screen
+                        name={Routes.review}
+                        component={Review}
+                        options={{
+                            header: ({ navigation, route }) => (
+                                <Header
+                                    navigation={navigation}
+                                    title={route.name}
+                                    app
+                                />
+                            ),
+                        }}
+                    />
+                    <Stack.Screen
+                        name={Routes.order}
+                        component={Order}
+                        options={{
+                            header: ({ navigation, route }) => (
+                                <Header
+                                    navigation={navigation}
+                                    title={route.name}
+                                    app
+                                />
+                            ),
+                        }}
+                    />
+                    <Stack.Screen
+                        name={Routes.orderDetails}
+                        component={OrderDetail}
+                        options={{
+                            header: ({ navigation, route }) => (
+                                <Header
+                                    navigation={navigation}
+                                    title={"Order Details"}
+                                    app
+                                />
+                            ),
+                        }}
+                    />
+                    <Stack.Screen
+                        name={Routes.twoFactorAuth}
+                        component={TwoFactorAuth}
+                        options={{
+                            header: ({ navigation, route }) => (
+                                <Header
+                                    navigation={navigation}
+                                    title={"Two-Factor Authentication"}
+                                    app
+                                />
+                            ),
+                        }}
+                    />
+                    <Stack.Screen
+                        name={Routes.deleteAccount}
+                        component={DeleteAccount}
+                        options={{
+                            header: ({ navigation, route }) => (
+                                <Header
+                                    navigation={navigation}
+                                    title={"Delete Account"}
+                                    app
+                                />
+                            ),
+                        }}
+                    />
+                    <Stack.Screen
+                        name={Routes.pickers}
+                        component={PickersList}
+                        options={{
+                            header: ({ navigation, route }) => (
+                                <Header
+                                    navigation={navigation}
+                                    title={route.name}
+                                    app
+                                />
+                            ),
+                        }}
+                    />
+                    <Stack.Screen
+                        name={Routes.addPickers}
+                        component={NewPicker}
+                        options={{
+                            header: ({ navigation, route }) => (
+                                <Header
+                                    navigation={navigation}
+                                    title={route.name}
+                                    app
+                                />
+                            ),
+                        }}
+                    />
+                    <Stack.Screen
+                        name={Routes.addresses}
+                        component={Addresses}
+                        options={{
+                            header: ({ navigation, route }) => (
+                                <Header
+                                    navigation={navigation}
+                                    title={route.name}
+                                    app
+                                />
+                            ),
+                        }}
+                    />
+                    <Stack.Screen
+                        name={Routes.addAddresses}
+                        component={NewAddress}
+                        options={{
+                            header: ({ navigation, route }) => (
+                                <Header
+                                    navigation={navigation}
+                                    title={route.name}
+                                    app
+                                />
+                            ),
+                        }}
+                    />
+                    <Stack.Screen
+                        name={Routes.map}
+                        component={Map}
+                        options={{
+                            header: ({ navigation, route }) => (
+                                <Header
+                                    navigation={navigation}
+                                    title={route.name}
+                                    app
+                                />
+                            ),
+                        }}
+                    />
+                    <Stack.Screen
+                        name={Routes.paymentOption}
+                        component={PaymentOption}
+                        options={{
+                            header: ({ navigation, route }) => (
+                                <Header
+                                    navigation={navigation}
+                                    title={route.name}
+                                    app
+                                />
+                            ),
+                        }}
+                    />
+                    <Stack.Screen
+                        name={Routes.orderConfirmation}
+                        component={OrderConfirmation}
+                        options={{
+                            header: ({ navigation, route }) => (
+                                <Header
+                                    navigation={navigation}
+                                    title={route.name}
+                                    app
+                                    noBack
+                                />
+                            ),
+                        }}
+                    />
+                </Stack.Navigator>
+            </NavigationContainer>
+        )
     );
-  };
-  React.useEffect(() => {
-    getUser();
-  }, [getUser]);
-  
-   console.log(isOffline);
-  return (
-      !loading && (
-          <NavigationContainer>
-              <Stack.Navigator
-                  initialRouteName={
-                      !isOffline ? Routes.homeScreen : Routes.Login
-                  }
-              >
-                  <Stack.Screen
-                      name={Routes.Welcome}
-                      component={WelcomeNavigation}
-                      options={{ headerShown: false }}
-                  />
-                  <Stack.Screen
-                      name={Routes.Authentication}
-                      component={AuthNavigation}
-                      options={{ headerShown: false }}
-                  />
-                  <Stack.Screen
-                      name={Routes.product}
-                      component={Product}
-                      options={{
-                          header: ({ navigation, route }) => (
-                              <Header
-                                  navigation={navigation}
-                                  title={route.params}
-                              />
-                          ),
-                      }}
-                  />
-                  <Stack.Screen
-                      name={Routes.homeScreen}
-                      component={BottomTabs}
-                      options={{ headerShown: false }}
-                  />
-                  <Stack.Screen
-                      name={Routes.voucher}
-                      component={VoucherTopTabs}
-                      options={{
-                          header: ({ navigation, route }) => (
-                              <Header
-                                  navigation={navigation}
-                                  title={route.name}
-                                  app
-                              />
-                          ),
-                      }}
-                      // options={{ headerShown: false }}
-                  />
-                  <Stack.Screen
-                      name={Routes.notification}
-                      component={NotificationStack}
-                      options={{
-                          header: ({ navigation, route }) => (
-                              <Header
-                                  navigation={navigation}
-                                  title={route.name}
-                              />
-                          ),
-                      }}
-                  />
-                  <Stack.Screen
-                      name={Routes.changePhoneNumber}
-                      component={ChangePhoneNumberStack}
-                      options={{
-                          header: ({ navigation, route }) => (
-                              <Header
-                                  navigation={navigation}
-                                  title={"Change Phone Number"}
-                              />
-                          ),
-                      }}
-                  />
-                  <Stack.Screen
-                      name={Routes.changePassword}
-                      component={ChangePassword}
-                      options={{
-                          header: ({ navigation, route }) => (
-                              <Header
-                                  navigation={navigation}
-                                  title={"Change Password"}
-                              />
-                          ),
-                      }}
-                  />
-                  <Stack.Screen
-                      name={Routes.changeEmail}
-                      component={changeEmail}
-                      options={{
-                          header: ({ navigation, route }) => (
-                              <Header
-                                  navigation={navigation}
-                                  title={"Change Email Address"}
-                              />
-                          ),
-                      }}
-                  />
-
-                  <Stack.Screen
-                      name={Routes.customerSupport}
-                      component={CustomerSupport}
-                      options={{
-                          header: ({ navigation, route }) => (
-                              <Header
-                                  navigation={navigation}
-                                  title={"Customer Care"}
-                              />
-                          ),
-                      }}
-                  />
-                  <Stack.Screen
-                      name={Routes.error}
-                      component={Error}
-                      options={{
-                          header: ({ navigation, route }) => (
-                              <Header
-                                  navigation={navigation}
-                                  title={route.name}
-                                  app
-                              />
-                          ),
-                      }}
-                  />
-                  <Stack.Screen
-                      name={Routes.savedItems}
-                      component={SavedItems}
-                      options={{
-                          header: ({ navigation, route }) => (
-                              <Header
-                                  navigation={navigation}
-                                  title={"Saved Items"}
-                                  app
-                              />
-                          ),
-                      }}
-                  />
-
-                  <Stack.Screen
-                      name={Routes.chat}
-                      component={UserChat}
-                      options={{
-                          header: ({ navigation, route }) => (
-                              <Header
-                                  navigation={navigation}
-                                  title={"User name"}
-                                  app
-                              />
-                          ),
-                      }}
-                  />
-                  <Stack.Screen
-                      name={Routes.review}
-                      component={Review}
-                      options={{
-                          header: ({ navigation, route }) => (
-                              <Header
-                                  navigation={navigation}
-                                  title={route.name}
-                                  app
-                              />
-                          ),
-                      }}
-                  />
-                  <Stack.Screen
-                      name={Routes.order}
-                      component={Order}
-                      options={{
-                          header: ({ navigation, route }) => (
-                              <Header
-                                  navigation={navigation}
-                                  title={route.name}
-                                  app
-                              />
-                          ),
-                      }}
-                  />
-                  <Stack.Screen
-                      name={Routes.orderDetails}
-                      component={OrderDetail}
-                      options={{
-                          header: ({ navigation, route }) => (
-                              <Header
-                                  navigation={navigation}
-                                  title={"Order Details"}
-                                  app
-                              />
-                          ),
-                      }}
-                  />
-                  <Stack.Screen
-                      name={Routes.twoFactorAuth}
-                      component={TwoFactorAuth}
-                      options={{
-                          header: ({ navigation, route }) => (
-                              <Header
-                                  navigation={navigation}
-                                  title={"Two-Factor Authentication"}
-                                  app
-                              />
-                          ),
-                      }}
-                  />
-                  <Stack.Screen
-                      name={Routes.deleteAccount}
-                      component={DeleteAccount}
-                      options={{
-                          header: ({ navigation, route }) => (
-                              <Header
-                                  navigation={navigation}
-                                  title={"Delete Account"}
-                                  app
-                              />
-                          ),
-                      }}
-                  />
-                  <Stack.Screen
-                      name={Routes.pickers}
-                      component={PickersList}
-                      options={{
-                          header: ({ navigation, route }) => (
-                              <Header
-                                  navigation={navigation}
-                                  title={route.name}
-                                  app
-                              />
-                          ),
-                      }}
-                  />
-                  <Stack.Screen
-                      name={Routes.addPickers}
-                      component={NewPicker}
-                      options={{
-                          header: ({ navigation, route }) => (
-                              <Header
-                                  navigation={navigation}
-                                  title={route.name}
-                                  app
-                              />
-                          ),
-                      }}
-                  />
-                  <Stack.Screen
-                      name={Routes.addresses}
-                      component={Addresses}
-                      options={{
-                          header: ({ navigation, route }) => (
-                              <Header
-                                  navigation={navigation}
-                                  title={route.name}
-                                  app
-                              />
-                          ),
-                      }}
-                  />
-                  <Stack.Screen
-                      name={Routes.addAddresses}
-                      component={NewAddress}
-                      options={{
-                          header: ({ navigation, route }) => (
-                              <Header
-                                  navigation={navigation}
-                                  title={route.name}
-                                  app
-                              />
-                          ),
-                      }}
-                  />
-                  <Stack.Screen
-                      name={Routes.map}
-                      component={Map}
-                      options={{
-                          header: ({ navigation, route }) => (
-                              <Header
-                                  navigation={navigation}
-                                  title={route.name}
-                                  app
-                                  transparent
-                              />
-                          ),
-                      }}
-                  />
-                  <Stack.Screen
-                      name={Routes.paymentOption}
-                      component={PaymentOption}
-                      options={{
-                          header: ({ navigation, route }) => (
-                              <Header
-                                  navigation={navigation}
-                                  title={route.name}
-                                  app
-                                  transparent
-                              />
-                          ),
-                      }}
-                  />
-              </Stack.Navigator>
-          </NavigationContainer>
-      )
-  );
 }

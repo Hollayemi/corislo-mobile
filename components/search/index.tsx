@@ -16,7 +16,7 @@ type prop = {
     mystyles?: any;
 };
 
-export default function SearchBox({ placeholder, value, onChange }: prop) {
+export default function SearchBox({ placeholder, value, onChange, mystyles }: prop) {
     return (
         <View
             style={{
@@ -25,6 +25,7 @@ export default function SearchBox({ placeholder, value, onChange }: prop) {
                 backgroundColor: "#F3F3F3",
                 flexDirection: "row",
                 alignItems: "center",
+                ...mystyles,
             }}
         >
             <View
@@ -35,7 +36,10 @@ export default function SearchBox({ placeholder, value, onChange }: prop) {
                     marginLeft: 9,
                 }}
             >
-                <FontAwesome name="search" size={22} color="#848080" />
+                <Image
+                    source={require("../../assets/search.png")}
+                    style={{ width: 25, height: 25 }}
+                />
 
                 <TextInput
                     placeholder={placeholder}
@@ -45,7 +49,7 @@ export default function SearchBox({ placeholder, value, onChange }: prop) {
                     style={{
                         fontFamily: "Poppins_500Medium",
                         color: "#848080",
-                        fontSize: 12,
+                        fontSize: 14,
                         flex: 0.98,
                     }}
                 />

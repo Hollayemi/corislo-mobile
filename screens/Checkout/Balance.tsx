@@ -3,66 +3,70 @@ import Voucher from "../cart/Voucher";
 import { FlatList, Text, View } from "react-native";
 import { reshapePrice } from "../../utils/format";
 
-export default function Balance({ amounts }: any) {
+export default function Balance({ amounts, noVoucher }: any) {
     return (
         <>
-            <Voucher />
+            {!noVoucher && <Voucher />}
             <Text style={{ color: "#1C2534", fontSize: 15, fontWeight: "600" }}>
                 Summary
             </Text>
-            <View
-                style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    paddingVertical: 5,
-                    paddingTop: 15,
-                }}
-            >
-                <Text
+            {amounts?.originalPrice && (
+                <View
                     style={{
-                        color: "#424242",
-                        fontSize: 13,
-                        fontWeight: "500",
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        paddingVertical: 5,
+                        paddingTop: 15,
                     }}
                 >
-                    Total items cost
-                </Text>
-                <Text
+                    <Text
+                        style={{
+                            color: "#424242",
+                            fontSize: 13,
+                            fontWeight: "500",
+                        }}
+                    >
+                        Total items cost
+                    </Text>
+                    <Text
+                        style={{
+                            color: "#424242",
+                            fontSize: 13,
+                            fontWeight: "600",
+                        }}
+                    >
+                        {reshapePrice(amounts?.originalPrice)}
+                    </Text>
+                </View>
+            )}
+            {amounts?.discountedPrice && (
+                <View
                     style={{
-                        color: "#424242",
-                        fontSize: 13,
-                        fontWeight: "600",
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        paddingVertical: 5,
                     }}
                 >
-                    {reshapePrice(amounts?.originalPrice)}
-                </Text>
-            </View>
-            <View
-                style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    paddingVertical: 5,
-                }}
-            >
-                <Text
-                    style={{
-                        color: "#424242",
-                        fontSize: 13,
-                        fontWeight: "500",
-                    }}
-                >
-                    Saved
-                </Text>
-                <Text
-                    style={{
-                        color: "#FF0C0C",
-                        fontSize: 13,
-                        fontWeight: "600",
-                    }}
-                >
-                    - {reshapePrice(amounts?.discountedPrice)}
-                </Text>
-            </View>
+                    <Text
+                        style={{
+                            color: "#424242",
+                            fontSize: 13,
+                            fontWeight: "500",
+                        }}
+                    >
+                        Saved
+                    </Text>
+                    <Text
+                        style={{
+                            color: "#FF0C0C",
+                            fontSize: 13,
+                            fontWeight: "600",
+                        }}
+                    >
+                        - {reshapePrice(amounts?.discountedPrice)}
+                    </Text>
+                </View>
+            )}
 
             <View
                 style={{

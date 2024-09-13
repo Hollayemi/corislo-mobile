@@ -10,10 +10,10 @@ type prop = {
     title: any;
     navigation: any;
     app?: boolean;
-    transparent?: boolean;
+    noBack?: boolean;
 };
 
-export default function Header({ title, navigation, app, transparent }: prop) {
+export default function Header({ title, navigation, app, noBack }: prop) {
     return (
         <View style={{ ...styles.header }}>
             <View
@@ -22,13 +22,13 @@ export default function Header({ title, navigation, app, transparent }: prop) {
                     { justifyContent: app ? "flex-start" : "space-between" },
                 ]}
             >
-                <AntDesign
+                {!noBack && <AntDesign
                     name="left"
                     size={20}
                     color="black"
                     style={{ paddingRight: "15%" }}
                     onPress={() => navigation.goBack()}
-                />
+                />}
                 <Text style={styles.title} numberOfLines={1}>
                     {title.prodName || title}
                 </Text>
@@ -67,8 +67,8 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        borderBottomWidth: 1,
-        borderBottomColor: "#eee",
+        // borderBottomWidth: 1,
+        // borderBottomColor: "#eee",
         paddingTop: StatusBarManager.HEIGHT + 20,
         backgroundColor: "#fff",
     },

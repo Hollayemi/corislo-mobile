@@ -64,3 +64,44 @@ const isToday = (someDate: Date): boolean => {
         someDate.getFullYear() === today.getFullYear()
     );
 };
+
+export const formatTime = (date: Date): string => {
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+
+  // Determine AM or PM suffix
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+
+  // Convert 24-hour format to 12-hour format
+  const formattedHours = hours % 12 || 12; // 12-hour format with no 0
+  const formattedMinutes = minutes.toString().padStart(2, '0'); // Ensure two digits for minutes
+
+  return `${formattedHours}:${formattedMinutes} ${ampm}`;
+};
+
+
+export const timeSince = (date: Date | string | number): string => {
+    const currentDate = new Date();
+    const parsedDate = new Date(date); // Ensure it's a valid date
+
+    // If the date is invalid, return a fallback message
+    if (isNaN(parsedDate.getTime())) {
+        return "Invalid date";
+    }
+
+    const timeElapsedInSeconds = Math.floor(
+        (currentDate.getTime() - parsedDate.getTime()) / 1000
+    );
+
+    if (timeElapsedInSeconds < 60) {
+        return "Just now";
+    } else if (timeElapsedInSeconds < 3600) {
+        const minutes = Math.floor(timeElapsedInSeconds / 60);
+        return `${minutes} minute${minutes !== 1 ? "s" : ""} ago`;
+    } else if (timeElapsedInSeconds < 86400) {
+        const hours = Math.floor(timeElapsedInSeconds / 3600);
+        return `${hours} hour${hours !== 1 ? "s" : ""} ago`;
+    } else  {
+        return `${formatDate(parsedDate)} ${formatTime(parsedDate)}`;
+    }
+};

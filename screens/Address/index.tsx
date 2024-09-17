@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { View, Text, FlatList, StyleSheet, Image, Touchable, TouchableOpacity } from "react-native";
+import {
+    View,
+    Text,
+    FlatList,
+    StyleSheet,
+    Image,
+    Touchable,
+    TouchableOpacity,
+} from "react-native";
 import { style } from "../../style";
 import { AntDesign } from "@expo/vector-icons";
 import useSWR from "swr";
@@ -9,23 +17,23 @@ import { useDispatch } from "react-redux";
 import { SwipeListView } from "react-native-swipe-list-view";
 import Button from "../../components/button";
 import { deleteAddress } from "../../redux/state/slices/users/address";
+import { AddressCard } from "./card";
+import { useUserData } from "../../hooks/useData";
+import { selectAsDefault } from "../../redux/state/slices/users/address";
 
 type Picker = {
     _id: string;
     state: string;
     address: string;
-    selected: boolean,
+    selected: boolean;
     postal_code: string;
     city: string;
 };
 
-type PickersListProps = {
-    pickers: Picker[];
-};
-
 export default function Addresses({ navigation }: any) {
     const dispatch = useDispatch();
-    const [selected, setSelected] = useState("");
+    const { userInfo } = useUserData() as any;
+    const [selected, setSelected] = useState(userInfo?.selectedAddress || {}) as any;
     const { data: addrs } = useSWR("/user/addresses");
     const addresses = addrs?.data || [];
     console.log(addresses);
@@ -44,35 +52,35 @@ export default function Addresses({ navigation }: any) {
         />
     );
 
-    const renderItem = ({ item, index }: { item: Picker; index: any }) => (
-        <TouchableOpacity onPress={() => !item.selected && setSelected(item._id)}>
-            <View style={styles.pickerContainer} key={index}>
-                <View style={{ marginLeft: 10 }}>
-                    <Text style={styles.title} numberOfLines={1}>
-                        {item.state}
-                    </Text>
-                    <Text
-                        style={styles.detail}
-                    >{`${item.address}, ${item.city}, ${item.state}.`}</Text>
-                    <Text style={styles.detail}>{item.postal_code}</Text>
-                </View>
-
-                <AntDesign
-                    name="edit"
-                    size={15}
-                    style={{
-                        marginRight: 10,
-                        position: "absolute",
-                        top: 15,
-                        right: 10,
-                    }}
-                    onPress={() =>
-                        deletePickupPerson({ id: item._id }, dispatch)
+    const renderItem = ({ item, index }: { item: Picker; index: any }) => {
+        const isDefault = userInfo?.selectedAddress?._id === item._id;
+        return (
+            <TouchableOpacity
+                onPress={() => !item.selected && setSelected(item)}
+                key={index}
+            >
+                <AddressCard
+                    item={item}
+                    isDefault={isDefault}
+                    icon={
+                        <AntDesign
+                            name="edit"
+                            size={15}
+                            style={{
+                                marginRight: 10,
+                                position: "absolute",
+                                top: 15,
+                                right: 10,
+                            }}
+                            onPress={() =>
+                                deletePickupPerson({ id: item._id }, dispatch)
+                            }
+                        />
                     }
                 />
-            </View>
-        </TouchableOpacity>
-    );
+            </TouchableOpacity>
+        );
+    };
 
     return (
         <View style={{ ...style.container, paddingTop: 12 }}>
@@ -88,7 +96,9 @@ export default function Addresses({ navigation }: any) {
                     renderItem={renderItem}
                     keyExtractor={(item) => item._id}
                     rightOpenValue={-75}
-                    renderHiddenItem={(e: any) => renderRightActions(e.item._id)}
+                    renderHiddenItem={(e: any) =>
+                        renderRightActions(e.item._id)
+                    }
                     ListEmptyComponent={
                         <Text>No shipping address available.</Text>
                     }
@@ -128,8 +138,13 @@ export default function Addresses({ navigation }: any) {
                 <Button
                     title="Set as Default"
                     mystyles={{ marginBottom: 40, marginHorizontal: 10 }}
-                    onPress={() => {}}
-                    disabled={!Boolean(selected)}
+                    onPress={() =>
+                        selectAsDefault(
+                            { field: "address", data: selected },
+                            dispatch
+                        )
+                    }
+                    disabled={userInfo?.selectedAddress?._id === selected._id}
                 />
             </View>
         </View>

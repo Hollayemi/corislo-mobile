@@ -3,6 +3,7 @@ import toaster from "../../../../../configs/toaster";
 import martApi from "../../api/baseApi";
 import { jsonHeader } from "../../api/setAuthHeaders";
 import { mutate } from "swr";
+import { Routes } from "../../../../../navigations/routes";
 
 const addOrderApi = createAsyncThunk("post/myOrder", async (payload: any) => {
     const { data } = await martApi
@@ -12,12 +13,13 @@ const addOrderApi = createAsyncThunk("post/myOrder", async (payload: any) => {
     return data;
 });
 
-export const addNewOrder = (payload: any, dispatch: any) => {
+export const addNewOrder = (payload: any, dispatch: any, navigation: any) => {
     dispatch(addOrderApi(payload))
         .then(unwrapResult)
         .then((res: any) => {
             toaster({ ...res });
             mutate("/user/order");
+            navigation.navigate(Routes.orderConfirmation)
         })
         .catch((e: any) => {});
 };

@@ -11,6 +11,8 @@ import { Divider } from "react-native-elements";
 import { OrderStages } from "../../components/order/stages";
 import Button from "../../components/button";
 import { Routes } from "../../navigations/routes";
+import { PickerCard } from "../Pickers/card";
+import { AddressCard } from "../Address/card";
 
 export default function OrderDetail({ navigation, route }: any) {
     const { data } = route.params;
@@ -46,7 +48,7 @@ export default function OrderDetail({ navigation, route }: any) {
                 style={{
                     backgroundColor: "#F6F6F6",
                     padding: 8,
-                    marginBottom: 40,
+                    marginBottom: 20,
                 }}
             >
                 <View
@@ -136,13 +138,35 @@ export default function OrderDetail({ navigation, route }: any) {
                     />
                 </View>
             </View>
+            <View style={{ marginBottom: 50 }}>
+                <Text
+                    style={{
+                        fontSize: 17,
+                        marginTop: 20,
+                        marginBottom: 10,
+                        color: "#464646",
+                        fontFamily: "Poppins_600SemiBold",
+                    }}
+                >
+                    {data.deliveryMedium === "pickup"
+                        ? "Picker"
+                        : "Shipping Address"}
+                </Text>
+                {data.deliveryMedium === "pickup" ? (
+                    <PickerCard item={data.items.picker} />
+                ) : (
+                    <AddressCard item={data.shippingAddress} />
+                )}
+            </View>
             <Balance amounts={{ originalPrice: data.totalAmount }} noVoucher />
-            { data.currStatus === "Completed" && <View style={{ marginVertical: 20 }}>
-                <Button
-                    title="Review Products"
-                    onPress={() => navigation.navigate(Routes.review)}
-                />
-            </View>}
+            {data.currStatus === "Completed" && (
+                <View style={{ marginVertical: 20 }}>
+                    <Button
+                        title="Review Products"
+                        onPress={() => navigation.navigate(Routes.review)}
+                    />
+                </View>
+            )}
         </ScrollView>
     );
 }

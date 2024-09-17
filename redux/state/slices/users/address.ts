@@ -43,7 +43,7 @@ const deleteAddHandler = createAsyncThunk(
 );
 
 export const deleteAddress = (id: any, dispatch: any, navigation: any) => {
-  console.log(id);
+    console.log(id);
     dispatch(deleteAddHandler(id))
         .then(unwrapResult)
         .then((res: any) => {
@@ -52,6 +52,29 @@ export const deleteAddress = (id: any, dispatch: any, navigation: any) => {
                 mutate("/user/addresses");
                 mutate("/user/get-account");
                 navigation.navigate(Routes.addresses);
+            }
+        })
+        .catch((e: any) => {});
+};
+
+const userSelectionApi = createAsyncThunk(
+    "post/default",
+    async (payload: any) => {
+        const { data } = await martApi
+            .post("/user/select", payload, await jsonHeader(""))
+            .then((e) => e)
+            .catch((e) => e.response);
+        return data;
+    }
+);
+
+export const selectAsDefault = (payload: any, dispatch: any) => {
+    dispatch(userSelectionApi(payload))
+        .then(unwrapResult)
+        .then((res: any) => {
+            toaster({ ...res });
+            if (res.type === "success") {
+                mutate("/user/get-account");
             }
         })
         .catch((e: any) => {});

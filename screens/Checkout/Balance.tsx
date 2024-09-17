@@ -10,7 +10,7 @@ export default function Balance({ amounts, noVoucher }: any) {
             <Text style={{ color: "#1C2534", fontSize: 15, fontWeight: "600" }}>
                 Summary
             </Text>
-            {amounts?.originalPrice && (
+            {amounts?.originalPrice ? (
                 <View
                     style={{
                         flexDirection: "row",
@@ -38,8 +38,8 @@ export default function Balance({ amounts, noVoucher }: any) {
                         {reshapePrice(amounts?.originalPrice)}
                     </Text>
                 </View>
-            )}
-            {amounts?.discountedPrice && (
+            ): null}
+            {amounts?.discountedPrice ? (
                 <View
                     style={{
                         flexDirection: "row",
@@ -66,7 +66,7 @@ export default function Balance({ amounts, noVoucher }: any) {
                         - {reshapePrice(amounts?.discountedPrice)}
                     </Text>
                 </View>
-            )}
+            ) : null}
 
             <View
                 style={{

@@ -35,11 +35,6 @@ export default function Order() {
         }
     };
 
-    const statusArray = {
-        ongoing: [""],
-    };
-
-    console.log(fetchedOrder);
     const ongoing = fetchedOrder.filter(
         (x: any) => !["Cancelled", "Completed"].includes(x.currStatus) && x
     );

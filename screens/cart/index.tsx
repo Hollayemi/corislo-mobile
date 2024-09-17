@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FlatList, SafeAreaView, Text, View } from "react-native";
+import { FlatList, SafeAreaView, ScrollView, Text, View } from "react-native";
 import Checkbox from "expo-checkbox";
 import Alert from "../../components/alert";
 import Button from "../../components/button";
@@ -36,172 +36,185 @@ export default function Cart({ navigation }: prop) {
             <Loader />
         </View>
     ) : (
-        <FlatList
-            ListHeaderComponent={
-                <View style={style.container}>
-                    <Alert
-                        label="You have a discount voucher for this products"
-                        type="action"
-                        onPress={() => {}}
-                    />
-                    <View
-                        style={{
-                            flexDirection: "row",
-                            justifyContent: "space-between",
-                            paddingVertical: "5%",
-                            marginHorizontal: "4%",
-                            borderBottomWidth: 1,
-                            borderColor: "#D2D2D2",
-                            borderStyle: "solid",
-                        }}
-                    >
-                        <View style={{ flexDirection: "row" }}>
-                            <Checkbox
-                                style={{}}
-                                value={selected.length === cartedProds.length}
-                                onValueChange={(e) => {
-                                    const checked = e;
-                                    selectCart(() =>
-                                        checked ? cartedProds : []
-                                    );
-                                }}
-                                color={
-                                    selected.length === cartedProds.length
-                                        ? "#2A347E"
-                                        : undefined
-                                }
-                            />
-                            <Text
-                                style={{
-                                    fontWeight: "500",
-                                    fontSize: 12,
-                                    color: "#424242",
-                                    marginLeft: 15,
-                                }}
-                            >
-                                Select Items
-                            </Text>
-                        </View>
-                        <Text
-                            style={{
-                                fontWeight: "600",
-                                fontSize: 12,
-                                color: "#1C2534",
-                            }}
-                        >
-                            {reshapePrice(cartData?.discountAmount)} (
-                            {cartedProds.length})
-                        </Text>
-                    </View>
-                </View>
-            }
+        <View
             style={{
-                paddingHorizontal: "2%",
-                flex: 1,
-                backgroundColor: "#fff",
+                ...style.container,
+                flexDirection: "column",
+                justifyContent: "space-between",
+                alignContent: "space-between",
+                height: "100%",
+                paddingHorizontal: 10,
             }}
-            data={cartData?.products || []}
-            renderItem={({ item }: any) => (
-                <Card selected={selected} selectCart={selectCart} {...item} />
-            )}
-            keyExtractor={(item: any) => item.id}
-            ListFooterComponent={
-                <>
-                    <View
+        >
+            <Alert
+                label="You have a discount voucher for this products"
+                type="action"
+                onPress={() => {}}
+            />
+            <View
+                style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    paddingVertical: "5%",
+                    marginHorizontal: "4%",
+                    borderBottomWidth: 1,
+                    borderColor: "#D2D2D2",
+                    borderStyle: "solid",
+                }}
+            >
+                <View style={{ flexDirection: "row" }}>
+                    <Checkbox
+                        style={{}}
+                        value={selected.length === cartedProds.length}
+                        onValueChange={(e) => {
+                            const checked = e;
+                            selectCart(() => (checked ? cartedProds : []));
+                        }}
+                        color={
+                            selected.length === cartedProds.length
+                                ? "#2A347E"
+                                : undefined
+                        }
+                    />
+                    <Text
                         style={{
-                            paddingVertical: "2%",
-                            marginHorizontal: "0%",
-                            borderStyle: "solid",
-                            borderBottomWidth: 1,
-                            borderTopWidth: 1,
-                            borderColor: "#D2D2D2",
-                            marginTop: 10,
+                            fontWeight: "500",
+                            fontSize: 12,
+                            color: "#424242",
+                            marginLeft: 15,
                         }}
                     >
-                        <Voucher />
-                    </View>
-                    <View
-                        style={{
-                            padding: "5%",
-                            flexDirection: "row",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                        }}
-                    >
-                        <View style={{ flex: 0.7 }}>
-                            <Text
-                                style={{
-                                    color: "#1C2534",
-                                    fontSize: 16,
-                                    fontWeight: "500",
-                                    marginBottom: 5,
-                                }}
-                            >
-                                Shipping Address
-                            </Text>
-                            <Text
-                                style={{
-                                    color: "#505050",
-                                    fontSize: 13,
-                                    lineHeight: 20,
-                                }}
-                            >
-                                {`${addr?.address}, ${addr?.state}, ${addr?.city} (${addr?.postal_code})`}
-                            </Text>
+                        Select Items
+                    </Text>
+                </View>
+                <Text
+                    style={{
+                        fontWeight: "600",
+                        fontSize: 12,
+                        color: "#1C2534",
+                    }}
+                >
+                    {reshapePrice(cartData?.discountAmount)} (
+                    {cartedProds.length})
+                </Text>
+            </View>
+            <ScrollView style={{}}>
+                <View style={{}}>
+                    {cartData?.products.map((item: any, index: any) => (
+                        <View style={{ height: 100 }}>
+                            <Card
+                                selected={selected}
+                                selectCart={selectCart}
+                                {...item}
+                            />
                         </View>
+                    ))}
+                </View>
+
+                {/* /> */}
+            </ScrollView>
+            <View>
+                <View
+                    style={{
+                        paddingVertical: 0,
+                        marginHorizontal: "0%",
+                        borderStyle: "solid",
+                        borderBottomWidth: 1,
+                        borderTopWidth: 1,
+                        borderColor: "#D2D2D2",
+                        marginTop: 10,
+                    }}
+                >
+                    <Voucher />
+                </View>
+                <View
+                    style={{
+                        padding: "5%",
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        display: "none",
+                    }}
+                >
+                    <View style={{ flex: 0.7 }}>
                         <Text
                             style={{
-                                padding: 10,
-                                paddingHorizontal: 30,
-                                borderStyle: "solid",
-                                borderWidth: 1,
-                                borderColor: "#2A347E",
-                                color: "#2A347E",
-                                fontSize: 10,
-                                borderRadius: 15,
+                                color: "#1C2534",
+                                fontSize: 16,
+                                fontWeight: "500",
+                                marginBottom: 5,
                             }}
                         >
-                            Change
+                            Shipping Address
+                        </Text>
+                        <Text
+                            style={{
+                                color: "#505050",
+                                fontSize: 13,
+                                lineHeight: 20,
+                            }}
+                        >
+                            {`${addr?.address}, ${addr?.state}, ${addr?.city} (${addr?.postal_code})`}
                         </Text>
                     </View>
-                    <View
+                    <Text
                         style={{
-                            padding: "5%",
-                            flexDirection: "row",
-                            justifyContent: "space-between",
+                            padding: 10,
+                            paddingHorizontal: 30,
+                            borderStyle: "solid",
+                            borderWidth: 1,
+                            borderColor: "#2A347E",
+                            color: "#2A347E",
+                            fontSize: 10,
+                            borderRadius: 15,
                         }}
                     >
-                        <View style={{ flex: 0.7 }}>
-                            <Text
-                                style={{
-                                    color: "#1C2534",
-                                    fontSize: 15,
-                                    fontWeight: "500",
-                                }}
-                            >
-                                Total Price
-                            </Text>
-                            <Text style={{ color: "#1C2534", fontSize: 18 }}>
-                                ₦85,300
-                            </Text>
-                        </View>
-                        <Button
-                            title={`Checkout (${
-                                selected.length || cartedProds.length
-                            })`}
-                            onPress={() => {
-                                try {
-                                    navigation.navigate(Routes.Checkout, {
-                                        selected,
-                                    });
-                                } catch (error) {}
+                        Change
+                    </Text>
+                </View>
+                <View
+                    style={{
+                        padding: "5%",
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                    }}
+                >
+                    <View style={{ flex: 0.7, width: 140 }}>
+                        <Text
+                            style={{
+                                color: "#1C2534",
+                                fontSize: 15,
+                                fontWeight: "500",
                             }}
-                            mystyles={{ height: 50 }}
-                            disabled={cartedProds?.length < 1}
-                        />
+                        >
+                            Total Price
+                        </Text>
+                        <Text
+                            style={{
+                                color: "#1C2534",
+                                fontSize: 18,
+                                fontWeight: 700,
+                            }}
+                        >
+                            {reshapePrice(cartData?.discountAmount)}
+                        </Text>
                     </View>
-                </>
-            }
-        />
+                    <Button
+                        title={`Checkout (${
+                            selected.length || cartedProds.length
+                        })`}
+                        onPress={() => {
+                            try {
+                                navigation.navigate(Routes.Checkout, {
+                                    selected,
+                                });
+                            } catch (error) {}
+                        }}
+                        mystyles={{ height: 50, width: 160 }}
+                        disabled={cartedProds?.length < 1}
+                    />
+                </View>
+            </View>
+        </View>
     );
 }

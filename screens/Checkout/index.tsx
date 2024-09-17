@@ -17,7 +17,12 @@ import { object } from "yup";
 export default function Checkout({ navigation, route }: any) {
     const { selected } = route.params;
     const dispatch = useDispatch();
-    const { cartedProds, userInfo, temp, showAlert } = useUserData() as any;
+    const {
+        cartedProds,
+        userInfo: { selectedAddress, selectedBilling },
+        temp,
+        showAlert,
+    } = useUserData() as any;
     const { data: carts, error } = useSWR(
         `/user/cart-group?${selected.length && `prods=${selected.join(".")}`}`
     );
@@ -29,8 +34,8 @@ export default function Checkout({ navigation, route }: any) {
         products: cartedProds,
         delivery: {},
         picker: {},
-        shippingAddress: temp.address || userInfo?.selectedAddress || null,
-        billingCard: userInfo?.selectedBilling || null,
+        shippingAddress: temp.address || selectedAddress || null,
+        billingCard: selectedBilling || null,
     });
 
     return (
@@ -43,11 +48,13 @@ and matches your expected delivery location."
             <FlatList
                 ListHeaderComponent={
                     <>
-                        <Method
-                            title="Lagos"
-                            desc="No 58, Allen Avenue, Along Lagos Mainland...."
-                            view
-                        />
+                        {selectedAddress._id ? (
+                            <Method
+                                title={selectedAddress?.state}
+                                desc={`${selectedAddress.address}, ${selectedAddress.city}, ${selectedAddress.state}.`}
+                                view
+                            />
+                        ) : null}
                     </>
                 }
                 style={{ flex: 1, padding: "3%" }}

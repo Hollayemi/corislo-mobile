@@ -96,7 +96,7 @@ export default function PaymentOption({ navigation, route }: any) {
                 <View style={{ marginVertical: "20%" }}>
                     <Button
                         title={`Pay Now ${reshapePrice(data.paying)}`}
-                        onPress={() => addNewOrder(data.payload, dispatch)}
+                        onPress={() => addNewOrder(data.payload, dispatch, navigation)}
                     />
                 </View>
             </View>

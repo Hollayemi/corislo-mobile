@@ -7,6 +7,7 @@ import { Routes } from "../../navigations/routes";
 import { deletePickupPerson } from "../../redux/state/slices/users/pickup";
 import { useDispatch } from "react-redux";
 import { SwipeListView } from "react-native-swipe-list-view";
+import { PickerCard } from "./card";
 
 type Picker = {
     _id: string;
@@ -45,18 +46,8 @@ export default function PickersList({ navigation }: any) {
         );
 
     const renderItem = ({ item, index }: { item: Picker; index: any }) => (
-        <View style={styles.pickerContainer} key={index}>
-            <Image
-                source={require("../../assets/no-profile.png")}
-                style={{ width: 60, height: 60 }}
-            />
-            <View style={{ marginLeft: 10 }}>
-                <Text style={styles.name} numberOfLines={1}>
-                    {item.name}
-                </Text>
-                <Text style={styles.detail}>{item.email || "- - - -"}</Text>
-                <Text style={styles.detail}>{item.relationship}</Text>
-            </View>
+        <View style={{ marginHorizontal: 15 }}>
+            <PickerCard item={item} key={index} />
         </View>
     );
 

@@ -12,15 +12,9 @@ import { formatName } from "../../utils/get-initials";
 interface prop extends DataProp {
     order?: boolean;
 }
-function CardRow({
-    payload,
-    updatePayload,
-    order,
-    ...otherItems
-}: any) {
+function CardRow({ payload, updatePayload, order, ...otherItems }: any) {
     const {
         _id: { store },
-        branchCheckout,
         fromBranch,
     } = otherItems;
     const deliveryType = payload.delivery[store];

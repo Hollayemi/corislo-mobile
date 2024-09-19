@@ -18,15 +18,36 @@ import { OrderStatus } from "../../screens/order/data";
 import { OrderStages } from "./stages";
 import { timeSince } from "../../utils/format";
 import { Routes } from "../../navigations/routes";
+import Rating from "../rating";
+import { useDispatch } from "react-redux";
+import { feedbackHandler } from "../../redux/state/slices/home/feedback";
 
 export default function ReviewCard({
     status,
     navigation,
     rating,
+    index,
     ...others
 }: any) {
-    const [rate, setRate] = useState(false);
+    const dispatch = useDispatch();
     const [ShowDetails, setShowDetails] = useState(false);
+    const [toReview, setToReview] = useState(false);
+    const [rate, setRate] = useState(0);
+    const [reviewNote, setReviewNote] = useState("");
+
+    const { store, branch, orderItemId, prodId } = others;
+    const reviewPayload = {
+        productId: prodId,
+        orderItemId,
+        store,
+        branch,
+        review: reviewNote,
+        rate,
+    };
+
+    const orderDetails = () => {
+        !rating ? setShowDetails(!ShowDetails) : setToReview(others.prodId);
+    };
     return (
         <View
             style={{
@@ -62,7 +83,7 @@ export default function ReviewCard({
                             fontFamily: "Poppins_600SemiBold",
                             fontSize: 16,
                         }}
-                        onPress={() => setShowDetails(!ShowDetails)}
+                        onPress={orderDetails}
                     >
                         {!rating && "Order No:"}
                         {others.orderSlug}
@@ -80,7 +101,7 @@ export default function ReviewCard({
                                 fontFamily: "Poppins_600SemiBold",
                                 color: "#696666",
                             }}
-                            onPress={() => setShowDetails(!ShowDetails)}
+                            onPress={orderDetails}
                         >
                             {timeSince(others.createdAt)}
                         </Text>
@@ -90,7 +111,7 @@ export default function ReviewCard({
                             name={ShowDetails ? "up" : "down"}
                             size={14}
                             color="black"
-                            onPress={() => setShowDetails(!ShowDetails)}
+                            onPress={orderDetails}
                         />
                     </View>
                     <Text
@@ -100,11 +121,7 @@ export default function ReviewCard({
                             fontSize: 10,
                         }}
                     >
-                        No of items:{" "}
-                        {
-                            others.items.storeProducts?.quantity || others.items.storeProducts
-                                ?.length
-                        }
+                        No of items: {others.quantity || others.items?.length}
                     </Text>
                 </View>
             </View>
@@ -134,20 +151,28 @@ export default function ReviewCard({
             ) : null}
             {!status ? (
                 <View>
-                    {rate ? (
+                    {others.items?.prodId === toReview ? (
                         <View
                             style={{ backgroundColor: "#F5F5F5", padding: 20 }}
                         >
+                            <Rating
+                                size={28}
+                                rate={rate}
+                                myStyles={{ marginBottom: 10 }}
+                                setClick={setRate}
+                            />
                             <TextInput
-                                selectionColor={"#F5F5F5"}
+                                selectionColor={"#233974"}
                                 multiline
                                 placeholder="Tell us more about your rating!"
                                 numberOfLines={10}
+                                onChangeText={(e) => setReviewNote(e)}
                                 style={{
-                                    color: "#F5F5F5",
+                                    color: "#464646",
                                     backgroundColor: "#fff",
                                     textAlignVertical: "top",
                                     padding: 10,
+                                    fontSize: 18,
                                 }}
                             />
                             <Text
@@ -159,7 +184,10 @@ export default function ReviewCard({
                                     color: "#7E7E7E",
                                     marginTop: 20,
                                 }}
-                                onPress={() => setRate(false)}
+                                onPress={() => {
+                                    feedbackHandler(reviewPayload, dispatch);
+                                    setRate(0);
+                                }}
                             >
                                 Submit your review
                             </Text>
@@ -176,10 +204,13 @@ export default function ReviewCard({
                                 color: "#1F1F1F",
                                 marginTop: 10,
                             }}
-                            onPress={() => setRate(true)}
+                            onPress={orderDetails}
                         >
-                            Rate this product  {"  "}{" "}
-                            <MaterialCommunityIcons name="star-shooting-outline" size={20} />
+                            Rate this product {"  "}{" "}
+                            <MaterialCommunityIcons
+                                name="star-shooting-outline"
+                                size={20}
+                            />
                         </Text>
                     )}
                 </View>

@@ -45,7 +45,11 @@ export enum Routes {
     addPickers = "New Picker",
     addresses = "Shipping Address",
     addAddresses = "New Shipping Address",
+    recentlyViewed = "Recently Viewed",
     map = "Map",
     paymentOption = "Payment",
     orderConfirmation = "Order Confirmation",
+    EmailChanged = "EmailChanged",
+    PasswordChanged = "PasswordChanged",
+    Search = "Search",
 }

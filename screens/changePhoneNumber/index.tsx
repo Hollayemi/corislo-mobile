@@ -34,7 +34,7 @@ export default function ChangePhoneNumber() {
           <Text
             style={{
               fontFamily: "Poppins_500Medium",
-              fontSize: 10,
+              fontSize: 15,
               marginVertical: 10,
             }}
           >
@@ -80,7 +80,7 @@ export default function ChangePhoneNumber() {
           <Text
             style={{
               fontFamily: "Poppins_500Medium",
-              fontSize: 10,
+              fontSize: 15,
               marginVertical: 10,
             }}
           >

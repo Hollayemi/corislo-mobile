@@ -5,6 +5,7 @@ import Coment from "./Coment";
 import Rating from "../../components/rating";
 import MyPagination from "../../components/pagination";
 import OptionsMenu from "../../components/option-menu";
+import { Ionicons } from "@expo/vector-icons";
 
 interface RatingDisplayLengthProps {
     rate: number;
@@ -77,22 +78,46 @@ export const ReviewTab: React.FC<ReviewTabProps> = ({
     return reviews?.length ? (
         <ScrollView>
             <View style={{ paddingHorizontal: 10, paddingVertical: 15 }}>
-                <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", width: "100%" }}>
+                <View
+                    style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        width: "100%",
+                    }}
+                >
                     <Text style={{ fontWeight: "bold", fontSize: 20 }}>
                         Product Review ({sum})
                     </Text>
                     <OptionsMenu
-                        others={{ placeholder: "Select Date Range" }}
+                        Component={() => (
+                            <View
+                                style={{
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                }}
+                            >
+                                <Text style={{ marginRight: 10 }}>
+                                    {option || "Select Date Range"}
+                                </Text>
+                                <Ionicons
+                                    name="chevron-down-circle"
+                                    size={15}
+                                />
+                            </View>
+                        )}
                         options={[
                             "January 2021 - December 2021",
                             "March 2022 - October 2022",
                             "March 2023 - October 2023",
-                        ]}
+                        ].map((x: any) => {
+                            return { key: x, label: x };
+                        })}
                         setSelectedValue={setOption}
                         selectedValue={option}
                     />
                 </View>
-               
+
                 <View
                     style={{
                         flexDirection: "row",

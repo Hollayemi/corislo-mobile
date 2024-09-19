@@ -163,8 +163,9 @@ export default function Step1({ navigation }: any) {
 
 export const styles = StyleSheet.create({
   error: {
-    fontSize: 10,
+    fontSize: 11,
     color: "#f00",
-    paddingLeft: "5%",
+    paddingLeft: "3%",
+    marginTop: 4
   },
 });

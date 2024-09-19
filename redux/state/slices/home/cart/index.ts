@@ -85,7 +85,7 @@ export const saveProduct = (payload: any, dispatch: any) => {
         .then((res: any) => {
             toaster({ ...res });
             if (res.type === "success") {
-                mutate("/user/saved-items/group");
+                mutate("/user/saved-items");
                 mutate("/user/save-item/prods");
             }
         })

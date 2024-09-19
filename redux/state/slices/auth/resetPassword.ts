@@ -42,15 +42,24 @@ const changePasswordApi = createAsyncThunk(
   }
 );
 
-export const changePasswordHandler = (payload: any, dispatch: any) => {
-  console.log(payload);
-  dispatch(changePasswordApi(payload))
-    .then(unwrapResult)
-    .then((res: any) => {
-      console.log(res)
-      toaster(res);
-    })
-    .catch((err: any) => {
-      toaster({ message: "No Connection", type: "error" });
-    });
+export const changePasswordHandler = (
+    payload: any,
+    dispatch: any,
+    navigation: any
+) => {
+    console.log(payload);
+    dispatch(changePasswordApi(payload))
+        .then(unwrapResult)
+        .then((res: any) => {
+            console.log(res);
+            toaster(res);
+            if (res.type === "success") {
+                navigation.navigate(Routes.PasswordChanged, {
+                    type: "changePassword",
+                });
+            }
+        })
+        .catch((err: any) => {
+            toaster({ message: "No Connection", type: "error" });
+        });
 };

@@ -100,7 +100,7 @@ export default function Cart({ navigation }: prop) {
             </View>
             <ScrollView style={{}}>
                 <View style={{}}>
-                    {cartData?.products.map((item: any, index: any) => (
+                    {cartData?.products?.map((item: any, index: any) => (
                         <View style={{ height: 100 }}>
                             <Card
                                 selected={selected}
@@ -110,7 +110,6 @@ export default function Cart({ navigation }: prop) {
                         </View>
                     ))}
                 </View>
-
                 {/* /> */}
             </ScrollView>
             <View>

@@ -33,6 +33,7 @@ export default function AuthNavigation() {
         component={Created}
         options={{ headerShown: false }}
       />
+
       <Stack.Screen
         name={Routes.ForgetPassword}
         component={ForgetPassword}
@@ -43,6 +44,7 @@ export default function AuthNavigation() {
         component={Login}
         options={{ headerShown: false }}
       />
+      
       <Stack.Screen
         name={Routes.updatePassword}
         component={UpdatePassword}

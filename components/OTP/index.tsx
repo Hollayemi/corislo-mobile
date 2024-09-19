@@ -5,9 +5,10 @@ type prop = {
   otp: string[];
   setOTP: any;
   inputRefs: React.MutableRefObject<(TextInput | null)[]>;
+  gray?: any
 };
 
-const OTPInput: React.FC<prop> = ({ otp, inputRefs, setOTP }) => {
+const OTPInput: React.FC<prop> = ({ otp, inputRefs, setOTP, gray }) => {
   const handleInputChange = (text: string, index: number) => {
     const newOTP = [...otp];
     newOTP[index] = text;
@@ -22,13 +23,14 @@ const OTPInput: React.FC<prop> = ({ otp, inputRefs, setOTP }) => {
       inputRefs.current[index + 1]?.focus();
     }
   };
+  const border = gray ? { borderColor: "#A3AAAE" } : {};
   return (
     <View style={styles.container}>
       {otp.map((value, index) => (
         <TextInput
           key={index}
           ref={(ref) => (inputRefs.current[index] = ref)}
-          style={styles.input}
+          style={{...styles.input, ...border}}
           onChangeText={(text) => handleInputChange(text, index)}
           value={value}
           maxLength={1}

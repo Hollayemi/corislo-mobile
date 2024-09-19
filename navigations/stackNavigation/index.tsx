@@ -19,7 +19,7 @@ import UserChat from "../../screens/Chat/UserChat";
 import Review from "../../screens/reviews";
 import Order from "../../screens/order";
 import OrderDetail from "../../screens/order/OrderDetail";
-import changeEmail from "../../screens/changeEmail";
+import ChangeEmail from "../../screens/changeEmail";
 import TwoFactorAuth from "../../screens/2fa";
 import DeleteAccount from "../../screens/DeleteAccount";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -32,6 +32,11 @@ import NewAddress from "../../screens/Address/newAddress";
 import Map from "../../screens/map";
 import PaymentOption from "../../screens/payment";
 import OrderConfirmation from "../../screens/payment/confirmation";
+import RecentlyViewed from "../../screens/RecentlyViewed";
+import Verify from "../../screens/Auth/Verify";
+import EmailChanged from "../../screens/changeEmail/EmailChanged";
+import PasswordChanged from "../../screens/changePassword/PasswordChanged";
+import Search from "../../screens/Search";
 
 const Stack = createNativeStackNavigator();
 
@@ -81,6 +86,11 @@ export default function Navigation() {
                     <Stack.Screen
                         name={Routes.homeScreen}
                         component={BottomTabs}
+                        options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                        name={Routes.homeScreen}
+                        component={Search}
                         options={{ headerShown: false }}
                     />
                     <Stack.Screen
@@ -134,8 +144,20 @@ export default function Navigation() {
                         }}
                     />
                     <Stack.Screen
+                        name={Routes.PasswordChanged}
+                        component={PasswordChanged}
+                        options={{
+                            header: ({ navigation, route }) => (
+                                <Header
+                                    navigation={navigation}
+                                    title={"Change Password"}
+                                />
+                            ),
+                        }}
+                    />
+                    <Stack.Screen
                         name={Routes.changeEmail}
-                        component={changeEmail}
+                        component={ChangeEmail}
                         options={{
                             header: ({ navigation, route }) => (
                                 <Header
@@ -144,6 +166,20 @@ export default function Navigation() {
                                 />
                             ),
                         }}
+                    />
+                    <Stack.Screen
+                        name={Routes.EmailChanged}
+                        component={EmailChanged}
+                        options={{
+                            header: ({ navigation, route }) => (
+                                <Header navigation={navigation} title={""} />
+                            ),
+                        }}
+                    />
+                    <Stack.Screen
+                        name={Routes.AuthenticationVerify}
+                        component={Verify}
+                        options={{ headerShown: false }}
                     />
 
                     <Stack.Screen
@@ -351,6 +387,19 @@ export default function Navigation() {
                                     title={route.name}
                                     app
                                     noBack
+                                />
+                            ),
+                        }}
+                    />
+                    <Stack.Screen
+                        name={Routes.recentlyViewed}
+                        component={RecentlyViewed}
+                        options={{
+                            header: ({ navigation, route }) => (
+                                <Header
+                                    navigation={navigation}
+                                    title={route.name}
+                                    app
                                 />
                             ),
                         }}

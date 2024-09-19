@@ -128,8 +128,8 @@ export default function Product({ navigation, route }: any) {
                                 size={24}
                                 color={
                                     savedProds.includes(product?._id)
-                                        ? "black"
-                                        : "red"
+                                        ? "red"
+                                        : "black"
                                 }
                                 onPress={() => saveProduct(payload, dispatch)}
                             />
@@ -461,7 +461,7 @@ const styles = StyleSheet.create({
         shadowColor: "rgba(0, 0, 0, 0.4)",
     },
     title: {
-        fontSize: 28,
+        fontSize: 24,
         fontWeight: "600",
         marginTop: "10%",
     },

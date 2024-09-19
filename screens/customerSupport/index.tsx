@@ -6,9 +6,9 @@ import Option from "./option";
 
 export default function CustomerSupport() {
   return (
-    <View style={{ flex: 1, backgroundColor: "#fff", padding: "5%" }}>
+    <View style={{ flex: 1, backgroundColor: "#fff",  }}>
       <View
-        style={{ flexDirection: "row", alignItems: "center", marginBottom: 40 }}
+        style={{ flexDirection: "row", alignItems: "center",paddingHorizontal: "5%", marginBottom: 30 }}
       >
         <Image source={require("../../assets/customerSupport.png")} />
         <Text
@@ -27,7 +27,9 @@ export default function CustomerSupport() {
         contentContainerStyle={{
           justifyContent: "space-between",
           flexDirection: "row",
+          paddingHorizontal: "4%",
           paddingBottom: 20,
+          
           flexWrap: "wrap",
         }}
         data={typeData}
